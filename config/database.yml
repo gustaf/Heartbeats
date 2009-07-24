@@ -18,8 +18,8 @@ development:
   adapter: mysql
   encoding: utf8
   database: sconnect_development
-  username: root
-  password:
+  username: jonatan
+  password: nji9cft6
   socket: /var/run/mysqld/mysqld.sock
 
 # Warning: The database defined as "test" will be erased and
@@ -29,14 +29,14 @@ test:
   adapter: mysql
   encoding: utf8
   database: sconnect_test
-  username: root
-  password:
+  username: jonatan
+  password: nji9cft6
   socket: /var/run/mysqld/mysqld.sock
 
 production:
   adapter: mysql
   encoding: utf8
   database: sconnect_production
-  username: root
-  password: 
+  username: jonatan
+  password: nji9cft6
   socket: /var/run/mysqld/mysqld.sock
