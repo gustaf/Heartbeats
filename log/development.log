@@ -75,3 +75,22 @@ WARNING: You're using the Ruby-based MySQL library that ships with Rails. This l
   [4;35;1mSQL (0.000466)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
 Rendering signin/index
 Completed in 0.00330 (302 reqs/sec) | Rendering: 0.00156 (47%) | DB: 0.00081 (24%) | 200 OK [http://localhost/]
+
+
+Processing SigninController#index (for 10.0.2.2 at 2009-07-24 20:31:55) [GET]
+  Session ID: BAh7BiIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNo
+SGFzaHsABjoKQHVzZWR7AA==--dafd5b15677cb90f34802f03467ad81708839f0a
+  Parameters: {"action"=>"index", "controller"=>"signin"}
+WARNING: You're using the Ruby-based MySQL library that ships with Rails. This library is not suited for production. Please install the C-based MySQL library instead (gem install mysql).
+  [4;36;1mSQL (0.000313)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.000287)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+Rendering signin/index
+Completed in 0.00322 (310 reqs/sec) | Rendering: 0.00161 (50%) | DB: 0.00060 (18%) | 200 OK [http://localhost/]
+
+
+Processing SigninController#index (for 10.0.2.2 at 2009-07-24 20:33:08) [GET]
+  Session ID: BAh7BiIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNo
+SGFzaHsABjoKQHVzZWR7AA==--dafd5b15677cb90f34802f03467ad81708839f0a
+  Parameters: {"action"=>"index", "controller"=>"signin"}
+Rendering signin/index
+Completed in 0.00317 (315 reqs/sec) | Rendering: 0.00158 (49%) | DB: 0.00000 (0%) | 200 OK [http://localhost/]
