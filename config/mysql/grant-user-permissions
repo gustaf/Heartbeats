@@ -1,0 +1,2 @@
+CREATE USER 'jonatan'@'localhost' IDENTIFIED BY 'nji9cft6';
+GRANT ALL PRIVILEGES ON *.* TO 'jonatan'@'localhost';
