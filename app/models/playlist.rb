@@ -1,9 +1,10 @@
 class Playlist < ActiveRecord::Base
   validate :url_is_valid
+  before_validation :set_url_spotify
   belongs_to :user
 
   def url_is_valid
-    is_http_url? || is_spotify_url?
+    errors.add(:url, "url is not valid") unless is_http_url? || is_spotify_url?
   end
 
   def is_http_url?
@@ -18,10 +19,36 @@ class Playlist < ActiveRecord::Base
       /^spotify:(album|artist|track):\w+$/)
   end
 
+  def touch
+    playlist = self.class.first(
+      :joins => :user,
+      :readonly => false,
+      :conditions => {:users => {:id => user.id}, :url_spotify => self.class.url_to_url_spotify(url)})
+    return unless playlist
+    playlist.updated_at = DateTime.now
+    playlist.save
+  end
+
   class << self
     def find_by_uid(fb_uid)
       all(:joins => :user, :conditions => {:users => {:fb_uid => fb_uid}})
     end
+
+    def url_to_url_spotify(url)
+      case url
+        when /^http:\/\/open\.spotify\.com\/user\/(\w+)\/playlist\/(\w+)$/
+          "spotify:user:#{$1}:playlist:#{$2}"
+        when /^http:\/\/open\.spotify\.com\/(album|artist|track)\/(\w+)$/
+          "spotify:#{$1}:#{$2}"
+        else
+          url
+      end
+    end
+  end
+
+  protected
+  def set_url_spotify
+    self.url_spotify ||= self.class.url_to_url_spotify(url)
   end
 end
 

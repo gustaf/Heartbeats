@@ -9,14 +9,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090804041616) do
+ActiveRecord::Schema.define(:version => 20090808161814) do
 
   create_table "playlists", :force => true do |t|
     t.string   "url"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "url_spotify", :null => false
   end
+
+  add_index "playlists", ["url_spotify"], :name => "index_playlists_on_url_spotify", :unique => true
 
   create_table "users", :force => true do |t|
     t.datetime "created_at"

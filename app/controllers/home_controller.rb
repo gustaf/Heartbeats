@@ -4,6 +4,7 @@ class HomeController < ApplicationController
 
   def index
     friends = facebook_session.user.friends
+    friends << facebook_session.user
     @playlists = {}
     friends.each do |friend|
       ps = Playlist.find_by_uid(friend.id)
@@ -14,10 +15,17 @@ class HomeController < ApplicationController
   def create
     playlist = Playlist.new(:user => @me, :url => params[:url])
 
-    if playlist.save
+    success = false
+    begin
+      success = playlist.save
+    rescue ActiveRecord::StatementInvalid
+      success = playlist.touch
+    end
+
+    if success
       redirect_to "/home"
     else
-      raise playlist.errors.join("; ")
+      raise playlist.errors.inspect
     end
   end
 

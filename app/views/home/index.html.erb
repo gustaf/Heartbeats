@@ -1,20 +1,19 @@
-<div id="username"><%= facebook_session.user.name %></div>
+<div id="content">
+<div id="username"><%= h facebook_session.user.name %></div>
 <div id="logout"><%= fb_logout_link "Logout", "signin" %></div>
 <div id="main_form" class="form">
 <% form_tag "home/create" do %>
-  <div><%= text_field_tag :url %></div>
-  <div><%= submit_tag "Submit" %></div>
+  <div id="input_playlist"><%= text_field_tag :url %></div>
+  <div id="submit_playlist"><%= submit_tag "Add" %></div>
 <% end %>
 </div>
 <div id="friends">
   <% @playlists.each do |friend, ps| %>
     <div class="friend">
-      <div class="friend_pic"><%= fb_profile_pic friend %></div>
-      <div class="friend_name"><%= friend.name %></div>
-      <% ps.each do |playlist| %>
-        <div class="playlist"><%= playlist.url %></div>
-      <% end %>
+      <div class="friend_pic"><%= fb_profile_pic friend, :size => :square %></div>
+      <div class="friend_name"><%= h friend.name %></div>
+    <% ps.each do |playlist| %><div class="playlist"><%= playlist.updated_at %>: <%= h playlist.url_spotify %></div><% end %>
     </div>
   <% end %>
 </div>
-
+</div>
