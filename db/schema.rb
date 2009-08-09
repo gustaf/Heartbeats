@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(:version => 20090808161814) do
     t.string   "url_spotify", :null => false
   end
 
-  add_index "playlists", ["url_spotify"], :name => "index_playlists_on_url_spotify", :unique => true
+  add_index "playlists", ["user_id", "url_spotify"], :name => "index_playlists_on_user_id_and_url_spotify", :unique => true
 
   create_table "users", :force => true do |t|
     t.datetime "created_at"

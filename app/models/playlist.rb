@@ -21,9 +21,8 @@ class Playlist < ActiveRecord::Base
 
   def touch
     playlist = self.class.first(
-      :joins => :user,
       :readonly => false,
-      :conditions => {:users => {:id => user.id}, :url_spotify => self.class.url_to_url_spotify(url)})
+      :conditions => {:user_id => user.id, :url_spotify => self.class.url_to_url_spotify(url)})
     return unless playlist
     playlist.updated_at = DateTime.now
     playlist.save
