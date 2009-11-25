@@ -12,6 +12,10 @@ class HomeController < ApplicationController
     end
   end
 
+  def test
+    @test = 'high'
+  end
+
   def create
     playlist = Playlist.new(:user => @me, :url => params[:url])
 
