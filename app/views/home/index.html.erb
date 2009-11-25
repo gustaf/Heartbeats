@@ -10,7 +10,7 @@
 
 <div id="friends">
   <% @playlists.each do |playlist| %>
-	<a href="<%= playlist.url %>"><%= playlist.url_spotify %></a>
+	<p>	<a href="<%= playlist.url %>"><%= playlist.url_spotify %></a> </p>
   <% end %>	
 	
   <% @old_playlists.each do |friend, ps| %>
