@@ -34,9 +34,10 @@ class HomeController < ApplicationController
 
     if success
       flash[:playlist_added] = UserPublisher.create_playlist_added(facebook_session.user)
-      facebook_session.send_notification(
-        facebook_session.user.friends.map {|f| f.id},
-        "shared a Spotify <b>playlist</b> with <a href='http://heartbeats.heroku.com'>Heartbeats</a>")
+#  THIS SENDS NOTIFICATION TO FACEBOOK FRIENDS
+#      facebook_session.send_notification(
+#        facebook_session.user.friends.map {|f| f.id},
+#        "shared a Spotify <b>playlist</b> with <a href='http://heartbeats.heroku.com'>Heartbeats</a>")
       redirect_to "/home"
     else
       raise playlist.errors.inspect
