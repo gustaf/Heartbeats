@@ -13,6 +13,8 @@ class Playlist < ActiveRecord::Base
       /^http:\/\/open\.spotify\.com\/(album|artist|track)\/\w+$/)
   end
 
+#spotify:user:ouvriere:playlist:2jw42ojvBkxb1NUvhYR1Fw
+ 
   def is_spotify_url?
     url =~ Regexp.union(
       /^spotify:user:\w+:playlist:\w+$/,
