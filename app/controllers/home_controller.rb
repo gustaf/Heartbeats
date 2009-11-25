@@ -3,16 +3,18 @@ class HomeController < ApplicationController
   helper_method :facebook_session
 
   def index
-   #  friends = facebook_session.user.friends
-   # friends << facebook_session.user
-   #@playlists = {}
-   # friends.each do |friend|
-   #    ps = Playlist.find_by_uid(friend.id)
-   #   @playlists[friend] = ps if ps && !ps.empty?
+    friends = facebook_session.user.friends
+    friends << facebook_session.user
+   @playlists = {}
+    friends.each do |friend|
+       ps = Playlist.find_by_uid(friend.id)
+      @playlists[friend] = ps if ps && !ps.empty?
+      end  
   end
 
   def test
     @test = 'high'
+    @fbuid= facebook_session.user.id
   end
 
   def create
