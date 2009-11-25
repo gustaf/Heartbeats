@@ -126,7 +126,7 @@ module Facebooker
       end
 
       def fb_cookie_names
-        fb_cookie_names = cookies.keys.select{|k| k.starts_with?(fb_cookie_prefix)}
+        fb_cookie_names = cookies.keys.select{|k| k && k.starts_with?(fb_cookie_prefix)}
       end
 
       def secure_with_cookies!
@@ -189,7 +189,7 @@ module Facebooker
       def create_new_facebook_session_and_redirect!
         session[:facebook_session] = new_facebook_session
         next_url = after_facebook_login_url || default_after_facebook_login_url
-        top_redirect_to session[:facebook_session].login_url({:next => next_url}) unless @installation_required
+        top_redirect_to session[:facebook_session].login_url({:next => next_url, :canvas=>params[:fb_sig_in_canvas]}) unless @installation_required
         false
       end
       
@@ -204,10 +204,6 @@ module Facebooker
             User.new(friend_uid, facebook_session)
           end
         end
-      end
-            
-      def blank?(value)
-        (value == '0' || value.nil? || value == '')        
       end
 
       def verified_facebook_params
@@ -229,12 +225,11 @@ module Facebooker
       
       def verify_signature(facebook_sig_params,expected_signature)
         # Don't verify the signature if rack has already done so.
-        if ::Rails.version >= "2.3"
-          return if ActionController::Dispatcher.middleware.include? Rack::Facebook
+        unless ::Rails.version >= "2.3" and ActionController::Dispatcher.middleware.include? Rack::Facebook
+          raw_string = facebook_sig_params.map{ |*args| args.join('=') }.sort.join
+          actual_sig = Digest::MD5.hexdigest([raw_string, Facebooker::Session.secret_key].join)
+          raise Facebooker::Session::IncorrectSignature if actual_sig != expected_signature
         end
-        raw_string = facebook_sig_params.map{ |*args| args.join('=') }.sort.join
-        actual_sig = Digest::MD5.hexdigest([raw_string, Facebooker::Session.secret_key].join)
-        raise Facebooker::Session::IncorrectSignature if actual_sig != expected_signature
         raise Facebooker::Session::SignatureTooOld if facebook_sig_params['time'] && Time.at(facebook_sig_params['time'].to_f) < earliest_valid_session
         true
       end
@@ -243,11 +238,11 @@ module Facebooker
         @facebook_parameter_conversions ||= Hash.new do |hash, key| 
           lambda{|value| value}
         end.merge(
-          'time' => lambda{|value| Time.at(value.to_f)},
-          'in_canvas' => lambda{|value| !blank?(value)},
-          'added' => lambda{|value| !blank?(value)},
-          'expires' => lambda{|value| blank?(value) ? nil : Time.at(value.to_f)},
-          'friends' => lambda{|value| value.split(/,/)}
+          'time'      => lambda{|value| Time.at(value.to_f)},
+          'in_canvas' => lambda{|value| one_or_true(value)},
+          'added'     => lambda{|value| one_or_true(value)},
+          'expires'   => lambda{|value| zero_or_false(value) ? nil : Time.at(value.to_f)},
+          'friends'   => lambda{|value| value.split(/,/)}
         )
       end
       
@@ -298,6 +293,9 @@ module Facebooker
       end
       def ensure_has_create_listing
         has_extended_permission?("create_listing") || application_needs_permission("create_listing")
+      end
+      def ensure_has_create_event
+        has_extended_permission?("create_event") || application_needs_permission("create_event")
       end
       
       def application_needs_permission(perm)

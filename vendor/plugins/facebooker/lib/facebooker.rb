@@ -95,6 +95,24 @@ module Facebooker
       end
     end
 
+    def all_api_keys
+      [
+        @raw_facebooker_configuration['api_key']
+      ] + (
+        @raw_facebooker_configuration['alternative_keys'] ?
+        @raw_facebooker_configuration['alternative_keys'].keys :
+        []
+      )
+    end
+
+    def with_all_applications(&block)
+      all_api_keys.each do |current_api_key|
+        with_application(current_api_key) do
+          block.call
+        end
+      end
+    end
+
     def fetch_config_for(api_key)
       if @raw_facebooker_configuration['api_key'] == api_key
         return @raw_facebooker_configuration
@@ -146,7 +164,7 @@ module Facebooker
       @timeout
     end
 
-    [:api_key,:secret_key, :www_server_base_url,:login_url_base,:install_url_base,:api_rest_path,:api_server_base,:api_server_base_url,:canvas_server_base, :video_server_base].each do |delegated_method|
+    [:api_key,:secret_key, :www_server_base_url,:login_url_base,:install_url_base,:permission_url_base,:connect_permission_url_base,:api_rest_path,:api_server_base,:api_server_base_url,:canvas_server_base, :video_server_base].each do |delegated_method|
       define_method(delegated_method){ return current_adapter.send(delegated_method)}
     end
 
@@ -206,6 +224,7 @@ require 'facebooker/service/net_http_service'
 require 'facebooker/server_cache'
 require 'facebooker/data'
 require 'facebooker/admin'
+require 'facebooker/application'
 require 'facebooker/mobile'
 require 'facebooker/session'
 require 'facebooker/version'

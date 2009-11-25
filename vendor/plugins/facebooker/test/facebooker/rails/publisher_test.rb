@@ -137,11 +137,27 @@ class TestPublisher < Facebooker::Rails::Publisher
     recipients to
   end
 
+  def publish_post_to_own_stream(user)
+    send_as :publish_stream
+    from  user
+    target user
+    attachment({:name => "Facebooker", :href => "http://www.exampple.com"})
+    message "Posting post to own stream"
+    action_links([{:text => "Action Link", :href => "http://www.example.com/action_link"}])
+  end
+
+  def publish_post_to_friends_stream(from, to)
+    send_as :publish_stream
+    from  from
+    target to
+    attachment({:name => "Facebooker", :href => "http://www.exampple.com"})
+    message "Posting post to friends stream"
+    action_links([{:text => "Action Link", :href => "http://www.example.com/action_link"}])
+  end
 end
 
 class Facebooker::Rails::Publisher::FacebookTemplateTest < Test::Unit::TestCase
   FacebookTemplate = Facebooker::Rails::Publisher::FacebookTemplate
-  include Facebooker::Rails::TestHelpers
 
   def setup
     super
@@ -187,14 +203,6 @@ class Facebooker::Rails::Publisher::FacebookTemplateTest < Test::Unit::TestCase
     FacebookTemplate.find_in_db(TestPublisher,"simple_user_action")
   end
 
-  def test_find_in_db_should_destroy_old_record_if_changed
-    FacebookTemplate.stubs(:find_by_template_name).returns(@template)
-    FacebookTemplate.stubs(:hashed_content).returns("MY CONTENT")
-    @template.stubs(:template_changed?).returns(true)
-    @template.expects(:destroy)
-    FacebookTemplate.find_in_db(TestPublisher,"simple_user_action")
-  end
-
   def test_find_in_db_should_re_register_if_changed
     FacebookTemplate.stubs(:find_by_template_name).with("1234567: TestPublisher::simple_user_action").returns(@template)
     FacebookTemplate.stubs(:hashed_content).returns("MY CONTENT")
@@ -203,6 +211,7 @@ class Facebooker::Rails::Publisher::FacebookTemplateTest < Test::Unit::TestCase
     FacebookTemplate.expects(:register).with(TestPublisher,"simple_user_action").returns(@template)
     FacebookTemplate.find_in_db(TestPublisher,"simple_user_action")
   end
+
 end
 
 class Facebooker::Rails::Publisher::PublisherTest < Test::Unit::TestCase
@@ -332,6 +341,20 @@ class Facebooker::Rails::Publisher::PublisherTest < Test::Unit::TestCase
    Facebooker::Rails::Publisher::FacebookTemplate.expects(:register)
     TestPublisher.register_user_action
   end
+
+  def test_register_should_deactivate_template_bundle_if_exists
+    @template = mock
+    @template.stubs(:bundle_id).returns(999)
+    @template.stubs(:bundle_id=)
+    @template.stubs(:save!)
+    @session = mock
+    @session.stubs(:register_template_bundle).returns(1000)
+    Facebooker::Session.stubs(:create).returns(@session)
+    Facebooker::Rails::Publisher::FacebookTemplate.stubs(:find_or_initialize_by_template_name).returns(@template)
+    @template.expects(:deactivate)
+    FacebookTemplate.register(TestPublisher, "simple_user_action")
+  end
+
   def test_register_user_action_with_action_links
     ActionController::Base.append_view_path("./test/../../app/views")
     Facebooker::Rails::Publisher::FacebookTemplate.expects(:register)
@@ -407,6 +430,20 @@ class Facebooker::Rails::Publisher::PublisherTest < Test::Unit::TestCase
     }
   end
 
+  def test_publish_post_to_own_stream
+    @user = Facebooker::User.new
+    @user.expects(:publish_to).with(@user, has_entry(:attachment=>instance_of(Hash)))
+
+    TestPublisher.deliver_publish_post_to_own_stream(@user)
+  end
+
+  def test_publish_post_to_friends_stream
+    @from_user = Facebooker::User.new
+    @to_user = Facebooker::User.new
+    @from_user.expects(:publish_to).with(@to_user, has_entry(:action_links=>instance_of(Array)))
+
+    TestPublisher.deliver_publish_post_to_friends_stream(@from_user, @to_user)
+  end
 
   def test_keeps_class_method_missing
     assert_raises(NoMethodError) {

@@ -24,6 +24,11 @@ module Facebooker
         end
       end
       
+      def fbjs_library
+        "<script>var _token = '#{form_authenticity_token}';var _hostname = '#{ActionController::Base.asset_host}'</script>"+
+        "#{javascript_include_tag 'facebooker'}"
+      end
+      
       def fb_iframe(src, options = {})
         content_tag "fb:iframe", '', options.merge({ :src => src })
       end
@@ -451,10 +456,10 @@ module Facebooker
       def facebook_messages
         message=""
         unless flash[:notice].blank?
-          message += fb_success(flash[:notice])
+          message += fb_success(*flash[:notice])
         end
         unless flash[:error].blank?
-          message += fb_error(flash[:error])
+          message += fb_error(*flash[:error])
         end
         message
       end
@@ -739,6 +744,57 @@ module Facebooker
         tag "fb:time",stringify_vals({:t => time.to_i}.merge(options))
       end
       
+      # Renders a fb:intl element
+      #
+      # Example:
+      # <%= fb_intl('Age', :desc => 'Label for the age form field', :delimiters => '[]') %>
+      #
+      # See http://wiki.developers.facebook.com/index.php/Fb:intl for
+      # more details
+      def fb_intl(text=nil, options={}, &proc)
+        raise ArgumentError, "Missing block or text" unless block_given? or text
+        content = block_given? ? capture(&proc) : text
+        content_tag("fb:intl", content, stringify_vals(options))
+      end
+
+      # Renders a fb:intl-token element
+      #
+      # Example:
+      # <%= fb_intl-token('number', 5) %>
+      #
+      # See http://wiki.developers.facebook.com/index.php/Fb:intl-token for
+      # more details
+      def fb_intl_token(name, text=nil, &proc)
+        raise ArgumentError, "Missing block or text" unless block_given? or text
+        content = block_given? ? capture(&proc) : text
+        content_tag("fb:intl-token", content, stringify_vals({:name => name}))
+      end
+
+      # Renders a fb:date element
+      #
+      # Example:
+      # <%= fb_date(Time.now, :format => 'verbose', :tz => 'America/New York') %>
+      #
+      # See http://wiki.developers.facebook.com/index.php/Fb:date for
+      # more details
+      def fb_date(time, options={})
+        tag "fb:date", stringify_vals({:t => time.to_i}.merge(options))
+      end
+
+      # Renders a fb:fbml-attribute element
+      #
+      # Example:
+      # <%= fb_fbml_attribute('title', Education) %>
+      #
+      # The options hash is passed to the fb:intl element that is generated inside this element
+      # and can have the keys available for the fb:intl element.
+      #
+      # See http://wiki.developers.facebook.com/index.php/Fb:fbml-attribute for
+      # more details
+      def fb_fbml_attribute(name, text, options={})
+        content_tag("fb:fbml-attribute", fb_intl(text, options), stringify_vals({:name => name}))
+      end
+
       protected
       
       def cast_to_facebook_id(object)

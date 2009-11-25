@@ -25,6 +25,7 @@ class ControllerWhichRequiresExtendedPermissions< NoisyController
   before_filter :ensure_has_photo_upload
   before_filter :ensure_has_video_upload
   before_filter :ensure_has_create_listing
+  before_filter :ensure_has_create_event
   def index
     render :text => 'score!'
   end
@@ -123,10 +124,6 @@ class PlainOldRailsController < ActionController::Base
   def canvas_true_test
     render :text=>comments_url(:canvas=>true)
   end
-end
-
-class Test::Unit::TestCase
-  include Facebooker::Rails::TestHelpers
 end
 
 
@@ -233,23 +230,28 @@ class RailsIntegrationTestForExtendedPermissions < Test::Unit::TestCase
     assert_equal("<fb:redirect url=\"http://www.facebook.com/authorize.php?api_key=1234567&v=1.0&ext_perm=status_update\" />", @response.body)
   end
   def test_redirects_without_photo_upload
-    post :index, facebook_params(:fb_sig_ext_perms=>"status_update")
+    post :index, facebook_params(:fb_sig_ext_perms=>"status_update,create_event")
     assert_response :success
     assert_equal("<fb:redirect url=\"http://www.facebook.com/authorize.php?api_key=1234567&v=1.0&ext_perm=photo_upload\" />", @response.body)
   end
   def test_redirects_without_video_upload
-    post :index, facebook_params(:fb_sig_ext_perms=>"status_update,photo_upload")
+    post :index, facebook_params(:fb_sig_ext_perms=>"status_update,photo_upload,create_event")
     assert_response :success
     assert_equal("<fb:redirect url=\"http://www.facebook.com/authorize.php?api_key=1234567&v=1.0&ext_perm=video_upload\" />", @response.body)
   end
   def test_redirects_without_create_listing
-    post :index, facebook_params(:fb_sig_ext_perms=>"status_update,photo_upload,video_upload")
+    post :index, facebook_params(:fb_sig_ext_perms=>"status_update,photo_upload,video_upload,create_event")
     assert_response :success
     assert_equal("<fb:redirect url=\"http://www.facebook.com/authorize.php?api_key=1234567&v=1.0&ext_perm=create_listing\" />", @response.body)
   end
+  def test_redirects_without_create_event
+    post :index, facebook_params(:fb_sig_ext_perms=>"status_update,photo_upload,create_listing,video_upload")
+    assert_response :success
+    assert_equal("<fb:redirect url=\"http://www.facebook.com/authorize.php?api_key=1234567&v=1.0&ext_perm=create_event\" />", @response.body)
+  end
   
   def test_renders_with_permission
-    post :index, facebook_params(:fb_sig_ext_perms=>"status_update,photo_upload,create_listing,video_upload")
+    post :index, facebook_params(:fb_sig_ext_perms=>"status_update,photo_upload,create_listing,video_upload,create_event")
     assert_response :success
     assert_equal("score!", @response.body)
     
@@ -330,6 +332,16 @@ class RailsIntegrationTest < Test::Unit::TestCase
   
   def test_facebook_params_convert_added_to_boolean_true
     get :index, facebook_params('fb_sig_added' => "1")
+    assert_equal(true, @controller.facebook_params['added'])
+  end
+
+  def test_facebook_params_convert_added_to_boolean_false_when_already_false
+    get :index, facebook_params('fb_sig_added' => false)
+    assert_equal(false, @controller.facebook_params['added'])
+  end
+
+  def test_facebook_params_convert_added_to_boolean_true_when_already_true
+    get :index, facebook_params('fb_sig_added' => true)
     assert_equal(true, @controller.facebook_params['added'])
   end
   
@@ -429,7 +441,7 @@ class RailsIntegrationTest < Test::Unit::TestCase
     setup_fb_connect_cookies
     get :index
     assert_equal(77777, @controller.facebook_session.user.id)
-    end
+  end
   
   def test_session_does_NOT_secure_with_expired_cookies
     setup_fb_connect_cookies(expired_cookie_hash_for_auth)
@@ -481,6 +493,12 @@ class RailsIntegrationTest < Test::Unit::TestCase
   def test_url_for_doesnt_include_url_root_when_not_linked_to_canvas
     get :link_test,facebook_params(:fb_sig_in_canvas=>0,:canvas=>false)
     assert !@response.body.match(/root/)
+  end
+  
+  def test_url_for_links_to_canvas_if_fb_sig_is_ajax_is_true_and_fb_sig_in_canvas_is_not_true
+    # Normal fb ajax calls have no fb_sig_canvas_param but we must explicitly set it to 0 because it is set to 1 in default_facebook_parameters in test helpers
+    get :link_test, facebook_params(:fb_sig_is_ajax=>1, :fb_sig_in_canvas=>0)
+    assert_match(/apps.facebook.com/, @response.body)
   end
   
   def test_default_url_omits_fb_params
@@ -547,6 +565,23 @@ class RailsSignatureTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new    
 
   end
+
+  if Rails.version < '2.3'
+  
+    def test_should_raise_on_bad_sig
+      begin
+        get :fb_params_test, facebook_params.merge('fb_sig' => 'incorrect')
+        fail "No IncorrectSignature raised"
+      rescue Facebooker::Session::IncorrectSignature=>e
+      end
+    end
+
+    def test_valid_signature
+      @controller.expects(:earliest_valid_session).returns(Time.at(1186588275.5988)-1)
+      get :fb_params_test, facebook_params 
+    end
+
+  end
   
   def test_should_raise_too_old_for_replayed_session
     begin
@@ -554,20 +589,6 @@ class RailsSignatureTest < Test::Unit::TestCase
       fail "No SignatureTooOld raised"
     rescue Facebooker::Session::SignatureTooOld=>e
     end
-  end
-  
-  def test_should_raise_on_bad_sig
-    begin
-      get :fb_params_test, facebook_params.merge('fb_sig' => 'incorrect')
-      fail "No IncorrectSignature raised"
-    rescue Facebooker::Session::IncorrectSignature=>e
-    end
-  end
-  
-  def test_valid_signature
-    @controller.expects(:earliest_valid_session).returns(Time.at(1186588275.5988)-1)
-    get :fb_params_test, facebook_params
-    
   end
   
 end
@@ -855,6 +876,11 @@ class RailsHelperTest < Test::Unit::TestCase
       (@h.fb_multi_friend_request("invite","ignored","action") {})
   end
   
+  def test_fbjs_library
+    @h.expects(:form_authenticity_token).returns('form_token')
+    assert_equal "<script>var _token = 'form_token';var _hostname = 'http://facebook.host.com'</script><script src=\"http://facebook.host.com/javascripts/facebooker.js\" type=\"text/javascript\"></script>", @h.fbjs_library
+  end
+  
   def test_fb_dialog
     @h.expects(:capture).returns("dialog content")
     @h.fb_dialog( "my_dialog", "1" ) do
@@ -1053,7 +1079,7 @@ class RailsHelperTest < Test::Unit::TestCase
   
   def test_init_fb_connect_with_features_and_options_js_jquery
     assert @h.init_fb_connect("XFBML", :js => :jquery).match(/XFBML.*/)
-    assert @h.init_fb_connect("XFBML", :js => :jquery).match(/\$\(document\).ready\(/)
+    assert @h.init_fb_connect("XFBML", :js => :jquery).match(/\jQuery\(document\).ready\(/)
   end
 
   def test_init_fb_connect_without_options_app_settings
@@ -1072,13 +1098,17 @@ class RailsHelperTest < Test::Unit::TestCase
   def test_fb_logout_link
     assert_equal @h.fb_logout_link("Logout","My URL"),"<a href=\"#\" onclick=\"FB.Connect.logoutAndRedirect(&quot;My URL&quot;);; return false;\">Logout</a>"
   end
+
   def test_fb_user_action_with_literal_callback
     action = Facebooker::Rails::Publisher::UserAction.new
-    assert_equal @h.fb_user_action(action,"message","prompt","function() {alert('hi')}"),"FB.Connect.showFeedDialog(null, null, null, null, null, FB.RequireConnect.promptConnect, function() {alert('hi')}, \"prompt\", {\"value\": \"message\"});"
+    assert_equal "FB.Connect.showFeedDialog(null, null, null, null, null, FB.RequireConnect.promptConnect, function() {alert('hi')}, \"prompt\", #{{"value" => "message"}.to_json});",
+                 @h.fb_user_action(action,"message","prompt","function() {alert('hi')}")
   end
+
   def test_fb_user_action_with_nil_callback
     action = Facebooker::Rails::Publisher::UserAction.new
-    assert_equal @h.fb_user_action(action,"message","prompt"),"FB.Connect.showFeedDialog(null, null, null, null, null, FB.RequireConnect.promptConnect, null, \"prompt\", {\"value\": \"message\"});"
+    assert_equal "FB.Connect.showFeedDialog(null, null, null, null, null, FB.RequireConnect.promptConnect, null, \"prompt\", #{{"value" => "message"}.to_json});",
+                 @h.fb_user_action(action,"message","prompt")
   end
 
 
@@ -1086,6 +1116,13 @@ class RailsHelperTest < Test::Unit::TestCase
     silence_warnings do
       assert_equal "<script src=\"http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php\" type=\"text/javascript\"></script>",
         @h.fb_connect_javascript_tag
+    end
+  end
+
+  def test_fb_connect_javascript_tag_with_language_option
+    silence_warnings do
+      assert_equal "<script src=\"http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US\" type=\"text/javascript\"></script>",
+        @h.fb_connect_javascript_tag(:lang => "en_US")
     end
   end
 
@@ -1101,6 +1138,21 @@ class RailsHelperTest < Test::Unit::TestCase
     silence_warnings do
       assert_equal "<script src=\"https://www.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php\" type=\"text/javascript\"></script>",
         @h.fb_connect_javascript_tag
+    end
+  end
+
+  def test_fb_connect_javascript_tag_ssl_with_language_option
+    @h.instance_eval do
+      def request
+        ssl_request = ActionController::TestRequest.new
+        ssl_request.stubs(:ssl?).returns(true)
+        ssl_request
+      end
+    end
+
+    silence_warnings do
+      assert_equal "<script src=\"https://www.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US\" type=\"text/javascript\"></script>",
+        @h.fb_connect_javascript_tag(:lang => "en_US")
     end
   end
 

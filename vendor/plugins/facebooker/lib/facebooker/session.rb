@@ -100,11 +100,11 @@ module Facebooker
 
     def login_url(options={})
       options = default_login_url_options.merge(options)
-      "#{Facebooker.login_url_base(@api_key)}#{login_url_optional_parameters(options)}"
+      "#{Facebooker.login_url_base}#{login_url_optional_parameters(options)}"
     end
 
     def install_url(options={})
-      "#{Facebooker.install_url_base(@api_key)}#{install_url_optional_parameters(options)}"
+      "#{Facebooker.install_url_base}#{install_url_optional_parameters(options)}"
     end
 
     # The url to get user to approve extended permissions
@@ -122,7 +122,16 @@ module Facebooker
     # * sms
     def permission_url(permission,options={})
       options = default_login_url_options.merge(options)
-      "http://#{Facebooker.www_server_base_url}/authorize.php?api_key=#{@api_key}&v=1.0&ext_perm=#{permission}#{install_url_optional_parameters(options)}"
+      options = add_next_parameters(options)
+      options << "&ext_perm=#{permission}"
+      "#{Facebooker.permission_url_base}#{options.join}"
+    end
+
+    def connect_permission_url(permission,options={})
+      options = default_login_url_options.merge(options)
+      options = add_next_parameters(options)
+      options << "&ext_perm=#{permission}"
+      "#{Facebooker.connect_permission_url_base}#{options.join}"
     end
 
     def install_url_optional_parameters(options)
@@ -145,6 +154,8 @@ module Facebooker
       optional_parameters << "&skipcookie=true" if options[:skip_cookie]
       optional_parameters << "&hide_checkbox=true" if options[:hide_checkbox]
       optional_parameters << "&canvas=true" if options[:canvas]
+      optional_parameters << "&fbconnect=true" if options[:fbconnect]
+      optional_parameters << "&req_perms=#{options[:req_perms]}" if options[:req_perms]
       optional_parameters.join
     end
 
@@ -195,7 +206,7 @@ module Facebooker
     def secure_with!(session_key, uid = nil, expires = nil, secret_from_session = nil)
       @session_key = session_key
       @uid = uid ? Integer(uid) : post('facebook.users.getLoggedInUser', :session_key => session_key)
-      @expires = Integer(expires)
+      @expires = expires ? Integer(expires) : 0
       @secret_from_session = secret_from_session
     end
 
@@ -208,12 +219,16 @@ module Facebooker
         user
       when 'photo'
         Photo.from_hash(hash)
+      when 'album'
+        Album.from_hash(hash)
       when 'page'
         Page.from_hash(hash)
       when 'page_admin'
         Page.from_hash(hash)
       when 'group'
         Group.from_hash(hash)
+      when 'event'
+        Event.from_hash(hash)
       when 'event_member'
         Event::Attendance.from_hash(hash)
       else
@@ -224,9 +239,12 @@ module Facebooker
     def fql_query(query, format = 'XML')
       post('facebook.fql.query', :query => query, :format => format) do |response|
         type = response.shift
-        return [] if type.nil?
-        response.shift.map do |hash|
-          fql_build_object(type, hash)
+        if type.nil?
+          []
+        else
+          response.shift.map do |hash|
+            fql_build_object(type, hash)
+          end
         end
       end
     end
@@ -262,15 +280,57 @@ module Facebooker
     # :end_time => Filter with this UTC as upper bound. A missing or zero parameter indicates no upper bound. (Time or Integer)
     # :rsvp_status => Filter by this RSVP status.
     def events(options = {})
-      @events ||= post('facebook.events.get', options) do |response|
+      @events ||= {}
+      @events[options.to_s] ||= post('facebook.events.get', options) do |response|
         response.map do |hash|
           Event.from_hash(hash)
         end
       end
     end
 
+    # Creates an event with the event_info hash and an optional Net::HTTP::MultipartPostFile for the event picture.
+    # If ActiveSupport::TimeWithZone is installed (it's in Rails > 2.1), and start_time or end_time are given as
+    # ActiveSupport::TimeWithZone, then they will be assumed to represent local time for the event. They will automatically be
+    # converted to the expected timezone for Facebook, which is PST or PDT depending on when the event occurs.
+    # Returns the eid of the newly created event
+    # http://wiki.developers.facebook.com/index.php/Events.create
+    def create_event(event_info, multipart_post_file = nil)
+      if defined?(ActiveSupport::TimeWithZone) && defined?(ActiveSupport::TimeZone)
+        # Facebook expects all event local times to be in Pacific Time, so we need to take the actual local time and 
+        # send it to Facebook as if it were Pacific Time converted to Unix epoch timestamp. Very confusing...
+        facebook_time = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
+        
+        start_time = event_info.delete(:start_time) || event_info.delete('start_time')
+        if start_time && start_time.is_a?(ActiveSupport::TimeWithZone)
+          event_info['start_time'] = facebook_time.parse(start_time.strftime("%Y-%m-%d %H:%M:%S")).to_i
+        else
+          event_info['start_time'] = start_time
+        end
+        
+        end_time = event_info.delete(:end_time) || event_info.delete('end_time')
+        if end_time && end_time.is_a?(ActiveSupport::TimeWithZone)
+          event_info['end_time'] = facebook_time.parse(end_time.strftime("%Y-%m-%d %H:%M:%S")).to_i
+        else
+          event_info['end_time'] = end_time
+        end
+      end
+      
+      post_file('facebook.events.create', :event_info => event_info.to_json, nil => multipart_post_file)
+    end
+    
+    # Cancel an event
+    # http://wiki.developers.facebook.com/index.php/Events.cancel
+    # E.g:
+    #  @session.cancel_event('100321123', :cancel_message => "It's raining...")
+    #  # => Returns true if all went well
+    def cancel_event(eid, options = {})
+      result = post('facebook.events.cancel', options.merge(:eid => eid))
+      result == '1' ? true : false
+    end
+
     def event_members(eid)
-      @members ||= post('facebook.events.getMembers', :eid => eid) do |response|
+      @members ||= {}
+      @members[eid] ||= post('facebook.events.getMembers', :eid => eid) do |response|
         response.map do |attendee_hash|
           Event::Attendance.from_hash(attendee_hash)
         end
@@ -322,6 +382,10 @@ module Facebooker
     def admin
       Facebooker::Admin.new(self)
     end
+    
+    def application
+      Facebooker::Application.new(self)
+    end
 
     def mobile
       Facebooker::Mobile.new(self)
@@ -347,7 +411,9 @@ module Facebooker
       if [subj_id, pids, aid].all? {|arg| arg.nil?}
         raise ArgumentError, "Can't get a photo without a picture, album or subject ID" 
       end
-      @photos = post('facebook.photos.get', :subj_id => subj_id, :pids => pids, :aid => aid ) do |response|
+      # We have to normalize params orherwise FB complain about signature
+      params = {:pids => pids, :subj_id => subj_id, :aid => aid}.delete_if { |k,v| v.nil? }
+      @photos = post('facebook.photos.get', params ) do |response|
         response.map do |hash|
           Photo.from_hash(hash)
         end
@@ -412,6 +478,18 @@ module Facebooker
       end
       
       post("facebook.feed.registerTemplateBundle", parameters, false)
+    end
+
+    ##
+    # Deactivate a template bundle with Facebook.
+    # Returns true if a bundle with the specified id is active and owned by this app.
+    # Useful to avoid exceeding the 100 templates/app limit.
+    def deactivate_template_bundle_by_id(template_bundle_id)
+      post("facebook.feed.deactivateTemplateBundleByID", {:template_bundle_id => template_bundle_id.to_s}, false)
+    end
+
+    def active_template_bundles
+      post("facebook.feed.getRegisteredTemplateBundles",{},false)
     end
 
     ##

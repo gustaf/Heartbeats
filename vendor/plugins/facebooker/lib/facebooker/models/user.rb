@@ -1,6 +1,7 @@
 require 'facebooker/model'
 require 'facebooker/models/affiliation'
 require 'facebooker/models/work_info'
+require 'facebooker/models/family_relative_info'
 module Facebooker
   # 
   # Holds attributes and behavior for a Facebook User
@@ -10,8 +11,8 @@ module Facebooker
       include Model
       attr_accessor :message, :time, :status_id
     end
-    FIELDS = [:status, :political, :pic_small, :name, :quotes, :is_app_user, :tv, :profile_update_time, :meeting_sex, :hs_info, :timezone, :relationship_status, :hometown_location, :about_me, :wall_count, :significant_other_id, :pic_big, :music, :work_history, :sex, :religion, :notes_count, :activities, :pic_square, :movies, :has_added_app, :education_history, :birthday, :birthday_date, :first_name, :meeting_for, :last_name, :interests, :current_location, :pic, :books, :affiliations, :locale, :profile_url, :proxied_email, :email_hashes, :allowed_restrictions, :pic_with_logo, :pic_big_with_logo, :pic_small_with_logo, :pic_square_with_logo]
-    STANDARD_FIELDS = [:uid, :first_name, :last_name, :name, :timezone, :birthday, :sex, :affiliations, :locale, :profile_url, :pic_square]
+    FIELDS = [:status, :political, :pic_small, :name, :quotes, :is_app_user, :tv, :profile_update_time, :meeting_sex, :hs_info, :timezone, :relationship_status, :hometown_location, :about_me, :wall_count, :significant_other_id, :pic_big, :music, :work_history, :sex, :religion, :notes_count, :activities, :pic_square, :movies, :has_added_app, :education_history, :birthday, :birthday_date, :first_name, :meeting_for, :last_name, :interests, :current_location, :pic, :books, :affiliations, :locale, :profile_url, :proxied_email, :email_hashes, :allowed_restrictions, :pic_with_logo, :pic_big_with_logo, :pic_small_with_logo, :pic_square_with_logo, :online_presence, :verified, :profile_blurb, :username, :website, :is_blocked, :family]
+    STANDARD_FIELDS = [:uid, :first_name, :last_name, :name, :timezone, :birthday, :sex, :affiliations, :locale, :profile_url, :proxied_email]
     populating_attr_accessor(*FIELDS)
     attr_reader :affiliations
     populating_hash_settable_accessor :current_location, Location
@@ -20,6 +21,7 @@ module Facebooker
     populating_hash_settable_list_accessor :affiliations, Affiliation
     populating_hash_settable_list_accessor :education_history, EducationInfo
     populating_hash_settable_list_accessor :work_history, WorkInfo
+    populating_hash_settable_list_accessor :family, FamilyRelativeInfo
 
     populating_attr_reader :status
 
@@ -63,7 +65,17 @@ module Facebooker
       @events[params.to_s] ||= @session.post('facebook.events.get', {:uid => self.id}.merge(params)).map do |event|
         Event.from_hash(event)
       end
-    end    
+    end
+
+    # Rsvp to an event with the eid and rsvp_status which can be 'attending', 'unsure', or 'declined'.
+    # http://wiki.developers.facebook.com/index.php/Events.rsvp
+    # E.g:
+    #  @user.rsvp_event('100321123', 'attending')
+    #  # => Returns true if all went well
+    def rsvp_event(eid, rsvp_status, options = {})
+      result = @session.post('facebook.events.rsvp', options.merge(:eid => eid, :rsvp_status => rsvp_status))
+      result == '1' ? true : false
+    end
     
     # 
     # Set the list of friends, given an array of User objects.  If the list has been retrieved previously, will not set
@@ -104,6 +116,11 @@ module Facebooker
       @friends_hash[cache_key]
     end
 
+    def friend_ids
+      options = {:uid => self.id}
+      @session.post('facebook.friends.get', options, false)
+    end
+
     ###
     # Publish a post into the stream on the user's Wall and News Feed.  This
     # post also appears in the user's friend's streams.  The +publish_stream+
@@ -122,16 +139,24 @@ module Facebooker
     #     :text => 'my website',
     #     :href => 'http://tenderlovemaking.com/'
     #   ])
-    def publish_to target, options = {}
-      @session.post('facebook.stream.publish',
-                    :uid        => self.id,
-                    :target_id  => target.id,
-                    :message    => options[:message],
-                    :attachment => Facebooker.json_encode(options[:attachment]),
-                    :action_links => Facebooker.json_encode(options[:action_links])
-                   )
+    def publish_to(target, options = {})
+      @session.post('facebook.stream.publish', prepare_publish_to_options(target, options), false)
     end
-    
+   
+    # Prepares options for the stream.publish
+    def prepare_publish_to_options(target, options)
+      opts = {:uid          => self.id,
+              :target_id    => target.id,
+              :message      => options[:message]} 
+
+      if(attachment = options[:attachment] && Facebooker.json_encode(options[:attachment]))
+        opts[:attachment] = attachment
+      end
+      if (links = options[:action_links] && Facebooker.json_encode(options[:action_links]))
+        opts[:action_links] = links
+      end
+      opts
+    end
     
     ###
     # Publish a comment on a post
@@ -176,9 +201,13 @@ module Facebooker
     end
     
     def friends_with_this_app
-      @friends_with_this_app ||= session.post('facebook.friends.getAppUsers').map do |uid|
+      @friends_with_this_app ||= friend_ids_with_this_app.map do |uid|
         User.new(uid, session)
       end
+    end
+
+    def friend_ids_with_this_app
+      @friend_ids_with_this_app ||= session.post('facebook.friends.getAppUsers')
     end
     
     def groups(gids = [])
@@ -345,7 +374,14 @@ module Facebooker
         @status = Status.from_hash(message)
       end
     end
-    
+   
+
+    ## 
+    # Return +limit+ statuses from the user
+    def statuses( limit = 50 )
+      session.post('facebook.status.get', {:uid => uid, :limit => limit}).collect { |ret| Status.from_hash(ret) }
+    end
+
     ##
     # Set the status for a user
     # DOES NOT prepend "is" to the message
@@ -361,7 +397,7 @@ module Facebooker
     ##
     # Checks to see if the user has enabled the given extended permission
     def has_permission?(ext_perm) # ext_perm = email, offline_access, status_update, photo_upload, create_listing, create_event, rsvp_event, sms
-      session.post('facebook.users.hasAppPermission',:ext_perm=>ext_perm) == "1"
+      session.post('facebook.users.hasAppPermission', {:ext_perm=>ext_perm, :uid => uid}, false) == "1"
     end    
     
     ##
