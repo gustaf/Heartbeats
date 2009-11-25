@@ -5,11 +5,11 @@ class HomeController < ApplicationController
   def index
     friends = facebook_session.user.friends
     friends << facebook_session.user
-   @playlists = {}
-    friends.each do |friend|
-       ps = Playlist.find_by_uid(friend.id)
-      @playlists[friend] = ps if ps && !ps.empty?
-      end  
+    @playlists = {}
+#   friends.each do |friend|
+#       ps = Playlist.find_by_uid(friend.id)
+#      @playlists[friend] = ps if ps && !ps.empty?
+#      end  
   end
 
   def test
