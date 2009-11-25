@@ -7,7 +7,8 @@ class HomeController < ApplicationController
     friends << facebook_session.user
     @playlists = Playlist.find_all_by_user_id(1)
     @old_playlists = {}
-    #    @playlists = {}
+    
+#    @playlists = {}
 #   friends.each do |friend|
 #       ps = Playlist.find_by_uid(friend.id)
 #      @playlists[friend] = ps if ps && !ps.empty?
@@ -20,8 +21,10 @@ class HomeController < ApplicationController
   end
 
   def create
-    playlist = Playlist.new(:user => @me, :url => params[:url])
-
+    playlist = Playlist.new#(:user => @me, :url => params[:url])
+    playlist.user_id=1
+    playlist.url=params[:url]
+          
     success = false
     begin
       success = playlist.save
