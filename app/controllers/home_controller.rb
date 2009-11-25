@@ -15,10 +15,6 @@ class HomeController < ApplicationController
   def test
     @test = 'high'
     @fbuid= facebook_session.user.id
-    
-    @info = facebook_session.users_getInfo(@fbuid)
-    
-    @fbphoto= @info.pic_square
   end
 
   def create
