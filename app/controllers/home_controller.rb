@@ -9,7 +9,6 @@ class HomeController < ApplicationController
    # friends.each do |friend|
    #    ps = Playlist.find_by_uid(friend.id)
    #   @playlists[friend] = ps if ps && !ps.empty?
-    end
   end
 
   def test
