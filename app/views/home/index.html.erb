@@ -9,7 +9,11 @@
 </div>
 
 <div id="friends">
-  <% @playlists.each do |friend, ps| %>
+  <% @playlists.each do |playlist| %>
+	<a href="<%= playlist.url %>"><%= playlist.url_spotify %></a>
+  <% end %>	
+	
+  <% @old_playlists.each do |friend, ps| %>
     <div class="friend">
       <div class="friend_pic"><%= fb_profile_pic friend, :size => :square %></div>
       <div class="friend_name"><%= h friend.name %></div>
