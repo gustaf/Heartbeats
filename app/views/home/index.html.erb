@@ -1,6 +1,6 @@
 <div id="content">
-Facebook Name:<div id="username"><%= h facebook_session.user.name %></div>
-<div id="logout"><%= fb_logout_link "Logout", "signin" %></div>
+<div id="username">Facebook Name:<%= h facebook_session.user.name %></div>
+<div id="logout">Click to Sign Out:<%= fb_logout_link "Sign Out", "signin" %></div>
 <div id="main_form" class="form">
 <% form_tag "home/create" do %>
   <div id="input_playlist"><%= text_field_tag :url %></div>
