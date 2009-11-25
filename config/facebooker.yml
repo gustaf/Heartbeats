@@ -9,10 +9,10 @@
 # This should only be necessary until the final version of the new profile is released.
 
 development:
-  api_key: 3fe483cdcacb61229865a628c2898b98
-  secret_key: 963c7ab63bbb3fa6e280fda67c4f0677
-  canvas_page_name: spotifyconnect
-  callback_url: http://92.243.26.46:3000
+  api_key: a725836f1e913146b80c23e2c6f3092a
+  secret_key: be396541a17d8124f5ea87f505b4ccbb
+  canvas_page_name: ourheartbeats
+  callback_url: http://heartbeats.heroku.com
   pretty_errors: true
   set_asset_host_to_callback_url: true
   tunnel:
@@ -23,27 +23,30 @@ development:
     server_alive_interval: 0
 
 test:
-  api_key: 
-  secret_key: 
-  canvas_page_name: 
-  callback_url:
-  set_asset_host_to_callback_url: true
-  tunnel:
-    public_host_username: 
-    public_host: 
-    public_port: 4007
-    local_port: 3000
-    server_alive_interval: 0
+    api_key: a725836f1e913146b80c23e2c6f3092a
+    secret_key: be396541a17d8124f5ea87f505b4ccbb
+    canvas_page_name: ourheartbeats
+    callback_url: http://heartbeats.heroku.com
+    pretty_errors: true
+    set_asset_host_to_callback_url: true
+    tunnel:
+      public_host_username: 
+      public_host: 
+      public_port: 4007
+      local_port: 3000
+      server_alive_interval: 0
 
 production:
-  api_key: 
-  secret_key: 
-  canvas_page_name: 
-  callback_url: 
-  set_asset_host_to_callback_url: true   
-  tunnel:
-    public_host_username: 
-    public_host: 
-    public_port: 4007
-    local_port: 3000
-    server_alive_interval: 0
+    api_key: a725836f1e913146b80c23e2c6f3092a
+    secret_key: be396541a17d8124f5ea87f505b4ccbb
+    canvas_page_name: ourheartbeats
+    callback_url: http://heartbeats.heroku.com
+    pretty_errors: true
+    set_asset_host_to_callback_url: true
+    tunnel:
+      public_host_username: 
+      public_host: 
+      public_port: 4007
+      local_port: 3000
+      server_alive_interval: 0
+
