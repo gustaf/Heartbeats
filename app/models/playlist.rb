@@ -25,9 +25,10 @@ class Playlist < ActiveRecord::Base
   
   def track_name
     begin
-      MetaSpotify::Artist.lookup(url_spotify)
+      track = MetaSpotify::Track.lookup(url_spotify)
+      return track.name
     rescue Exception => e
-      "no track"
+      return "no track"
     end
   end  
 
