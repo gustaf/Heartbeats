@@ -43,8 +43,14 @@ class HomeController < ApplicationController
       raise playlist.errors.inspect
     end
   end
-  
-
+    
+  def delete 
+    id = params[:id]
+    playlist = Playlist.find(id)
+    playlist.destroy 
+    
+    redirect_to "/home"  
+  end
    
   private
   def ensure_logged_in_and_get_user
