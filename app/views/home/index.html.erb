@@ -18,8 +18,7 @@
 <!-- SHOW PLAYLIST -->
 <div id="friends">
   <% @playlists.each do |playlist| %>
-	<p>Spotify Music:	<a href="<%= playlist.url %>"><%= playlist.url_spotify %></a>
-		<%= playlist.track_name %>
+	<p>Spotify Music:	<a href="<%= playlist.url %>"><%= playlist.track_name %></a>
 	<%= link_to 'Delete', :controller  => 'home', :action  => 'delete', :id => playlist.id %>
 	</p>
 <% end %>	
