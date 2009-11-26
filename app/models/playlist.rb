@@ -22,15 +22,28 @@ class Playlist < ActiveRecord::Base
       /^spotify:user:\w+:playlist:\w+$/,
       /^spotify:(album|artist|track):\w+$/)
   end
+
+# Get Artist & Trackname through MetaSpotify API Begin
   
   def track_name
     begin
       track = MetaSpotify::Track.lookup(url_spotify)
       return track.name
     rescue Exception => e
-      return "no track"
+      return "Playlist"
     end
   end  
+
+  def artist_name
+    begin
+      artist = MetaSpotify::Artist.lookup(url_spotify)
+      return artists.name
+    rescue Exception => e
+      return "Playlist"
+    end
+  end
+
+# Get Artist & Trackname through MetaSpotify API End
 
   def touch
     playlist = self.class.first(
