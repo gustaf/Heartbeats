@@ -12,7 +12,7 @@
 <div id="friends">
   <% @playlists.each do |playlist| %>
 	<p>Spotify URI:	<a href="<%= playlist.url %>"><%= playlist.url_spotify %></a> 
-	<%= link_to 'Destroy', playlist_delete_url(:id => playlist.id) %>
+	<%= link_to 'Delete', :controller  => 'home', :action  => 'delete' %>
 	</p>
 
  <% end %>	
