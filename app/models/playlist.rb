@@ -30,7 +30,7 @@ class Playlist < ActiveRecord::Base
       track = MetaSpotify::Track.lookup(url_spotify)
       return track.name
     rescue Exception => e
-      return "Playlist"
+      return "Not a Track"
     end
   end  
 
@@ -39,7 +39,7 @@ class Playlist < ActiveRecord::Base
       artist = MetaSpotify::Artist.lookup(url_spotify)
       return artists.name
     rescue Exception => e
-      return "Playlist"
+      return "Not an Artist"
     end
   end
 
