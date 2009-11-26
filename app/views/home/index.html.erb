@@ -19,7 +19,6 @@
 <div id="friends">
   <% @playlists.each do |playlist| %>
 	<p>Spotify Music:	<a href="<%= playlist.url %>"><%= playlist.url_spotify %></a>
-		<%= playlist. %>
 	<%= link_to 'Delete', :controller  => 'home', :action  => 'delete', :id => playlist.id %>
 	</p>
 <% end %>	
