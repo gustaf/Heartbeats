@@ -44,10 +44,6 @@ class HomeController < ApplicationController
     end
   end
   
-  def destroy
-     @playlist = Playlists.find(params[:id])
-     @playlist.destroy
-     end
 
    
   private
