@@ -18,10 +18,13 @@
 <!-- SHOW PLAYLIST -->
 <div id="friends">
   <% @playlists.each do |playlist| %>
-	<p>Spotify Music:	<a href="<%= playlist.url %>"><%= playlist.track_name %></a>
+	<p>Spotify Music:	<a href="<%= playlist.url %>"><%= playlist.url_spotify %></a>
+		<%= playlist. %>
 	<%= link_to 'Delete', :controller  => 'home', :action  => 'delete', :id => playlist.id %>
 	</p>
 <% end %>	
+
+<!-- SHOW PLAYLIST AND FACEBOOK USER-->
 	  
   <% @old_playlists.each do |friend, ps| %>
     <div class="friend">

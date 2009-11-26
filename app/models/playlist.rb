@@ -5,6 +5,8 @@ class Playlist < ActiveRecord::Base
   before_validation :set_url_spotify
   belongs_to :user
 
+# CHECK AND VALIDATE SPOTIFY URL
+
   def url_is_valid
     errors.add(:url, "url is not valid") unless is_http_url? || is_spotify_url?
   end
@@ -15,7 +17,6 @@ class Playlist < ActiveRecord::Base
       /^http:\/\/open\.spotify\.com\/(album|artist|track)\/\w+$/)
   end
 
-#spotify:user:ouvriere:playlist:2jw42ojvBkxb1NUvhYR1Fw
  
   def is_spotify_url?
     url =~ Regexp.union(

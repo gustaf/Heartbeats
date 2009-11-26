@@ -43,7 +43,8 @@ class HomeController < ApplicationController
       raise playlist.errors.inspect
     end
   end
-    
+
+# DELETE PLAYLIST    
   def delete 
     id = params[:id]
     playlist = Playlist.find(id)
