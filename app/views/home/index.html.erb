@@ -1,8 +1,7 @@
 <link href="http://www.ourheartbeats.com/stylesheets/stylesheet.css" media="screen" rel="stylesheet" type="text/css" />
 
 <div id="content">
-<div id="username"><%= h facebook_session.user.name %></div>
-<div id="logout"><%= fb_logout_link "Sign Out", "signin" %></div>
+<div id="username"><%= h facebook_session.user.name %></div><div id="logout"><%= fb_logout_link "Sign Out", "signin" %></div>
 
 <div id="main_form" class="form">
 <% form_tag "home/create" do %>
