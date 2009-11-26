@@ -44,11 +44,11 @@ class HomeController < ApplicationController
     end
   end
   
-  def destroy
-     @playlist = Playlists.find(params[:id])
-     @playlist.destroy
-     end
-   end
+#  def destroy
+#     @playlist = Playlists.find(params[:id])
+#     @playlist.destroy
+#     end
+#   end
    
   private
   def ensure_logged_in_and_get_user
