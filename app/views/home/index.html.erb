@@ -1,15 +1,21 @@
 <link href="http://www.ourheartbeats.com/stylesheets/stylesheet.css" media="screen" rel="stylesheet" type="text/css" />
 
+<!-- FACEBOOK USER INFO-->
 <div id="content">
 <div id="username + logout"><%= h facebook_session.user.name %> <%= fb_logout_link "Sign Out", "signin" %></div>
 
+<br/><br/>
+
+<!-- ADD PLAYLIST -->
 <div id="main_form" class="form">
 <% form_tag "home/create" do %>
   <div id="input_playlist"><%= text_field_tag :url %></div>
   <div id="submit_playlist"><%= submit_tag "Add" %></div>
 <% end %>
 </div>
+<br/><br/>
 
+<!-- SHOW PLAYLIST -->
 <div id="friends">
   <% @playlists.each do |playlist| %>
 	<p>Spotify URI:	<a href="<%= playlist.url %>"><%= playlist.url_spotify %></a>
