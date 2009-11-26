@@ -1,3 +1,5 @@
+require 'meta-spotify'
+
 class Playlist < ActiveRecord::Base
   validate :url_is_valid
   before_validation :set_url_spotify
@@ -20,6 +22,14 @@ class Playlist < ActiveRecord::Base
       /^spotify:user:\w+:playlist:\w+$/,
       /^spotify:(album|artist|track):\w+$/)
   end
+  
+  def track_name
+    begin
+      MetaSpotify::Artist.lookup(url_spotify)
+    rescue Exception => e
+      "no track"
+    end
+  end  
 
   def touch
     playlist = self.class.first(
