@@ -11,9 +11,12 @@
 
 <div id="friends">
   <% @playlists.each do |playlist| %>
-	<p>Spotify URI:	<a href="<%= playlist.url %>"><%= playlist.url_spotify %></a> </p>
+	<p>Spotify URI:	<a href="<%= playlist.url %>"><%= playlist.url_spotify %></a> 
+	<%= link_to 'Destroy', playlist, :confirm => 'Are you sure?', :method => :delete %>	
+	</p>
+
  <% end %>	
-	
+	  
   <% @old_playlists.each do |friend, ps| %>
     <div class="friend">
       <div class="friend_pic"><%= fb_profile_pic friend, :size => :square %></div>

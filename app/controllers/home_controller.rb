@@ -43,7 +43,13 @@ class HomeController < ApplicationController
       raise playlist.errors.inspect
     end
   end
-
+  
+  def destroy
+     @playlist = Playlists.find(params[:id])
+     @playlist.destroy
+     end
+   end
+   
   private
   def ensure_logged_in_and_get_user
     if !facebook_session || facebook_session.expired?
