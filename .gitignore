@@ -1,4 +1,8 @@
-*.log  # Will exclude all .log files
 config/database.yml
-config/facebooker.yml
-
+log/*
+db/schema.rb
+test.log
+development.log
+production.log
+facebooker.yml
+tmp
