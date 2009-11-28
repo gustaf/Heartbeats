@@ -1,8 +1,0 @@
-config/database.yml
-log/*
-db/schema.rb
-test.log
-development.log
-production.log
-facebooker.yml
-tmp
