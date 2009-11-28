@@ -1,0 +1,38 @@
+
+<link href="http://www.ourheartbeats.com/stylesheets/stylesheet.css" media="screen" rel="stylesheet" type="text/css" />
+
+<!-- FACEBOOK USER INFO-->
+<div id="content">
+<div id="username + logout"><%= h facebook_session.user.name %> <%= fb_logout_link "Sign Out", "signin" %></div>
+
+<br/><br/>
+
+<!-- ADD PLAYLIST -->
+<div id="main_form" class="form">
+<% form_tag "home/create" do %>
+  <div id="input_playlist"><%= text_field_tag :url %></div>
+  <div id="submit_playlist"><%= submit_tag "Add Playlist" %></div>
+<% end %>
+</div>
+<br/><br/>
+
+<!-- SHOW PLAYLIST -->
+<div id="friends">
+  <% @playlists.each do |playlist| %>
+	<p>Spotify Music:	<a href="<%= playlist.url %>"><%= playlist.url_spotify %></a>
+	<%= link_to 'Delete', :controller  => 'home', :action  => 'delete', :id => playlist.id %>
+	</p>
+<% end %>	
+
+<!-- SHOW PLAYLIST AND FACEBOOK USER-->
+	  
+  <% @old_playlists.each do |friend, ps| %>
+    <div class="friend">
+      <div class="friend_pic"><%= fb_profile_pic friend, :size => :square %></div>
+      <div class="friend_name"><%= h friend.name %></div>
+    <% ps.each do |playlist| %><div class="playlist"><%= playlist.updated_at %>: <%= h playlist.url_spotify %></div><% end %>
+    </div>
+  <% end %>
+
+</div>
+</div>
