@@ -1,0 +1,4 @@
+*.log  # Will exclude all .log files
+config/database.yml
+config/facebooker.yml
+
