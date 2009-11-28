@@ -8,11 +8,8 @@ class HomeController < ApplicationController
     @playlists = Playlist.find_all_by_user_id(1)
     @old_playlists = {}
     
-#    @playlists = {}
-#   friends.each do |friend|
-#       ps = Playlist.find_by_uid(friend.id)
-#      @playlists[friend] = ps if ps && !ps.empty?
-#      end  
+    @playlists = {}
+    @friends_in_app = User.find(:all, :conditions => ["fb_uid IN (?)", friends.map{|f| f.uid}], :include => :playlists)
   end
 
   def test

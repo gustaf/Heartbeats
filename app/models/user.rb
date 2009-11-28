@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   validates_presence_of :fb_uid
   validates_uniqueness_of :fb_uid
+  has_many :playlists
 
   class << self
     def fb_uid(fb_uid)
