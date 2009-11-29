@@ -1,4 +1,4 @@
 <div class="playlist">
-	<div><%= playlist.updated_at %>: <%= h playlist.url_spotify %></div>
+	<div><img src="images/spotifyclick.png" height="14" width="14">&nbsp;<%= playlist.updated_at %>: <%= h playlist.url_spotify %></div>
 	<div><%= link_to 'Delete', :controller  => 'home', :action  => 'delete', :id => playlist.id %></div>
 </div>
