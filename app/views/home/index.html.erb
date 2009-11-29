@@ -13,12 +13,12 @@
 	
 	<!-- ADD PLAYLIST -->
 	<div id="new_playlist">
-		<% form_tag "home/create" do %>
-		  <div id="input_playlist"><%= text_field_tag :url %></div>
-		  <div id="submit_playlist"><%= submit_tag "Add Playlist" %></div>
-		<% end %>
+		<% form_for :playlist, @new_playlist, :url => playlists_url do |f| %>
+      <%= f.text_field :url %>
+      <%= submit_tag 'Add Playlist' %>
+    <% end %>
 	</div>
-
+	
 	<br/><br/>
 
 	<!-- SHOW PLAYLIST -->

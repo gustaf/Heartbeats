@@ -4,7 +4,7 @@ class SigninController < ApplicationController
 
   def index
     if facebook_session && !facebook_session.expired?
-      redirect_to(:controller => "home")
+      redirect_to root_url
     end
   end
 

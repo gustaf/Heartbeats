@@ -1,4 +1,5 @@
 <div class="playlist">
 	<div><%= playlist.updated_at %>: <%= h playlist.url_spotify %></div>
-	<div><%= link_to 'Delete', :controller  => 'home', :action  => 'delete', :id => playlist.id %></div>
+	<%= link_to("Delete", playlist_url(playlist), :confirm => "Are you sure you want to delete this playlist?", :method => :delete) %>
+	
 </div>
