@@ -2,7 +2,7 @@ class CreatePlaylists < ActiveRecord::Migration
   def self.up
     create_table :playlists do |t|
       t.string :url
-      t.string :playlists, :url_spotify, :null => false
+      t.string :url_spotify, :null => false
       t.references :user
 
       t.timestamps

@@ -15,27 +15,13 @@ class HomeController < ApplicationController
   end
 
   def create
-    playlist = Playlist.new#(:user => @me, :url => params[:url])
-    playlist.user_id=1
-    playlist.url=params[:url]
-          
-    success = false
-    begin
-      success = playlist.save
-    rescue ActiveRecord::StatementInvalid
-      success = playlist.touch
-    end
+    playlist = Playlist.create(:user => @user, :url => params[:url])
 
-    if success
+    if playlist
       flash[:playlist_added] = UserPublisher.create_playlist_added(facebook_session.user)
-#  THIS SENDS NOTIFICATION TO FACEBOOK FRIENDS
-#      facebook_session.send_notification(
-#        facebook_session.user.friends.map {|f| f.id},
-#        "shared a Spotify <b>playlist</b> with <a href='http://heartbeats.heroku.com'>Heartbeats</a>")
-      redirect_to "/home"
-    else
-      raise playlist.errors.inspect
     end
+    
+    redirect_to "/home"
   end
 
 # DELETE PLAYLIST    
