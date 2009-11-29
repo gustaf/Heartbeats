@@ -1,9 +1,5 @@
-
-<link href="http://www.ourheartbeats.com/stylesheets/stylesheet.css" media="screen" rel="stylesheet" type="text/css" />
-
-<!-- FACEBOOK USER INFO-->
 <div id="content">
-	<div id="header">
+	<div id="header" class="clearfix">
 		<div id="top_links">
 			<%= h facebook_session.user.name %> <%= fb_logout_link "Sign Out", "signin" %>
 		</div>
@@ -13,7 +9,7 @@
 	</div>
 	
 	<!-- ADD PLAYLIST -->
-	<div id="new_playlist">
+	<div id="new_playlist" class="clearfix">
 		<% form_for :playlist, @new_playlist, :url => playlists_url do |f| %>
       <%= f.text_field :url %>
       <%= submit_tag 'Add Playlist' %>
@@ -23,13 +19,13 @@
 	<br/><br/>
 
 	<!-- SHOW PLAYLIST -->
-	<div id="my_playlists">
+	<div id="my_playlists" class="clearfix">
 		My playlists:
 		<%= render :partial => "playlist", :collection => @my_playlists %>
 	</div>
 	<br/>
 	<br/>
-	<div id="friend_list">
+	<div id="friend_list" class="clearfix">
 		Friends' playlists:
 		<%= render :partial => "friend", :collection => @friends_in_app %>
 	</div>
