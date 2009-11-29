@@ -3,30 +3,32 @@
 
 <!-- FACEBOOK USER INFO-->
 <div id="content">
-	<div id="username + logout"><%= h facebook_session.user.name %> <%= fb_logout_link "Sign Out", "signin" %></div>
-
-	<br/><br/>
-
+	<div id="header">
+		<div id="top_links">
+			<%= h facebook_session.user.name %> <%= fb_logout_link "Sign Out", "signin" %>
+		</div>
+		<div id="logo">
+		</div>
+	</div>
+	
 	<!-- ADD PLAYLIST -->
-	<div id="main_form" class="form">
+	<div id="new_playlist">
 		<% form_tag "home/create" do %>
 		  <div id="input_playlist"><%= text_field_tag :url %></div>
 		  <div id="submit_playlist"><%= submit_tag "Add Playlist" %></div>
 		<% end %>
 	</div>
+
 	<br/><br/>
 
 	<!-- SHOW PLAYLIST -->
 	<div id="my_playlists">
 		My playlists:
-		<% @my_playlists.each do |playlist| %>
-			<div class="playlist"><img src="images/spotifyclick.png" height="14" width="14">&nbsp;<%= playlist.updated_at %>: <%= h playlist.url_spotify %></div>
-			<div><%= link_to 'Delete', :controller  => 'home', :action  => 'delete', :id => playlist.id %></div>
-		<% end %>
+		<%= render :partial => "playlist", :collection => @my_playlists %>
 	</div>
 	<br/>
 	<br/>
-	<div id="friends">
+	<div id="friend_list">
 		Friends' playlists:
 		<%= render :partial => "friend", :collection => @friends_in_app %>
 	</div>
