@@ -28,15 +28,6 @@
 	<br/>
 	<div id="friends">
 		Friends' playlists:
-		<% @friends_in_app.each do |friend| %>
-			<div class="friend">
-				<div class="friend_pic"><%= fb_profile_pic friend.uid, :size => :square %></div>
-	      <div class="friend_name"><%= fb_name friend.uid %></div>
-				<% friend.playlists.each do |playlist| %>
-					<div class="playlist"><%= playlist.updated_at %>: <%= h playlist.url_spotify %></div>
-					<div><%= link_to 'Delete', :controller  => 'home', :action  => 'delete', :id => playlist.id %></div>
-				<% end %>
-			</div>
-		<% end %>
+		<%= render :partial => "friend", :collection => @friends_in_app %>
 	</div>
 </div>
