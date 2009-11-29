@@ -5,9 +5,9 @@ class User < ActiveRecord::Base
 
   class << self
     def fb_uid(fb_uid)
-      user = first({:conditions => {:fb_uid => fb_uid}})
+      user = first({:conditions => {:fb_uid => fb_uid.to_s}})
       return user if user
-      user = new(:fb_uid => fb_uid)
+      user = new(:fb_uid => fb_uid.to_s)
       user.save!
       user
     end
