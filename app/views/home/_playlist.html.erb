@@ -1,5 +1,5 @@
 <div class="playlist">
-	<img src="images/spotifyclick.png" height="14" width="14"/>
+	<%= image_tag "spotifyclick.png" %>
 	<%= link_to playlist.url_spotify %>
 	<%= link_to("Delete", playlist_url(playlist), :confirm => "Are you sure you want to delete this playlist?", :method => :delete, :class => "delete_link") if playlist.user == @user %>
 </div>
