@@ -12,23 +12,23 @@ display:block;
 }
 
 body {background-color: #fff;font-family:"lucida grande",tahoma,sans-serif;font-size:13px;color: #000000;}
-a:hover{text-decoration:underline;color: #0000ff;}
+a:hover{text-decoration:underline;color: #000000;}
 a{cursor:pointer;color:#3b5998;text-decoration:none;}
 
-#content{width:760px;margin:1em auto;padding:10px;text-align:left;position:relative;background:#ffffff;}
-#header{text-align:right;}
-/*#header{border:0px;border-style:solid;border-width:0px;}*/
-#logo img{margin-top:-2px;position:absolute;left:0;}
+#content {width:760px;margin:1em auto;padding:10px;background:#ffffff;}
+#header {}
+#logo img{float:left;}
+#top_links{float:right;background-color:#fff;white-space:nowrap;display:inline-block;padding:0 .7em;}
 
-#top_links{border:0px;border-style:solid;border-width:0px;margin:0px;padding:10px 200px 10px 10px;float:right;}
 
-#new_playlist{border:1px;border-style:solid;border-width:1px;margin:0px;padding:10px 20px 10px 200px;float:left;}
+#new_playlist{border:1px;border-style:solid;border-width:1px;margin:10px;padding:10px;}
 
-#my_playlists{border:1px;border-style:solid;border-width:1px;margin:0px;padding:20px 10px 10px 200px;float:left;}
+
+#my_playlists{border:1px;border-style:solid;border-width:1px;margin:10px;padding:10px;}
 .playlist{color:#0000ff;text-decoration:none;}
 
 
-#friend_list{border:1px;border-style:solid;border-width:1px;margin:0px;padding:20px 10px 10px 200px;float:left;}
-.friend{border:0px;border-style:solid;padding:20px 40px 20px 40px;}
+#friend_list{border:1px;border-style:solid;border-width:1px;margin:10px;padding:10px;}
+.friend{border:0px;border-style:solid;padding:10px;}
 .friendpic{}
 .friend_name{font-weight:bold;}

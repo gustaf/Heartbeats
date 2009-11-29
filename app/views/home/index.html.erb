@@ -15,16 +15,13 @@
       <%= submit_tag 'Add Playlist' %>
     <% end %>
 	</div>
-	
-	<br/><br/>
 
 	<!-- SHOW PLAYLIST -->
 	<div id="my_playlists" class="clearfix">
 		My playlists:
 		<%= render :partial => "playlist", :collection => @my_playlists %>
 	</div>
-	<br/>
-	<br/>
+	
 	<div id="friend_list" class="clearfix">
 		Friends' playlists:
 		<%= render :partial => "friend", :collection => @friends_in_app %>
