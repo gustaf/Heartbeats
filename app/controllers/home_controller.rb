@@ -18,7 +18,7 @@ class HomeController < ApplicationController
     playlist = Playlist.create(:user => @user, :url => params[:url])
 
     if playlist
-      flash[:playlist_added] = UserPublisher.create_playlist_added(facebook_session.user)
+      flash[:playlist_added] = "Show stream publisher"
     end
     
     redirect_to "/home"

@@ -17,7 +17,17 @@
 	<br/><br/>
 
 	<!-- SHOW PLAYLIST -->
+	<div id="my_playlists">
+		My playlists:
+		<% @my_playlists.each do |playlist| %>
+			<div class="playlist"><%= playlist.updated_at %>: <%= h playlist.url_spotify %></div>
+			<div><%= link_to 'Delete', :controller  => 'home', :action  => 'delete', :id => playlist.id %></div>
+		<% end %>
+	</div>
+	<br/>
+	<br/>
 	<div id="friends">
+		Friends' playlists:
 		<% @friends_in_app.each do |friend| %>
 			<div class="friend">
 				<div class="friend_pic"><%= fb_profile_pic friend.uid, :size => :square %></div>
