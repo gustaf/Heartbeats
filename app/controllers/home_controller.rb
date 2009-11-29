@@ -66,6 +66,6 @@ class HomeController < ApplicationController
       return
     end
 
-    #@me = User.fb_uid(facebook_session.user.id)
+    @me = User.fb_uid(facebook_session.user.id)
   end
 end
