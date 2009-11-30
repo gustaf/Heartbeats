@@ -9,7 +9,7 @@ a{cursor:pointer;color:#3b5998;text-decoration:none;}
 #header {}
 #logo img{float:left;}
 #top_links{float:right;background-color:#fff;white-space:nowrap;display:inline-block;padding:0 .7em;}
-
+.top-navigation *{display:inline;}
 
 #new_playlist{border:0px;border-style:solid;border-width:0px;margin:10px;padding:10px;}
 #new_playlist_form{border: solid 1px #33677F;}
