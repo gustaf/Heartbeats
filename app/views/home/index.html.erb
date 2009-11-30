@@ -1,7 +1,9 @@
 <div id="content">
 	<div id="header" class="clearfix">
 		<div id="top_links">
-			<%= fb_name facebook_session.user.uid, :useyou => "false" %> <%= fb_logout_link "Sign Out", "signin" %>
+		<ul class="top-navigation">
+			<li><%= fb_name facebook_session.user.uid, :useyou => "false" %></li>  <li><%= fb_logout_link "Sign Out", "signin" %></li>
+		</ul>	
 		</div>
 		<div id="logo">
 			<%= image_tag "logo.png" %>
