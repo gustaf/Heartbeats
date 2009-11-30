@@ -12,10 +12,25 @@
 	
 	<!-- ADD PLAYLIST -->
 	<div id="new_playlist" class="clearfix">
-		<% form_for :playlist, @new_playlist, :url => playlists_url, :id => "new_playlist_form" do |f| %>
-      <%= f.text_field :url %>
-      <%= submit_tag 'Add Playlist' %>
+		<div id="input_border">
+			<div id="input_shaddow">
+				<div id="input" contenteditable="true">
+				</div>
+			</div>
+		</div>
+
+		<% form_for :playlist, @new_playlist, :url => playlists_url, :html => {:id => "new_playlist_form"} do |f| %>
+      <%= f.hidden_field :url %>
+      <%= submit_tag 'Add Playlist', :onclick => "submitPlaylist();return false;" %>
     <% end %>
+
+		<script>
+			function submitPlaylist (){
+				$("playlist_url").value = $("input").innerHTML;
+				$("new_playlist_form").submit();
+			}
+		</script>
+
 	</div>
 
 	<!-- SHOW PLAYLIST -->

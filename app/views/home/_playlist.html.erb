@@ -1,5 +1,5 @@
 <div class="playlist clearfix">
 	<%= image_tag "spotifyclick.png" %>
-	<%= link_to truncate(playlist.url_spotify, :length => 40), playlist.url_spotify %>
+	<%= link_to truncate(h(playlist.to_s), :length => 35), playlist.url_spotify %>
 	<%= link_to("Delete", playlist_url(playlist), :confirm => "Are you sure you want to delete this playlist?", :method => :delete, :class => "delete_link") if playlist.user == @user %>
 </div>
