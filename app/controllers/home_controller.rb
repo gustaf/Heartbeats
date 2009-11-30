@@ -8,6 +8,6 @@ class HomeController < ApplicationController
     @my_playlists = Playlist.find_all_by_user_id(@user.id)
     
     friends = facebook_session.user.friends
-    @friends_in_app = User.find(:all, :conditions => ["uid IN (?)", friends.map{|f| f.uid}], :include => :playlists)
+    @friends_in_app = User.find(:all, :conditions => ["uid IN (?)", friends.map{|f| f.uid}], :include => :playlists, :limit => 16)
   end
 end

@@ -1,18 +1,7 @@
-.clearfix:after {
-clear:both;
-content:".";
-display:block;
-font-size:0;
-height:0;
-line-height:0;
-visibility:hidden;
-text-align: left;
-}
-.clearfix {
-display:block;
-}
+.clearfix:after {clear:both;content:".";display:block;font-size:0;height:0;line-height:0;visibility:hidden;}
+.clearfix {display:block;}
 
-body {background-color: #fff;font-family:"lucida grande",tahoma,sans-serif;font-size:13px;color: #000000;}
+body {background-color: #fff;font-family:"Helvetica Neue", helvetica, arial, sans-serif;line-height: 1.5em;font-size:13px;color: #000000;}
 a:hover{text-decoration:underline;color: #000000;}
 a{cursor:pointer;color:#3b5998;text-decoration:none;}
 
@@ -22,8 +11,9 @@ a{cursor:pointer;color:#3b5998;text-decoration:none;}
 #top_links{float:right;background-color:#fff;white-space:nowrap;display:inline-block;padding:0 .7em;}
 
 
-#new_playlist{border:1px;border-style:solid;border-width:1px;margin:10px;padding:10px;}
-
+#new_playlist{border:0px;border-style:solid;border-width:0px;margin:10px;padding:10px;}
+#new_playlist_form{border: solid 1px #33677F;}
+#playlist_url{border: solid 1px #33677F;}
 
 #my_playlists{border:1px;border-style:solid;border-width:1px;margin:10px;padding:10px;}
 .playlist{color:#0000ff;text-decoration:none;}
