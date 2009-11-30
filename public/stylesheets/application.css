@@ -10,6 +10,11 @@ a{cursor:pointer;color:#3b5998;text-decoration:none;}
 #logo img{float:left;}
 #top_links{float:right;background-color:#fff;white-space:nowrap;display:inline-block;padding:0 .7em;}
 .top-navigation *{display:inline;}
+.top-navigation{background-color:#fff;white-space:nowrap;display:inline-block;padding:0 .7em;}
+.top-navigation *{display:inline;}
+.top-navigation>li{position:relative;}
+.top-navigation>li>a{padding:.5em .15em;border:1px solid transparent;font-size:1.05em;display:inline-block;}
+.top-navigation>li>a:focus{outline:none;}
 
 #new_playlist{border:0px;border-style:solid;border-width:0px;margin:10px;padding:10px;}
 #new_playlist_form{border: solid 1px #33677F;}
