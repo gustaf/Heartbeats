@@ -1,9 +1,9 @@
 .clearfix:after {clear:both;content:".";display:block;font-size:0;height:0;line-height:0;visibility:hidden;}
 .clearfix {display:block;}
 
-body {background-color: #fff;font-family:"Helvetica Neue", helvetica, arial, sans-serif;line-height: 1.5em;font-size:13px;color: #000000;}
-a:hover{text-decoration:underline;color: #000000;}
-a{cursor:pointer;color:#3b5998;text-decoration:none;}
+body {background-color: #fff;font-family:"lucida grande",tahoma,sans-serif;line-height: 1.5em;font-size:13px;color: #000000;}
+a:hover{text-decoration:underline;color: #002BB8;}
+a{cursor:pointer;color:#002BB8;text-decoration:none;}
 
 #content {width:760px;margin:1em auto;padding:10px;background:#ffffff;}
 #header {}
