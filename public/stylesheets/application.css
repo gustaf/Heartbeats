@@ -6,6 +6,7 @@ font-size:0;
 height:0;
 line-height:0;
 visibility:hidden;
+text-align: left;
 }
 .clearfix {
 display:block;
@@ -26,9 +27,12 @@ a{cursor:pointer;color:#3b5998;text-decoration:none;}
 
 #my_playlists{border:1px;border-style:solid;border-width:1px;margin:10px;padding:10px;}
 .playlist{color:#0000ff;text-decoration:none;}
+.playlist img {float: left; margin-top: 2px;}
+.playlist a {overflow: hidden; float: left; width: 250px; margin-left: 5px;}
 
 
-#friend_list{border:1px;border-style:solid;border-width:1px;margin:10px;padding:10px;}
-.friend{border:0px;border-style:solid;padding:10px;}
-.friendpic{}
-.friend_name{font-weight:bold;}
+#friends_list {margin-top:10px;}
+.friend {width:350px;float:left;margin-bottom:20px;}
+.friend_pic {float:left;}
+.friend_details {float: left;width:275px;margin-left:10px;}
+.friend_name {font-weight:bold;font-size:16px;}

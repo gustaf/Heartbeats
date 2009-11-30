@@ -1,5 +1,9 @@
 <div class="friend">
 	<div class="friend_pic"><%= fb_profile_pic friend.uid, :size => :square %></div>
-  <div class="friend_name"><%= fb_name friend.uid %></div>
-	<%= render :partial => "playlist", :collection => friend.playlists %>
+	<div class="friend_details">
+  	<div class="friend_name"><%= fb_name friend.uid %></div>
+		<div class="friend_playlists">
+			<%= render :partial => "playlist", :collection => friend.playlists %>
+		</div>
+	</div>
 </div>

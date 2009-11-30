@@ -10,20 +10,20 @@
 	
 	<!-- ADD PLAYLIST -->
 	<div id="new_playlist" class="clearfix">
-		<% form_for :playlist, @new_playlist, :url => playlists_url do |f| %>
+		<% form_for :playlist, @new_playlist, :url => playlists_url, :id => "new_playlist_form" do |f| %>
       <%= f.text_field :url %>
       <%= submit_tag 'Add Playlist' %>
     <% end %>
 	</div>
 
 	<!-- SHOW PLAYLIST -->
+	My playlists:
 	<div id="my_playlists" class="clearfix">
-		My playlists:
 		<%= render :partial => "playlist", :collection => @my_playlists %>
 	</div>
 	
-	<div id="friend_list" class="clearfix">
-		Friends' playlists:
+	Friends' playlists:
+	<div id="friends_list" class="clearfix">
 		<%= render :partial => "friend", :collection => @friends_in_app %>
 	</div>
 </div>
