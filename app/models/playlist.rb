@@ -4,7 +4,9 @@ class Playlist < ActiveRecord::Base
   validate :url_is_valid
   before_validation :set_url_spotify
   belongs_to :user
-  
+  def to_s
+    title.blank? ? url : title
+  end
   # CHECK AND VALIDATE SPOTIFY URL
   def url_is_valid
     errors.add(:url, "url is not valid") unless is_http_url? || is_spotify_url?
