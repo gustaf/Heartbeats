@@ -22,7 +22,8 @@ a{cursor:pointer;color:#3b5998;text-decoration:none;}
 
 
 #friends_list {margin-top:10px;}
-.friend {width:350px;float:left;margin-bottom:20px;}
+.friend_column {float: left; width: 350px;}
+.friend {width:350px;margin-bottom:15px;}
 .friend_pic {float:left;}
 .friend_details {float: left;width:275px;margin-left:10px;}
 .friend_name {font-weight:bold;font-size:16px;}

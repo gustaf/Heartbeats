@@ -24,6 +24,11 @@
 	
 	Friends' playlists:
 	<div id="friends_list" class="clearfix">
-		<%= render :partial => "friend", :collection => @friends_in_app %>
+		<div id="left_column" class="friend_column">
+			<%= render :partial => "friend", :collection => @friends_in_left_col %>
+		</div>
+		<div id="right_column" class="friend_column">
+			<%= render :partial => "friend", :collection => @friends_in_right_col %>
+		</div>
 	</div>
 </div>
