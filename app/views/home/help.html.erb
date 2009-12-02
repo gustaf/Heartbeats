@@ -1,12 +1,10 @@
 <div id="content">
 	<div id="header" class="clearfix">
 		<div id="top_links">
-		<ul class="top-navigation">
 			<%= link_to "Home", :action => "index" %>
 			<%= link_to "Help", :action => "Help" %>
 			<%= fb_name facebook_session.user.uid, :useyou => "false" %>
 			<%= fb_logout_link "Sign Out", "signin" %>
-		</ul>	
 		</div>
 		<div id="logo">
 			<%= image_tag "logo.png" %>
