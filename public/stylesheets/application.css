@@ -1,13 +1,13 @@
 .clearfix:after {clear:both;content:".";display:block;font-size:0;height:0;line-height:0;visibility:hidden;}
 .clearfix {display:block;}
 
-body {background-color: #e4e3e3;font-family:"lucida grande",tahoma,sans-serif;line-height: 1.5em;font-size:13px;color: #000000;}
+body {background-color: #efefef;font-family:"lucida grande",tahoma,sans-serif;line-height: 1.5em;font-size:13px;color: #000000;}
 a:hover{text-decoration:underline;color: #0066cc;}
 a{cursor:pointer;color:#0066cc;text-decoration:none;}
 a.FB_Link{cursor:pointer;color:#0066cc;text-decoration:none;}
 a:hover.FB_Link{text-decoration:underline;color: #0066cc;}
 
-#content {width:780px;margin:1em auto;padding:10px;background:#e4e3e3;font-family:"lucida grande",tahoma,sans-serif;line-height: 1.5em;font-size:13px;color: #000000;}
+#content {width:780px;margin:1em auto;padding:10px;background:#efefef;font-family:"lucida grande",tahoma,sans-serif;line-height: 1.5em;font-size:13px;color: #000000;}
 #header {}
 
 #round_top,.ie #round_top{background:#fff!important;}
@@ -65,7 +65,7 @@ a:hover.FB_Link{text-decoration:underline;color: #0066cc;}
 	margin-left: 5px;
 }
 
-#headline {font-weight:bold;font-size:16px;color:#333333;margin-top:20px;padding:10px;}
+#headline {font-weight:bold;font-size:18px;color:#333333;margin-top:20px;padding:10px;}
 
 #my_playlists{border:0px;border-style:solid;border-width:0px;margin-top:0px;margin-bottom:0px;padding:10px;}
 .playlist{color:#0066cc;}
