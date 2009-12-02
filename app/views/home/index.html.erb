@@ -40,7 +40,8 @@
 		<%= render :partial => "playlist", :collection => @my_playlists %>
 	</div></div>
 	<div id="round_bottom"></div>
-			
+	
+	<div id="round_top">		
 	<div id="headline">Friends' playlists:</div>
 	<div id="friends_list" class="clearfix">
 		<div id="left_column" class="friend_column">
@@ -50,4 +51,6 @@
 			<%= render :partial => "friend", :collection => @friends_in_right_col %>
 		</div>
 	</div>
+	</div>
+	<div id="round_bottom"></div>
 </div>
