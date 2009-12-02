@@ -72,7 +72,7 @@ a:hover.FB_Link{text-decoration:underline;color: #0066cc;}
 .playlist img {float: left; margin-top: 2px;}
 .playlist a {overflow: hidden; float: left; width: 250px; margin-left: 5px;}
 
-#friends_list {border:0px;border-style:solid;border-width:0px;margin-top:15px;margin-bottom:25px;}
+#friends_list {border:0px;border-style:solid;border-width:0px;margin-top:15px;margin-bottom:0px;padding:10px;}
 .friend_column {float: left; width: 350px;}
 .friend {width:350px;margin-bottom:15px;}
 .friend_pic {float:left;}
