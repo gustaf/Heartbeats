@@ -14,14 +14,14 @@ a.FB_Link {cursor:pointer;color:#002BB8;text-decoration:none;}
 .top-navigation *{display:inline;}
 .ul {list-style-image:none;list-style-position:outside;list-style-type:none;}
 
-#new_playlist {width:760px;margin-top:10px;margin-bottom:20px;border:1px;border-style:solid;border-width:1px;}
+#new_playlist {width:760px;margin-top:10px;margin-bottom:20px;border:0px;border-style:solid;border-width:0px;}
 #new_playlist #input_border{
 	width:340px;
 	border-color:#AEAEAE #BBBBBB #BBBBBB;
 	border-style:solid;
 	border-width:1px;
 	float: left;
-	margin-left: 100px;
+	margin-left: 200px;
 }
 #new_playlist #input_shaddow {	
 	border-top:1px solid #E8E8E8;
