@@ -26,6 +26,7 @@ a:hover.FB_Link{text-decoration:underline;color: #3B5998;}
 #logo img{float:left;}
 #top_links{float:right;background-color:#efefef;white-space:nowrap;display:inline-block;padding:0 .7em;}
 .top-navigation {background-color:#FFFFFF;display:inline-block;padding:0 0.7em;white-space:nowrap;}
+.top-navigation > li > a {border:1px solid transparent;display:inline-block;font-size:1.05em;padding:0.5em 0.15em;}
 .ul {list-style-image:none;list-style-position:outside;list-style-type:none;}
 .round { -moz-border-radius-bottomleft:5px; -moz-border-radius-bottomright:5px; -moz-border-radius-topleft:5px; -moz-border-radius-topright:5px;}
 
