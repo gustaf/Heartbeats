@@ -15,12 +15,12 @@
 	<div id="new_playlist" class="clearfix">
 		<div id="input_border">
 			<div id="input_shaddow">
-				<div id="input" contenteditable="true">
+				Copy and paste you Spotify playlist: <div id="input" contenteditable="true">
 				</div>
 			</div>
 		</div>
 
-		Copy and paste you Spotify playlist: <% form_for :playlist, @new_playlist, :url => playlists_url, :html => {:id => "new_playlist_form"} do |f| %>
+		<% form_for :playlist, @new_playlist, :url => playlists_url, :html => {:id => "new_playlist_form"} do |f| %>
       <%= f.hidden_field :url %>
       <%= submit_tag 'Add Playlist', :onclick => "submitPlaylist();return false;" %>
     <% end %>
