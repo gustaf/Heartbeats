@@ -27,7 +27,7 @@ a:hover.FB_Link{text-decoration:underline;color: #0066cc;}
 
 
 #logo img{float:left;}
-#top_links{float:right;background-color:#fff;white-space:nowrap;display:inline-block;padding:0 .7em;}
+#top_links{float:right;background-color:#efefef;white-space:nowrap;display:inline-block;padding:0 .7em;}
 .top-navigation *{display:inline;}
 .ul {list-style-image:none;list-style-position:outside;list-style-type:none;}
 
@@ -46,7 +46,7 @@ a:hover.FB_Link{text-decoration:underline;color: #0066cc;}
 }
 #new_playlist #input {
 	width:275px;
-	background-color:#FFFFFF;
+	background-color:#efefef;
 	border:medium none;
 	cursor:text;
 	font-size:14px;
