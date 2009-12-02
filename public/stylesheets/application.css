@@ -12,7 +12,7 @@ a{color:#002BB8;text-decoration:none;}
 .top-navigation *{display:inline;}
 .ul {list-style-image:none;list-style-position:outside;list-style-type:none;}
 
-#new_playlist { width: 450px;margin-top:10px;margin-bottom:20px;border:1px;border-style:solid;border-width:1px;}
+#new_playlist { width: 450px;margin-top:10px;margin-bottom:20px;border:0px;border-style:solid;border-width:0px;}
 #new_playlist #input_border{
 	width:290px;
 	border-color:#AEAEAE #BBBBBB #BBBBBB;
@@ -50,7 +50,7 @@ a{color:#002BB8;text-decoration:none;}
 
 #headline {font-weight:bold;font-size:16px;color:#333333;margin-left:0px;}
 
-#my_playlists{border:0px;border-style:solid;border-width:0px;margin-top:10px;margin-bottom:25px;padding:5px;}
+#my_playlists{border:0px;border-style:solid;border-width:0px;margin-top:5px;margin-bottom:25px;padding:5px;}
 .playlist{color:#002BB8;text-decoration:none;}
 .playlist img {float: left; margin-top: 2px;}
 .playlist a {overflow: hidden; float: left; width: 250px; margin-left: 5px;}
