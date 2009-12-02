@@ -1,7 +1,7 @@
 .clearfix:after {clear:both;content:".";display:block;font-size:0;height:0;line-height:0;visibility:hidden;}
 .clearfix {display:block;}
 
-body {background-color: #efefef;font-family:"lucida grande",tahoma,sans-serif;line-height: 1.5em;font-size:13px;color: #000000;}
+body {background-color: #e4e3e3;font-family:"lucida grande",tahoma,sans-serif;line-height: 1.5em;font-size:13px;color: #000000;}
 a:hover{text-decoration:underline;color: #0066cc;}
 a{cursor:pointer;color:#0066cc;text-decoration:none;}
 a.FB_Link{cursor:pointer;color:#0066cc;text-decoration:none;}
@@ -24,11 +24,11 @@ a:hover.FB_Link{text-decoration:underline;color: #0066cc;}
 
 
 #logo img{float:left;}
-#top_links{float:right;background-color:#efefef;white-space:nowrap;display:inline-block;padding:0 .7em;}
+#top_links{float:right;background-color:#e4e3e3;white-space:nowrap;display:inline-block;padding:0 .7em;}
 .top-navigation *{display:inline;}
 .ul {list-style-image:none;list-style-position:outside;list-style-type:none;}
 
-#new_playlist {width:760px;margin-top:10px;margin-bottom:20px;border:0px;border-style:solid;border-width:0px;}
+#new_playlist {width:760px;margin-top:10px;margin-bottom:0px;border:0px;border-style:solid;border-width:0px;padding:10px;}
 #new_playlist #input_border{
 	width:340px;
 	border-color:#AEAEAE #BBBBBB #BBBBBB;
@@ -43,7 +43,7 @@ a:hover.FB_Link{text-decoration:underline;color: #0066cc;}
 }
 #new_playlist #input {
 	width:275px;
-	background-color:#efefef;
+	background-color:#ffffff;
 	border:medium none;
 	cursor:text;
 	font-size:14px;
