@@ -2,10 +2,7 @@
 	<div id="header" class="clearfix">
 		<div id="top_links">
 		<ul class="top-navigation">
-			<li><%= link_to "Home", :action => "index" %></li>  
-			<li><%= link_to "Help", :action => "Help" %></li>  
-			<li><%= fb_name facebook_session.user.uid, :useyou => "false" %></li>  
-			<li><%= fb_logout_link "Sign Out", "signin" %></li>
+			<li><%= link_to "Home", :action => "index" %></li><li><%= link_to "Help", :action => "Help" %></li><li><%= fb_name facebook_session.user.uid, :useyou => "false" %></li><li><%= fb_logout_link "Sign Out", "signin" %></li>
 		</ul>	
 		</div>
 		<div id="logo">

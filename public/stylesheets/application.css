@@ -12,7 +12,6 @@ a:hover.FB_Link{text-decoration:underline;color: #3B5998;}
 
 #logo img{float:left;}
 #top_links{float:right;background-color:#efefef;white-space:nowrap;display:inline-block;padding:0 .7em;}
-.top-navigation > li > a {border:1px solid transparent;display:inline-block;font-size:1.05em;padding:0.5em 0.15em;}
 .ul {list-style-image:none;list-style-position:outside;list-style-type:none;}
 
 #round_top,.ie #round_top{background:#fff!important;}
