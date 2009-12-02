@@ -26,7 +26,7 @@ test:
     api_key: a725836f1e913146b80c23e2c6f3092a
     secret_key: be396541a17d8124f5ea87f505b4ccbb
     canvas_page_name: ourheartbeats
-    callback_url: http://heartbeats.heroku.com
+    callback_url: http://heartb.com
     pretty_errors: true
     set_asset_host_to_callback_url: true
     tunnel:
@@ -40,7 +40,7 @@ production:
     api_key: a725836f1e913146b80c23e2c6f3092a
     secret_key: be396541a17d8124f5ea87f505b4ccbb
     canvas_page_name: ourheartbeats
-    callback_url: http://heartbeats.heroku.com
+    callback_url: http://heartb.com
     pretty_errors: true
     set_asset_host_to_callback_url: true
     tunnel:
