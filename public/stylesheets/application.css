@@ -48,6 +48,7 @@ a{cursor:pointer;color:#002BB8;text-decoration:none;}
 	margin-left: 5px;
 }
 
+#headline {font-weight:bold;font-size:16px;color:#333333;}
 
 #my_playlists{border:0px;border-style:solid;border-width:0px;margin:0px;padding:10px;}
 .playlist{color:#002BB8;text-decoration:none;}
@@ -60,4 +61,4 @@ a{cursor:pointer;color:#002BB8;text-decoration:none;}
 .friend {width:350px;margin-bottom:15px;}
 .friend_pic {float:left;}
 .friend_details {float: left;width:275px;margin-left:10px;}
-.friend_name {font-weight:bold;font-size:16px;}
+.friend_name {font-weight:bold;font-size:16px;color:#002BB8;}
