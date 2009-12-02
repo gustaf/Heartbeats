@@ -50,12 +50,12 @@ a{color:#002BB8;text-decoration:none;}
 
 #headline {font-weight:bold;font-size:16px;color:#333333;margin-left:0px;}
 
-#my_playlists{border:0px;border-style:solid;border-width:0px;margin-top:5px;margin-bottom:25px;padding:5px;}
+#my_playlists{border:0px;border-style:solid;border-width:0px;margin-top:10px;margin-bottom:25px;padding:5px;}
 .playlist{color:#002BB8;text-decoration:none;}
 .playlist img {float: left; margin-top: 2px;}
 .playlist a {overflow: hidden; float: left; width: 250px; margin-left: 5px;}
 
-#friends_list {border:0px;border-style:solid;border-width:0px;margin-top:10px;margin-bottom:25px;}
+#friends_list {border:0px;border-style:solid;border-width:0px;margin-top:15px;margin-bottom:25px;}
 .friend_column {float: left; width: 350px;}
 .friend {width:350px;margin-bottom:15px;}
 .friend_pic {float:left;}
