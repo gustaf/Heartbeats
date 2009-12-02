@@ -58,7 +58,7 @@ a{cursor:pointer;color:#002BB8;text-decoration:none;}
 
 #friends_list {margin-top:10px;}
 .friend_column {float: left; width: 350px;}
-.friend {width:350px;margin-bottom:15px;}
+.friend {width:350px;margin-bottom:15px;color:#002BB8;}
 .friend_pic {float:left;}
-.friend_details {float: left;width:275px;margin-left:10px;}
+.friend_details {float: left;width:275px;margin-left:10px;color:#002BB8;}
 .friend_name {font-weight:bold;font-size:15px;color:#002BB8;}
