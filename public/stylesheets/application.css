@@ -65,14 +65,14 @@ a:hover.FB_Link{text-decoration:underline;color: #0066cc;}
 	margin-left: 5px;
 }
 
-#headline {font-weight:bold;font-size:18px;color:#333333;margin-top:20px;padding:10px;}
+#headline {font-weight:bold;font-size:18px;color:#333333;margin-top:20px;margin-top:10px;padding:10px;}
 
-#my_playlists{border:0px;border-style:solid;border-width:0px;margin-top:0px;margin-bottom:0px;padding:10px;}
+#my_playlists{border:0px;border-style:solid;border-width:0px;margin-top:10px;margin-bottom:0px;padding:20px;}
 .playlist{color:#0066cc;}
 .playlist img {float: left; margin-top: 2px;}
 .playlist a {overflow: hidden; float: left; width: 250px; margin-left: 5px;}
 
-#friends_list {border:0px;border-style:solid;border-width:0px;margin-top:15px;margin-bottom:0px;padding:10px;}
+#friends_list {border:0px;border-style:solid;border-width:0px;margin-top:10px;margin-bottom:0px;padding:20px;}
 .friend_column {float: left; width: 350px;}
 .friend {width:350px;margin-bottom:15px;}
 .friend_pic {float:left;}

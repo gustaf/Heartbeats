@@ -37,15 +37,15 @@
 	<div id="round_bottom"></div>
 	<br/>
 	
-	<div id="round_top">
 	<div id="headline">My playlists:</div>
-	<div id="my_playlists" class="clearfix">
+	<div id="round_top">
+		<div id="my_playlists" class="clearfix">
 		<%= render :partial => "playlist", :collection => @my_playlists %>
 	</div></div>
 	<div id="round_bottom"></div>
 	
-	<div id="round_top">		
 	<div id="headline">Friends' playlists:</div>
+	<div id="round_top">		
 	<div id="friends_list" class="clearfix">
 		<div id="left_column" class="friend_column">
 			<%= render :partial => "friend", :collection => @friends_in_left_col %>
