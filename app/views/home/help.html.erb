@@ -1,0 +1,23 @@
+<div id="content">
+	<div id="header" class="clearfix">
+		<div id="top_links">
+		<ul class="top-navigation">
+			<li><%= link_to "Help", :action => "Help" %></li>  
+			<li><%= link_to "Help", :action => "Help" %></li>  
+			<li><%= fb_name facebook_session.user.uid, :useyou => "false" %></li>  
+			<li><%= fb_logout_link "Sign Out", "signin" %></li>
+		</ul>	
+		</div>
+		<div id="logo">
+			<%= image_tag "logo.png" %>
+		</div>
+	</div>
+	<br/>
+
+	<div id="headline">Help</div>
+	<div id="round_top">
+		Coming very soon. 		
+	</div>
+	</div>
+	<div id="round_bottom"></div>
+</div>
