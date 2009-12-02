@@ -25,8 +25,11 @@ a:hover.FB_Link{text-decoration:underline;color: #3B5998;}
 
 #logo img{float:left;}
 #top_links{float:right;background-color:#efefef;white-space:nowrap;display:inline-block;padding:0 .7em;}
-.top-navigation *{display:inline;}
+.top-navigation {background-color:#FFFFFF;display:inline-block;padding:0 0.7em;white-space:nowrap;}
 .ul {list-style-image:none;list-style-position:outside;list-style-type:none;}
+.round { -moz-border-radius-bottomleft:5px; -moz-border-radius-bottomright:5px; -moz-border-radius-topleft:5px; -moz-border-radius-topright:5px;}
+
+
 
 #new_playlist {width:760px;margin-top:0px;margin-bottom:0px;border:0px;border-style:solid;border-width:0px;padding:20px;}
 #new_playlist #input_border{
