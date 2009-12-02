@@ -11,7 +11,7 @@ a:hover.FB_Link{text-decoration:underline;color: #3B5998;}
 #header {text-align:right;}
 
 #logo img{float:left;}
-#top_links{float:right;background-color:#efefef;white-space:nowrap;display:inline-block;padding:0 .7em;}
+#top_links{float:right;background-color:#efefef;white-space:nowrap;padding:0 .7em;}
 
 #round_top,.ie #round_top{background:#fff!important;}
 #round_top{position:relative;background:#59b;-webkit-border-top-left-radius:10px;-webkit-border-top-right-radius:10px;-moz-border-radius-topleft:10px;-moz-border-radius-topright:10px;border-top-left-radius:10px;border-top-right-radius:10px;}
