@@ -23,9 +23,6 @@ a:hover.FB_Link{text-decoration:underline;color: #0066cc;}
 #round_bottom,.ie #round_bottom{background:#fff;padding-top:10px;}
 
 
-
-
-
 #logo img{float:left;}
 #top_links{float:right;background-color:#efefef;white-space:nowrap;display:inline-block;padding:0 .7em;}
 .top-navigation *{display:inline;}
@@ -70,7 +67,7 @@ a:hover.FB_Link{text-decoration:underline;color: #0066cc;}
 
 #headline {font-weight:bold;font-size:16px;color:#333333;margin-left:0px;}
 
-#my_playlists{border:0px;border-style:solid;border-width:0px;margin-top:10px;margin-bottom:25px;padding:5px;}
+#my_playlists{border:0px;border-style:solid;border-width:0px;margin-top:10px;margin-bottom:0px;padding:5px;}
 .playlist{color:#0066cc;}
 .playlist img {float: left; margin-top: 2px;}
 .playlist a {overflow: hidden; float: left; width: 250px; margin-left: 5px;}
