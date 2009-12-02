@@ -28,7 +28,7 @@ a:hover.FB_Link{text-decoration:underline;color: #0066cc;}
 .top-navigation *{display:inline;}
 .ul {list-style-image:none;list-style-position:outside;list-style-type:none;}
 
-#new_playlist {width:760px;margin-top:40px;margin-bottom:0px;border:0px;border-style:solid;border-width:0px;padding:20px;}
+#new_playlist {width:760px;margin-top:0px;margin-bottom:0px;border:0px;border-style:solid;border-width:0px;padding:20px;}
 #new_playlist #input_border{
 	width:340px;
 	border-color:#AEAEAE #BBBBBB #BBBBBB;
@@ -65,7 +65,7 @@ a:hover.FB_Link{text-decoration:underline;color: #0066cc;}
 	margin-left: 5px;
 }
 
-#headline {font-weight:bold;font-size:18px;color:#333333;margin-top:20px;padding:10px;}
+#headline {font-weight:bold;font-size:17px;color:#333333;margin-top:20px;padding:10px;}
 
 #my_playlists{border:0px;border-style:solid;border-width:0px;margin-top:0px;margin-bottom:0px;padding:20px;}
 .playlist{color:#0066cc;}
