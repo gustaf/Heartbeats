@@ -62,3 +62,5 @@ a{cursor:pointer;color:#002BB8;text-decoration:none;}
 .friend_pic {float:left;}
 .friend_details {float: left;width:275px;margin-left:10px;color:#002BB8;}
 .friend_name {font-weight:bold;font-size:15px;color:#002BB8;}
+.left_column {color:#002BB8;}
+.right_column {color:#002BB8;}
