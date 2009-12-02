@@ -20,7 +20,7 @@
 			</div>
 		</div>
 
-		<% form_for :playlist, @new_playlist, :url => playlists_url, :html => {:id => "new_playlist_form"} do |f| %>
+		Copy and paste you Spotify playlist: <% form_for :playlist, @new_playlist, :url => playlists_url, :html => {:id => "new_playlist_form"} do |f| %>
       <%= f.hidden_field :url %>
       <%= submit_tag 'Add Playlist', :onclick => "submitPlaylist();return false;" %>
     <% end %>
