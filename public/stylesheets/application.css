@@ -49,12 +49,12 @@ a{color:#002BB8;text-decoration:none;}
 }
 
 #headline {font-weight:bold;font-size:16px;color:#333333;}
+.FB_Link {color:#002BB8;}
 
 #my_playlists{border:0px;border-style:solid;border-width:0px;margin:0px;padding:10px;}
 .playlist{color:#002BB8;text-decoration:none;}
 .playlist img {float: left; margin-top: 2px;}
 .playlist a {overflow: hidden; float: left; width: 250px; margin-left: 5px;}
-
 
 #friends_list {margin-top:10px;}
 .friend_column {float: left; width: 350px;}
