@@ -9,7 +9,7 @@
 			<%= image_tag "logo.png" %>
 		</div>
 	</div>
-	
+	<br/>
 	<!-- ADD PLAYLIST -->
 	<div id="new_playlist" class="clearfix">
 		<div id="input_border">
@@ -32,10 +32,10 @@
 		</script>
 
 	</div>
-
+	<br/>
 	<!-- SHOW PLAYLIST -->
-	<div id="headline">My playlists:</div>
 	<div id="my_playlists" class="clearfix">
+		<div id="headline">My playlists:</div>
 		<%= render :partial => "playlist", :collection => @my_playlists %>
 	</div>
 	
