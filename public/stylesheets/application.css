@@ -73,9 +73,9 @@ a:hover.FB_Link{text-decoration:underline;color: #3B5998;}
 .playlist img {float: left; margin-top: 2px;}
 .playlist a {overflow: hidden; float: left; width: 250px; margin-left: 5px;}
 
-#friends_list {border-top:1px solid #EEEEEE;margin-top:0px;margin-bottom:0px;padding:20px;}
+#friends_list {margin-top:0px;margin-bottom:0px;padding:20px;}
 .friend_column {float: left; width: 350px;}
-.friend {width:350px;margin-bottom:15px;}
+.friend {width:350px;margin-bottom:15px;border-top:1px solid #EEEEEE;}
 .friend_pic {float:left;}
 .friend_details {float: left;width:275px;margin-left:10px;}
 .friend_name {font-weight:bold;font-size:14px;}
