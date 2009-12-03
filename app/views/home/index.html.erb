@@ -2,7 +2,7 @@
 	<div id="header" class="clearfix">
 		<div id="top_links">
 			<%= link_to "Home", :action => "index" %>
-			<%= link_to "Help", :action => "Help" %>
+			<%= link_to "Help", :action => "help" %>
 			<%= fb_name facebook_session.user.uid, :useyou => "false" %>
 			<%= fb_logout_link "Sign Out", "signin" %>
 		</div>
