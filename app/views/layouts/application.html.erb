@@ -21,12 +21,14 @@
 			/* This is basic - uses default settings */ 
 			$("a#inline").fancybox();
 			 /* Using custom settings */ 
-			$("a#inline").fancybox({ 
-				'hideOnContentClick': true,
+			$("a#inline").fancybox({ 'hideOnContentClick': true }); 
+			$("a.group").fancybox({ 
 				'zoomSpeedIn': 300, 
 				'zoomSpeedOut': 300, 
+				'overlayShow': false, 
 				'enableEscapeButton': true,
 				'showCloseButton': true
+				 })
 				}); 
 			</script>
 	
