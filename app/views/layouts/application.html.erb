@@ -200,34 +200,6 @@
 						], opts);
 					});
 
-					$("#ajax1").fancybox({
-						ajax			: {
-						    type	: "POST",
-						    data	: 'a=1'
-						}
-					});
-
-					$("#ajax2").fancybox({
-					    overlayShow     : true,
-					    overlayOpacity	: 0.5,
-		   				overlayColor	: '#101010',
-
-						ajax			: {
-						    type	: "POST",
-						    data	: 'b=2'
-						}
-					});
-
-					$("#search_go").click(function() {
-						var what = $("#search_what").val();
-
-						$.fancybox( {
-							'href'	: 'http://www.google.ca/search?newwindow=1&q=' + what
-						}, {
-							frameWidth			: 750,
-							frameHeight			: 430,
-							type				: 'iframe'	
-						});
 					});
 				});
 
