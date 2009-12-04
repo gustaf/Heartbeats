@@ -11,5 +11,32 @@
 		</div>
 	</div>
 	<br/>
-	<a id="inline" href="#data">This shows content of element who has id="data"</a>
+	<a id="inline" href="#data">
+		<!-- ADD PLAYLIST -->
+		<div id="headline">Copy and paste your Spotify playlist:</div>
+		<div id="round_top">
+		<div id="new_playlist" class="clearfix">
+			<div id="input_border">
+				<div id="input_shaddow">
+					<div id="input" contenteditable="true">
+					</div>
+				</div>
+			</div>
+
+			<% form_for :playlist, @new_playlist, :url => playlists_url, :html => {:id => "new_playlist_form"} do |f| %>
+	      <%= f.hidden_field :url %>
+	      <%= submit_tag 'Add Playlist', :onclick => "submitPlaylist();return false;" %>
+	    <% end %>
+
+			<script>
+				function submitPlaylist (){
+					$("playlist_url").value = $("input").innerHTML;
+					$("new_playlist_form").submit();
+				}
+			</script>
+
+		</div>
+		</div>
+		<div id="round_bottom"></div>
+		</a>
 </div>
