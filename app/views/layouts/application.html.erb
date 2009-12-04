@@ -19,13 +19,14 @@
 			<script type="text/javascript">
 			$(document).ready(function() { 
 			/* This is basic - uses default settings */ 
-			$("a#inline").fancybox();
+			$("a#single_image").fancybox();
 			 /* Using custom settings */ 
 			$("a#inline").fancybox({ 'hideOnContentClick': true }); 
 			$("a.group").fancybox({ 
 				'zoomSpeedIn': 300, 
 				'zoomSpeedOut': 300, 
-				'overlayShow': false }); 
+				'overlayShow': false, 
+				'enableEscapeButton': true })
 				}); 
 			</script>
 	
