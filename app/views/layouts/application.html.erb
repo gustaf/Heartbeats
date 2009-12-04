@@ -5,7 +5,6 @@
 	<%= javascript_include_tag "jquery-1.3.2.min.js" %>
 	<%= javascript_include_tag "jquery.easing.1.3.js" %>
 	<%= javascript_include_tag "jquery.fancybox-1.2.0.js" %>
-	
 	<%= fb_connect_javascript_tag %>
 	<% init_fb_connect "XFBML","Api" do %>
 	  <%= yield :fb_connect%>
@@ -56,9 +55,210 @@
 		window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function() { _loadSuper(); _loadUserVoice(); };
 		</script>
 
-		<script type="text/javascript"> $(document).ready(function() { $("a#YOUR_ID_HERE").fancybox({ 'hideOnContentClick': true }); 
-		$("a.YOUR_CLASS_HERE").fancybox({ 'zoomSpeedIn': 0, 'zoomSpeedOut': 0, 'overlayShow': true }); }); </script> 
+		<script type="text/javascript"> $(document).ready(function() { $("a#fancybox").fancybox({ 'hideOnContentClick': true }); 
+		$("a.popup").fancybox({ 'zoomSpeedIn': 0, 'zoomSpeedOut': 0, 'overlayShow': true }); }); </script> 
 		
+		<script type="text/javascript"> 
+		
+		$(document).ready(function() {
+					$("#example1-1").fancybox({
+						'zoomSpeedIn'			: 300,
+						'zoomSpeedOut'			: 300,
+						'hideOnContentClick'	: true
+					});
+
+					$("#example1-2").fancybox({
+						titlePosition			: 'inside',
+						'zoomSpeedIn'			: 300,
+						'zoomSpeedOut'			: 300,
+					    'zoomOpacity'			: true,
+						'hideOnContentClick'	: false
+					});
+
+
+					$("#example1-3").fancybox({
+						titlePosition			: 'inside',
+						padding					: 20,
+						'zoomSpeedIn'			: 0,
+						'zoomSpeedOut'			: 0,
+						'hideOnContentClick'	: true
+					});
+
+					$("#example2-1, #example2-2").fancybox({
+					    titleShow               : false,
+						margin					: 0,
+						'zoomSpeedIn'			: 0,
+						'zoomSpeedOut'			: 0,
+						'overlayShow'			: true,
+						'hideOnContentClick'	: true
+					});
+
+					$("a.zoom1").fancybox({
+					    'overlayShow'	: true,
+						'autoScale'     : true,
+						'margin'        : 0
+					});
+
+					$("a.zoom2").fancybox({
+						titlePosition		: 'inside',
+					    //'autoScale'         : false,
+						'zoomSpeedIn'		: 0,
+						'zoomSpeedOut'		: 0
+					});
+
+					$("#custom4").fancybox({
+						zoomSpeedIn			: 0,
+		            	zoomSpeedOut		: 0,
+						hideOnContentClick	: false	
+					});
+
+					$("a.zoom3").click(function() {
+						$.fancybox( this, {
+							autoDimensions	: false,
+							margin			: 0,
+							frameWidth		: '100%',
+							frameHeight		: '100%'
+						});
+
+						return false;
+					});
+
+					$("a.zoom4").fancybox({
+						modal : true
+					});
+
+					$("a.zoom5").fancybox({
+				    	frameWidth			: 750,
+						frameHeight			: 450,
+						hideOnContentClick	: false
+						/*,
+						autoDimensions		: false,
+						autoScale           : false
+						*/
+					});
+
+					$("#custom1").click(function() {
+						$.fancybox({
+						    //orig    : this,
+							href	: '#biude',
+							title   : 'Custom title'
+						}, {
+							frameWidth		: 300,
+							frameHeight		: 200
+						});
+					});
+
+					$("#login_form").bind("submit", function() {
+					    $.fancybox.showActivity();
+
+						var data = $(this).serializeArray();
+
+						$.ajax({
+							type	: "POST",
+							cache	: false,
+							url		: "./examples/login.php",
+							data	: data,
+							success: function(data) {
+								$.fancybox(data);
+							}
+						});
+
+						return false;
+					});
+
+					var opts = {
+						'zoomSpeedIn'		: 200,
+						'zoomSpeedOut'		: 200,
+						'autoDimensions'	: true,
+						'frameWidth'		: 500
+					}
+
+					$("#manual1").click(function() {
+						$.fancybox( $.trim( $("#inline1").html() ), opts);
+					});
+
+					$("#manual2").click(function() {
+						$.fancybox( $('#biude'), opts);
+					});
+
+					$("#manual3").click(function() {
+						$.fancybox( $('#biude')[0], opts);
+					});
+
+					$("#manual4").click(function() {
+						$.fancybox( {
+							'href'	: 'http://farm4.static.flickr.com/3498/4006876523_289a8296ee.jpg',
+							'orig'	: this
+						}, opts);
+					});
+
+					$("#manual5").click(function() {
+						$.fancybox([
+							{ 'href' : 'http://farm4.static.flickr.com/3498/4006876523_289a8296ee.jpg' },
+							{ 'href' : 'http://farm4.static.flickr.com/3068/3096463741_67b9979fd4.jpg' }
+						], opts);
+					});
+
+					$("#ajax1").fancybox({
+						ajax			: {
+						    type	: "POST",
+						    data	: 'a=1'
+						}
+					});
+
+					$("#ajax2").fancybox({
+					    overlayShow     : true,
+					    overlayOpacity	: 0.5,
+		   				overlayColor	: '#101010',
+
+						ajax			: {
+						    type	: "POST",
+						    data	: 'b=2'
+						}
+					});
+
+					$("#search_go").click(function() {
+						var what = $("#search_what").val();
+
+						$.fancybox( {
+							'href'	: 'http://www.google.ca/search?newwindow=1&q=' + what
+						}, {
+							frameWidth			: 750,
+							frameHeight			: 430,
+							type				: 'iframe'	
+						});
+					});
+				});
+
+				$(window).bind("load", function() { 
+					// šito īstenībā vajadzētu tad, kad pilniibaa ielaadejusies lapa
+					// mosh lapā rakstīt warningu - autodimensions var gļukot, ja lādē bildes, kas nav ielādējušās
+					// (kā arī par marginiem)
+
+					$("#aaa").click(function() {
+						var arr = [
+						    $("#example1-1"),
+							$('#biude'),
+							$('#biude')[0],
+							$.trim( $("#inline1").html() ),
+							{
+								'href'	: 'http://farm4.static.flickr.com/3498/4006876523_289a8296ee.jpg',
+								'orig'	: this,
+								'opts'	: {
+									'padding' : 0
+								}
+							}
+						];
+
+						$.fancybox( arr, {
+							'zoomSpeedIn'		: 200,
+							'zoomSpeedOut'		: 200,
+							'autoDimensions'	: true,
+							'frameWidth'		: 500
+						});
+					});
+				});
+			</script>
 		</div>
 		
 	</body>
