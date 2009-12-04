@@ -4,6 +4,8 @@
 require 'meta-spotify'
 
 class ApplicationController < ActionController::Base
+  before_filter :check_uri
+  
   helper :all # include all helpers, all the time
 
   protect_from_forgery
@@ -26,4 +28,16 @@ class ApplicationController < ActionController::Base
 
     @user = User.find_or_create(facebook_session.user.id)
   end
+  
+  def check_uri
+    if /^www/.match(request.host)
+      new_url=request.protocol
+      new_url+=request.host_with_port.sub("www.","")
+      new_url+=request.request_uri
+      redirect_to new_url
+    end
+  end
+  
+  
 end
+
