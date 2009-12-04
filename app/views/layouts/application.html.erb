@@ -2,13 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
 	<head>
 	<%= javascript_include_tag :defaults %>
+	<%= javascript_include_tag "jquery-1.3.2.min.js" %>
+	<%= javascript_include_tag "jquery.easing.1.3.js" %>
+	<%= javascript_include_tag "jquery.fancybox-1.2.0.js" %>
+	
 	<%= fb_connect_javascript_tag %>
 	<% init_fb_connect "XFBML","Api" do %>
 	  <%= yield :fb_connect%>
 	<% end %>
 	<%= stylesheet_link_tag "application" %>
 	<%= stylesheet_link_tag "fancybox" %>
-	
+		
   	<title>Heartbeats - Share your Spotify Playlists</title>
 	</head>
 	<body>
@@ -51,9 +55,6 @@
 		_loadSuper = window.onload;
 		window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function() { _loadSuper(); _loadUserVoice(); };
 		</script>
-		<script type="text/javascript" src="javascripts/jquery-1.3.2.min.js"></script> 
-		<script type="text/javascript" src="javascripts/jquery.easing.1.3.js"></script> 
-		<script type="text/javascript" src="javascripts/jquery.fancybox-1.2.0.js"></script> 
 
 		<script type="text/javascript"> $(document).ready(function() { $("a#YOUR_ID_HERE").fancybox({ 'hideOnContentClick': true }); 
 		$("a.YOUR_CLASS_HERE").fancybox({ 'zoomSpeedIn': 0, 'zoomSpeedOut': 0, 'overlayShow': true }); }); </script> 
