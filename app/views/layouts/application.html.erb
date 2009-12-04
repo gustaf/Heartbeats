@@ -29,6 +29,7 @@
 			pageTracker._trackPageview();
 			} catch(err) {}</script>
 		</div>
+		
 		<div id="uservoice">
 		<script type="text/javascript">
 		var uservoiceOptions = {
@@ -54,7 +55,9 @@
 		_loadSuper = window.onload;
 		window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function() { _loadSuper(); _loadUserVoice(); };
 		</script>
+		</div>
 
+		<div id="fancybox">
 		<script type="text/javascript"> 
 		
 		$(document).ready(function() {
@@ -256,7 +259,6 @@
 					});
 				});
 			</script>
-		</div>
-		
+			</div>
 	</body>
 </html>
