@@ -20,7 +20,7 @@ class Playlist < ActiveRecord::Base
  
   def is_spotify_url?
     url =~ Regexp.union(
-      /^spotify:user:\w+:playlist:\w+$/,
+      /^spotify:user:[\w\.]+:playlist:\w+$/,
       /^spotify:(album|artist|track):\w+$/)
   end
 
