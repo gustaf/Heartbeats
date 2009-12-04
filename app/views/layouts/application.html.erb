@@ -7,6 +7,8 @@
 	  <%= yield :fb_connect%>
 	<% end %>
 	<%= stylesheet_link_tag "application" %>
+	<%= stylesheet_link_tag "fancybox" %>
+	
   	<title>Heartbeats - Share your Spotify Playlists</title>
 	</head>
 	<body>
@@ -49,6 +51,13 @@
 		_loadSuper = window.onload;
 		window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function() { _loadSuper(); _loadUserVoice(); };
 		</script>
+		<script type="text/javascript" src="javascripts/jquery-1.3.2.min.js"></script> 
+		<script type="text/javascript" src="javascripts/jquery.easing.1.3.js"></script> 
+		<script type="text/javascript" src="javascripts/jquery.fancybox-1.2.0.js"></script> 
+
+		<script type="text/javascript"> $(document).ready(function() { $("a#YOUR_ID_HERE").fancybox({ 'hideOnContentClick': true }); 
+		$("a.YOUR_CLASS_HERE").fancybox({ 'zoomSpeedIn': 0, 'zoomSpeedOut': 0, 'overlayShow': true }); }); </script> 
+		
 		</div>
 		
 	</body>
