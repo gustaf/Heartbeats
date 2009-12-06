@@ -1,9 +1,9 @@
 <div class="friend clearfix">
 	<div class="friend_pic"><%= fb_profile_pic friend.uid, :size => :square %></div>
 	<div class="friend_details">
-  	<div class="friend_name"><%= fb_name friend.uid %></div>
+  	<div class="friend_name"><%= fb_name friend.uid, :useyou => "false" %></div>
 		<div class="friend_playlists">
-			<%= render :partial => "playlist", :collection => friend.playlists %>
+			<%= render :partial => "/home/playlist.html.erb", :collection => friend.playlists %>
 		</div>
 	</div>
 </div>

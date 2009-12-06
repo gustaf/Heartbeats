@@ -11,49 +11,50 @@
 	</div>
 	<br/>
 	<!-- ADD PLAYLIST -->
-	<div id="headline">Copy and paste your Spotify playlist:</div>
-	<div id="round_top">
-	<div id="new_playlist" class="clearfix">
-		<div id="input_border">
-			<div id="input_shaddow">
-				<div id="input" contenteditable="true">
+	<div class="headline">Copy and paste your Spotify playlist:</div>
+	<div class="round_top">
+		<div id="new_playlist" class="clearfix">
+			<div id="input_border">
+				<div id="input_shaddow">
+					<div id="input" contenteditable="true">
+					</div>
 				</div>
 			</div>
+
+			<% form_for :playlist, @new_playlist, :url => playlists_url, :html => {:id => "new_playlist_form"} do |f| %>
+	      <%= f.hidden_field :url %>
+	      <%= submit_tag 'Add Playlist', :onclick => "submitPlaylist();return false;" %>
+	    <% end %>
+
+			<script>
+				function submitPlaylist (){
+					$("playlist_url").value = $("input").innerHTML;
+					$("new_playlist_form").submit();
+				}
+			</script>
+
 		</div>
-
-		<% form_for :playlist, @new_playlist, :url => playlists_url, :html => {:id => "new_playlist_form"} do |f| %>
-      <%= f.hidden_field :url %>
-      <%= submit_tag 'Add Playlist', :onclick => "submitPlaylist();return false;" %>
-    <% end %>
-
-		<script>
-			function submitPlaylist (){
-				$("playlist_url").value = $("input").innerHTML;
-				$("new_playlist_form").submit();
-			}
-		</script>
-
 	</div>
-	</div>
-	<div id="round_bottom"></div>
+	<div class="round_bottom"></div>
 	
-	<div id="headline">My playlists:</div>
-	<div id="round_top">
+	<div class="headline">My playlists:</div>
+	<div class="round_top">
 		<div id="my_playlists" class="clearfix">
-		<%= render :partial => "playlist", :collection => @my_playlists %>
-	</div></div>
+			<%= render :partial => "playlist", :collection => @my_playlists %>
+		</div>
+	</div>
 	<div id="round_bottom"></div>
 	
-	<div id="headline">Friends' playlists:</div>
-	<div id="round_top">		
-	<div id="friends_list" class="clearfix">
-		<div id="left_column" class="friend_column">
-			<%= render :partial => "friend", :collection => @friends_in_left_col %>
-		</div>
-		<div id="right_column" class="friend_column">
-			<%= render :partial => "friend", :collection => @friends_in_right_col %>
+	<div class="headline">Friends' playlists:</div>
+	<div class="round_top">		
+		<div id="friends_list" class="clearfix">
+			<div id="left_column" class="friend_column">
+				<%= render :partial => "friend", :collection => @friends_in_left_col %>
+			</div>
+			<div id="right_column" class="friend_column">
+				<%= render :partial => "friend", :collection => @friends_in_right_col %>
+			</div>
 		</div>
 	</div>
-	</div>
-	<div id="round_bottom"></div>
+	<div class="round_bottom"></div>
 </div>

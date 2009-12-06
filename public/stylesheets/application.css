@@ -13,20 +13,18 @@ a:hover.FB_Link{text-decoration:underline;color: #3B5998;}
 #logo img{float:left;text-decoration:none;border:0px;}
 #top_links{float:right;background-color:#efefef;white-space:nowrap;padding:0 .7em;}
 
-#round_top,.ie #round_top{background:#fff!important;}
-#round_top{position:relative;background:#59b;-webkit-border-top-left-radius:10px;-webkit-border-top-right-radius:10px;-moz-border-radius-topleft:10px;-moz-border-radius-topright:10px;border-top-left-radius:10px;border-top-right-radius:10px;}
+.headline {font-weight:bold;font-size:17px;color:#333333;margin-top:20px;padding:10px;}
 
-#round_bottom{position:relative;background:#023;overflow:hidden;-webkit-border-bottom-left-radius:10px;-webkit-border-bottom-right-radius:10px;-moz-border-radius-bottomleft:10px;-moz-border-radius-bottomright:10px;border-bottom-left-radius:10px;border-bottom-right-radius:10px;}
-#round_bottom div{overflow:hidden;width:705px;padding-left:25px;height:1.9em;}
-.ie6 #round_bottom div li{margin:.5em 0;}
-.ie6 #round_bottom div,.ie7 #round_bottom div{background-position:0 .5em;}
+.round_top,.ie .round_top{background:#fff!important;}
+.round_top{position:relative;background:#59b;-webkit-border-top-left-radius:10px;-webkit-border-top-right-radius:10px;-moz-border-radius-topleft:10px;-moz-border-radius-topright:10px;border-top-left-radius:10px;border-top-right-radius:10px;}
 
-#round_bottom .fade{background:transparent url(http://s.twimg.com/a/1259704211/images/red/fade-trends.png) repeat-y scroll -60px 0;}
-#round_bottom,.ie #round_bottom{background:#fff;padding-top:10px;}
+.round_bottom{position:relative;background:#023;overflow:hidden;-webkit-border-bottom-left-radius:10px;-webkit-border-bottom-right-radius:10px;-moz-border-radius-bottomleft:10px;-moz-border-radius-bottomright:10px;border-bottom-left-radius:10px;border-bottom-right-radius:10px;}
+.round_bottom div{overflow:hidden;width:705px;padding-left:25px;height:1.9em;}
+.ie6 .round_bottom div li{margin:.5em 0;}
+.ie6 .round_bottom div,.ie7 .round_bottom div{background-position:0 .5em;}
 
-
-
-
+.round_bottom .fade{background:transparent url(http://s.twimg.com/a/1259704211/images/red/fade-trends.png) repeat-y scroll -60px 0;}
+.round_bottom,.ie .round_bottom{background:#fff;padding-top:10px;}
 
 #new_playlist {width:760px;margin-top:0px;margin-bottom:0px;border:0px;border-style:solid;border-width:0px;padding:20px;}
 #new_playlist #input_border{
@@ -64,9 +62,6 @@ a:hover.FB_Link{text-decoration:underline;color: #3B5998;}
 	margin-left: 5px;
 }
 
-#headline {font-weight:bold;font-size:17px;color:#333333;margin-top:20px;padding:10px;}
-
-
 #my_playlists{border:0px;border-style:solid;border-width:0px;margin-top:0px;margin-bottom:0px;padding:20px;}
 .playlist{color:#0066cc;}
 .playlist img {float: left; margin-top: 2px;}
@@ -74,7 +69,7 @@ a:hover.FB_Link{text-decoration:underline;color: #3B5998;}
 
 #friends_list {margin-top:0px;margin-bottom:0px;padding:20px;}
 .friend_column {float: left; width: 350px;margin-right:10px;}
-.friend {width:350px;margin-bottom:15px;border-top:1px solid #EEEEEE;}
+.friend {width:350px;margin-bottom:15px;}
 .friend_pic {float:left;}
 .friend_details {float: left;width:275px;margin-left:10px;}
 .friend_name {font-weight:bold;font-size:14px;}

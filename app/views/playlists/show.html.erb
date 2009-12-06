@@ -1,0 +1,27 @@
+<div id="content">
+	<div id="header" class="clearfix">
+		<div id="top_links">
+					<%= link_to "Home", root_url %>
+		</div>
+		<div id="logo">
+			<%= link_to (image_tag "logo.png"), root_url %>
+		</div>
+	</div>
+	<br/>
+	<div class="headline" style="text-align: center;">
+		<div>Open in Spotify:</div><br/>
+		<div  style="font-size: 25px;margin: 0px 20px 20px 20px;"><%= link_to truncate(h(@playlist.to_s), :length => 35), @playlist.url_spotify %></div>
+	</div>
+	<div class="round_top">
+		<div style="padding: 10px;color:#666666;font-size:13px;font-weight:bold;">
+			Added <%= time_ago_in_words @playlist.created_at %> by:
+		</div>
+		<div id="creator" style="padding: 10px">
+			<%= render :partial => "/home/friend.html.erb", :locals => {:friend => @creator}%>
+		</div>
+		<div id="other people">
+			
+		</div>
+	</div>
+	<div class="round_bottom"> </div>
+</div>
