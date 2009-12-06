@@ -9,11 +9,25 @@
 	</div>
 	<br/>
 	<div class="headline" style="text-align: center;">
-		<div>Open in Spotify:</div><br/>
-		<div  style="font-size: 25px;margin: 0px 20px 20px 20px;"><%= link_to truncate(h(@playlist.to_s), :length => 35), @playlist.url_spotify %></div>
+		<div>Open in Spotify:</div>
+		<div  style="font-size: 25px;margin: 15px 20px 20px 20px;"><%= link_to truncate(h(@playlist.to_s), :length => 35), @playlist.url_spotify %></div>
+		<div id="playlist_share_buttons" class="clearfix" style="margin-left:290px;">
+			<div id="facebook_share" style="float:left;width:100px;">
+				<a name="fb_share" type="button_count" href="http://www.facebook.com/sharer.php">Share</a>
+				<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+			</div>
+			
+			<div id="twitter_share" style="float:left;margin-top:4px;width:100px">
+				<script type="text/javascript">
+				tweetmeme_style = 'compact';
+				</script>
+				
+				<script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
+			</div>
+		</div>
 	</div>
 	<div class="round_top">
-		<div style="padding: 10px;color:#666666;font-size:13px;font-weight:bold;">
+		<div style="padding: 10px 10px 0px 10px;color:#666666;font-size:13px;font-weight:bold;">
 			Added <%= time_ago_in_words @playlist.created_at %> by:
 		</div>
 		<div id="creator" style="padding: 10px">
