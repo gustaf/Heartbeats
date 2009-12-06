@@ -2,17 +2,19 @@
 .clearfix {display:block;}
 
 body {background-color: #efefef;font-family:"lucida grande",tahoma,sans-serif;line-height: 1.5em;font-size:13px;color: #000000;}
-a:hover{text-decoration:underline;color: #0066cc;}
-a{cursor:pointer;color:#0066cc;text-decoration:none;}
-a.FB_Link{cursor:pointer;color:#0066cc;text-decoration:none;}
-a:hover.FB_Link{text-decoration:underline;color: #0066cc;}
+a:hover{text-decoration:underline;color: #3B5998;}
+a{cursor:pointer;color:#3B5998;text-decoration:none;outline-style:none;}
+a.FB_Link{cursor:pointer;color:#3B5998;text-decoration:none;outline-style:none;}
+a:hover.FB_Link{text-decoration:underline;color: #3B5998;}
 
 #content {width:780px;margin:1em auto;padding:10px;background:#efefef;font-family:"lucida grande",tahoma,sans-serif;line-height: 1.5em;font-size:13px;color: #000000;}
-#header {}
+#header {text-align:right;}
+
+#logo img{float:left;text-decoration:none;border:0px;}
+#top_links{float:right;background-color:#efefef;white-space:nowrap;padding:0 .7em;}
 
 #round_top,.ie #round_top{background:#fff!important;}
 #round_top{position:relative;background:#59b;-webkit-border-top-left-radius:10px;-webkit-border-top-right-radius:10px;-moz-border-radius-topleft:10px;-moz-border-radius-topright:10px;border-top-left-radius:10px;border-top-right-radius:10px;}
-.ie #round_top{background:transparent url("http://s.twimg.com/a/1259704211/images/clouds-ie.gif") no-repeat 0 0!important;}
 
 #round_bottom{position:relative;background:#023;overflow:hidden;-webkit-border-bottom-left-radius:10px;-webkit-border-bottom-right-radius:10px;-moz-border-radius-bottomleft:10px;-moz-border-radius-bottomright:10px;border-bottom-left-radius:10px;border-bottom-right-radius:10px;}
 #round_bottom div{overflow:hidden;width:705px;padding-left:25px;height:1.9em;}
@@ -23,10 +25,8 @@ a:hover.FB_Link{text-decoration:underline;color: #0066cc;}
 #round_bottom,.ie #round_bottom{background:#fff;padding-top:10px;}
 
 
-#logo img{float:left;}
-#top_links{float:right;background-color:#efefef;white-space:nowrap;display:inline-block;padding:0 .7em;}
-.top-navigation *{display:inline;}
-.ul {list-style-image:none;list-style-position:outside;list-style-type:none;}
+
+
 
 #new_playlist {width:760px;margin-top:0px;margin-bottom:0px;border:0px;border-style:solid;border-width:0px;padding:20px;}
 #new_playlist #input_border{
@@ -72,9 +72,10 @@ a:hover.FB_Link{text-decoration:underline;color: #0066cc;}
 .playlist img {float: left; margin-top: 2px;}
 .playlist a {overflow: hidden; float: left; width: 250px; margin-left: 5px;}
 
-#friends_list {border:0px;border-style:solid;border-width:0px;margin-top:0px;margin-bottom:0px;padding:20px;}
-.friend_column {float: left; width: 350px;}
-.friend {width:350px;margin-bottom:15px;}
+#friends_list {margin-top:0px;margin-bottom:0px;padding:20px;}
+.friend_column {float: left; width: 350px;margin-right:10px;}
+.friend {width:350px;margin-bottom:15px;border-top:1px solid #EEEEEE;}
 .friend_pic {float:left;}
 .friend_details {float: left;width:275px;margin-left:10px;}
 .friend_name {font-weight:bold;font-size:14px;}
+

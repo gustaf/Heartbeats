@@ -1,12 +1,12 @@
 <div id="content">
 	<div id="header" class="clearfix">
 		<div id="top_links">
-		<ul class="top-navigation">
-			<li><%= fb_name facebook_session.user.uid, :useyou => "false" %></li>  <li><%= fb_logout_link "Sign Out", "signin" %></li>
-		</ul>	
-		</div>
+					<%= link_to "Home", :action => "index" %> | 
+					<!--<%= link_to "Help", :action => "help" %> | -->
+					<%= fb_name facebook_session.user.uid, :useyou => "false" %> | 
+					<%= fb_logout_link "Sign Out", "signin" %> |		</div>
 		<div id="logo">
-			<%= image_tag "logo.png" %>
+			<%= link_to (image_tag "logo.png"), :action => "index" %>
 		</div>
 	</div>
 	<br/>
@@ -36,7 +36,6 @@
 	</div>
 	</div>
 	<div id="round_bottom"></div>
-	<br/>
 	
 	<div id="headline">My playlists:</div>
 	<div id="round_top">

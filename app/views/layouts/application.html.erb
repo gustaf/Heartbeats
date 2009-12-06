@@ -7,12 +7,62 @@
 	  <%= yield :fb_connect%>
 	<% end %>
 	<%= stylesheet_link_tag "application" %>
-  	<title>Heartbeats - Share your Spotify Playlists</title>
+<!--	<%= stylesheet_link_tag "fancybox" %>
+	<%= javascript_include_tag "jquery-1.3.2.min.js" %>	
+	<%= javascript_include_tag "jquery.fancybox-1.2.6.js" %>
+	<%= javascript_include_tag "jquery.easing.1.3.js" %>
+  -->	
+	<title>Heartbeats - Share your Spotify Playlists</title>
 	</head>
 	<body>
-	
+<!--
+		<div id="fancybox">
+			<script type="text/javascript">
+			$(document).ready(function() { 
+			/* This is basic - uses default settings */ 
+			$("a#inline").fancybox();
+			 /* Using custom settings */ 
+			$("a#inline").fancybox({ 'hideOnContentClick': true }); 
+			$("a.group").fancybox({ 
+				'zoomSpeedIn': 300, 
+				'zoomSpeedOut': 300, 
+				'overlayShow': false, 
+				'enableEscapeButton': true,
+				'showCloseButton': true
+				 })
+				}); 
+			</script>	
+			</div>
+-->			
 		<%= yield %>
-		
+			
+			<div id="uservoice">
+			<script type="text/javascript">
+			var uservoiceOptions = {
+			  /* required */
+			  key: 'heartbeats',
+			  host: 'heartbeats.uservoice.com', 
+			  forum: '35142',
+			  showTab: true,  
+			  /* optional */
+			  alignment: 'left',
+			  background_color:'#f00', 
+			  text_color: 'white',
+			  hover_color: '#06C',
+			  lang: 'en'
+			};
+
+			function _loadUserVoice() {
+			  var s = document.createElement('script');
+			  s.setAttribute('type', 'text/javascript');
+			  s.setAttribute('src', ("https:" == document.location.protocol ? "https://" : "http://") + "cdn.uservoice.com/javascripts/widgets/tab.js");
+			  document.getElementsByTagName('head')[0].appendChild(s);
+			}
+			_loadSuper = window.onload;
+			window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function() { _loadSuper(); _loadUserVoice(); };
+			</script>
+			</div>
+			
 		<div id="google_analytics">
 			<script type="text/javascript">
 			var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -23,32 +73,6 @@
 			var pageTracker = _gat._getTracker("UA-11831786-1");
 			pageTracker._trackPageview();
 			} catch(err) {}</script>
-		</div>
-		<div id="uservoice">
-		<script type="text/javascript">
-		var uservoiceOptions = {
-		  /* required */
-		  key: 'heartbeats',
-		  host: 'heartbeats.uservoice.com', 
-		  forum: '35142',
-		  showTab: true,  
-		  /* optional */
-		  alignment: 'left',
-		  background_color:'#f00', 
-		  text_color: 'white',
-		  hover_color: '#06C',
-		  lang: 'en'
-		};
-
-		function _loadUserVoice() {
-		  var s = document.createElement('script');
-		  s.setAttribute('type', 'text/javascript');
-		  s.setAttribute('src', ("https:" == document.location.protocol ? "https://" : "http://") + "cdn.uservoice.com/javascripts/widgets/tab.js");
-		  document.getElementsByTagName('head')[0].appendChild(s);
-		}
-		_loadSuper = window.onload;
-		window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function() { _loadSuper(); _loadUserVoice(); };
-		</script>
 		</div>
 		
 	</body>
