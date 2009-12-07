@@ -9,9 +9,9 @@
 # This should only be necessary until the final version of the new profile is released.
 
 development:
-  api_key: 556bbd587e8944e24b757dfd8e585fc4
-  secret_key: c6a6b6ddfe3a70fbdc99ebe8feeb71d5
-  canvas_page_name: blackboard
+  api_key: 2730f998cf89f870fa497f48b1b2d2f2
+  secret_key: 71b2db28dbb586ce26bd06e3ae311629
+  canvas_page_name: heartbeatsdev
   callback_url: 0.0.0.0:3000
   pretty_errors: true
   set_asset_host_to_callback_url: true
