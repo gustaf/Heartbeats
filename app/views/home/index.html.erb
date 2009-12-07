@@ -23,7 +23,7 @@
 
 			<% form_for :playlist, @new_playlist, :url => playlists_url, :html => {:id => "new_playlist_form"} do |f| %>
 	      <%= f.hidden_field :url %>
-	      <%= submit_tag 'Add Playlist', :onclick => "submitPlaylist();return false;mpmetrics.track();" %>
+	      <%= submit_tag 'Add Playlist', :onclick => "submitPlaylist();return false;" %>
 	    <% end %>
 
 			<script>
@@ -32,11 +32,7 @@
 					$("new_playlist_form").submit();
 					}
 			</script>
-			
-			<script type="text/javascript">
-				mpmetrics.track('add-playlist', {'token' : '49fd7af9fdac5f715a5aea352f10515c'});
-			</script>	
-
+				
 		</div>
 	</div>
 	<div class="round_bottom"></div>
