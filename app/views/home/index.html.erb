@@ -30,9 +30,9 @@
 				function submitPlaylist (){
 					$("playlist_url").value = $("input").innerHTML;
 					$("new_playlist_form").submit();
+					mpmetrics.track('add-playlist');
 				}
 			</script>
-
 		</div>
 	</div>
 	<div class="round_bottom"></div>
