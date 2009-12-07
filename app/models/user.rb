@@ -6,12 +6,21 @@ class User < ActiveRecord::Base
   
   def like(playlist)
     unless likes?(playlist)
-      Like.create(:user => self, :playlist => playlist)
+      Like.create(:user_id => id, :playlist_id => playlist.id)
     end
   end
   
+  def unlike(playlist)
+    like = like_for(playlist)
+    like.destroy if like
+  end
+  
+  def like_for(playlist)
+    Like.find(:first, :conditions => ["user_id = ? and playlist_id = ?", self, playlist])
+  end
+  
   def likes?(playlist)
-    !Like.find(:first, :conditions => ["user_id = ? and playlist_id = ?", self, playlist]).blank?
+    !like_for(playlist).blank?
   end
   
   class << self
