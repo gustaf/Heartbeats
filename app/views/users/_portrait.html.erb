@@ -1,0 +1,9 @@
+<% show_name = show_name || false %>
+<div class="portrait">
+	<%= user_pic(portrait) %>
+	<% if show_name %>
+		<div class="portrait_name">
+			<%= user_name(portrait) %>
+		</div>
+	<% end %>
+</div>
