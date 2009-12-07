@@ -5,9 +5,11 @@ class Likes < ActiveRecord::Migration
       t.integer :playlist_id
       t.timestamps
     end
+    add_index :likes, [:user_id, :playlist_id], :unique => true
   end
 
   def self.down
     drop_table :likes
+    remove_index :likes, [:user_id, :playlist_id]
   end
 end
