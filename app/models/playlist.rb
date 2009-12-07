@@ -4,6 +4,7 @@ class Playlist < ActiveRecord::Base
   validate :url_is_valid
   before_validation :set_url_spotify
   belongs_to :user
+  has_many :likes
   
   def to_s
     title.blank? ? url : title

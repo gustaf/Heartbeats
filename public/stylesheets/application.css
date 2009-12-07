@@ -6,6 +6,7 @@ a:hover{text-decoration:underline;color: #3B5998;}
 a{cursor:pointer;color:#3B5998;text-decoration:none;outline-style:none;}
 a.FB_Link{cursor:pointer;color:#3B5998;text-decoration:none;outline-style:none;}
 a:hover.FB_Link{text-decoration:underline;color: #3B5998;}
+img { border:0 none; }
 
 #content {width:780px;margin:1em auto;padding:10px;background:#efefef;font-family:"lucida grande",tahoma,sans-serif;line-height: 1.5em;font-size:13px;color: #000000;}
 #header {text-align:right;}
@@ -74,6 +75,22 @@ a:hover.FB_Link{text-decoration:underline;color: #3B5998;}
 .friend_details {float: left;width:275px;margin-left:10px;}
 .friend_name {font-weight:bold;font-size:14px;}
 
-
 #left_column {float: left; width: 350px;margin-right:10px;}
 #right_column {float: left; width: 350px;margin-right:10px;}
+
+.portrait {
+	width: 57px;
+	display:block;
+	float:left;
+	overflow:hidden;
+	padding-right:6px;
+	position:relative;
+}
+.portrait .user_pic, .portrait .user_name {
+	display:block;
+	float:left;
+}
+.portrait_name {
+	width: 57px;
+	float:left;
+}
