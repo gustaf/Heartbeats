@@ -1,11 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
   map.root :controller => 'home'
   
-  map.resources :users do |user|
-    user.resources :playlists
-  end
-  
+  map.resources :users
   map.resources :playlists
+  map.resources :likes
 
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

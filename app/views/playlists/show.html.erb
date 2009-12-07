@@ -1,19 +1,55 @@
+<script type="text/javascript">
+	//window.onload = function(){ document.location.href = "<%= @playlist.url_spotify %>";}
+</script>
 <div id="content">
 	<div id="header" class="clearfix">
 		<div id="top_links">
-					<%= link_to "Home", root_url %>
+			<%= link_to "Home", root_url %>
 		</div>
 		<div id="logo">
 			<%= link_to (image_tag "logo.png"), root_url %>
 		</div>
 	</div>
-	<br/>
+	
 	<div class="headline" style="text-align: center;">
 		<div>Open in Spotify:</div>
 		<div  style="font-size: 25px;margin: 15px 20px 20px 20px;"><%= link_to truncate(h(@playlist.to_s), :length => 35), @playlist.url_spotify %></div>
 	</div>
 	<div class="round_top">
 		<div class="clearfix">
+			
+			<!-- FACEBOOK SHARE AND LIKE BUTTON -->
+			<div id="facebook_share" style="padding:10px 0px 0px 300px;color:#666666;font-size:13px;font-weight:bold;" class="clearfix">
+				<div style="padding-top: 1px;float:left;margin-right:10px;">Share on Facebook:</div>
+				<a name="fb_share" type="box_count" href="http://www.facebook.com/sharer.php" style="float:left;">Share</a>
+				<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+			</div>
+			<% unless @current_user_likes %>
+				<div id="like" style="padding:10px 0px 0px 325px;color:#666666;font-size:13px;font-weight:bold;" class="clearfix">
+					<%= image_tag "fb_like_on.gif" %>
+					<%= link_to "Like on Heartbeats", "#", :class => "like_link", :onclick => "submitLike(); return false;"%>
+				</div>
+				
+				<% form_for :like, @new_like, :url => likes_url, :html => {:id => "new_like_form"} do |f| %>
+		      <%= f.hidden_field :playlist_id %>
+		    <% end %>
+
+				<script>
+					function submitLike (){
+						new Ajax.Request('<%= likes_url %>',
+						  {
+								parameters: $('new_like_form').serialize(true),
+						    method:'post',
+						    onSuccess: function(transport){
+						      $('like').hide();
+						    },
+						    onFailure: function(){ alert('Something went wrong...') }
+						  });
+					}
+				</script>
+			<% end %>
+			
+			<!-- PLAYLIST CREATOR INFO -->
 			<div id="left_column">
 				<div style="padding: 10px 10px 0px 10px;color:#666666;font-size:13px;font-weight:bold;">
 					Added <%= time_ago_in_words @playlist.created_at %> by:
@@ -22,11 +58,14 @@
 					<%= render :partial => "/home/friend.html.erb", :locals => {:friend => @creator}%>
 				</div>
 			</div>
-			<div id="right_column">
-				<div style="padding-top:10px;color:#666666;font-size:13px;font-weight:bold;">
-					<div style="padding-top: 1px;float:left;margin-right:10px;">Share on Facebook:</div>
-					<a name="fb_share" type="box_count" href="http://www.facebook.com/sharer.php" style="float:left;">Share</a>
-					<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+			
+			<!-- LIKED BY -->
+			<div id="right_column" style="width:400px;">
+				<div style="padding: 10px 10px 0px 10px;color:#666666;font-size:13px;font-weight:bold;">
+					Liked by:
+				</div>
+				<div id="liked_by" style="padding: 10px">
+					<%= render :partial => "/users/portrait.html.erb", :collection => @liked_by %>
 				</div>
 			</div>
 		</div>

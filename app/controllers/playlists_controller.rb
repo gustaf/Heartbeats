@@ -1,6 +1,6 @@
 class PlaylistsController < ApplicationController
-  #before_filter :set_facebook_session, :ensure_logged_in_and_get_user
-  #helper_method :facebook_session
+  before_filter :set_facebook_session, :ensure_logged_in_and_get_user
+  helper_method :facebook_session
   
   def index
     render :text => "playlists/index"
@@ -9,6 +9,8 @@ class PlaylistsController < ApplicationController
   def show
     @playlist = Playlist.find params[:id]
     @creator = @playlist.user
+    @liked_by = User.find(:all, :joins => :likes, :conditions => ["likes.playlist_id = ?", @playlist])
+    @current_user_likes = @user.likes? @playlist
   end
   
   def create
