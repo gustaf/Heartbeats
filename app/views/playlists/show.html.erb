@@ -31,7 +31,7 @@
 					Added <%= time_ago_in_words @playlist.created_at %> by:
 				</div>
 				<div id="creator" style="padding: 10px">
-					<%= render :partial => "/home/friend.html.erb", :locals => {:friend => @creator, :show_delete => false}%>
+					<%= render :partial => "/home/friend.html.erb", :locals => {:friend => @creator }%>
 				</div>
 			</div>
 			

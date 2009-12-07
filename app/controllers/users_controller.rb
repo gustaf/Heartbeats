@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   end
   
   def show
-    render :text => "users/show"
+    @profile_user = User.find(params[:id])
   end
 
 end

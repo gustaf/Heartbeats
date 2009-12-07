@@ -1,0 +1,17 @@
+<div id="content">
+	<div id="header" class="clearfix">
+		<div id="top_links">
+			<%= link_to "Home", root_url %>
+		</div>
+		<div id="logo">
+			<%= link_to (image_tag "logo.png"), root_url %>
+		</div>
+	</div>
+	
+	<div class="round_top" style="margin-top:20px">
+		<div id="user" style="padding: 10px">
+			<%= render :partial => "/home/friend.html.erb", :locals => {:friend => @profile_user}%>
+		</div>
+	</div>
+	<div class="round_bottom"> </div>
+</div>
