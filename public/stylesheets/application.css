@@ -27,7 +27,7 @@ img { border:0 none; }
 .round_bottom .fade{background:transparent url(http://s.twimg.com/a/1259704211/images/red/fade-trends.png) repeat-y scroll -60px 0;}
 .round_bottom,.ie .round_bottom{background:#fff;padding-top:10px;}
 
-#new_playlist {width:760px;margin-top:0px;margin-bottom:0px;border:0px;border-style:solid;border-width:0px;padding:20px;}
+#new_playlist {width:760px;margin-top:0px;margin-bottom:0px;border:0px;border-style:solid;border-width:0px;padding:20px 20px 10px;}
 #new_playlist #input_border{
 	width:340px;
 	border-color:#AEAEAE #BBBBBB #BBBBBB;
