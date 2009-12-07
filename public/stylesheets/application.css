@@ -74,3 +74,6 @@ a:hover.FB_Link{text-decoration:underline;color: #3B5998;}
 .friend_details {float: left;width:275px;margin-left:10px;}
 .friend_name {font-weight:bold;font-size:14px;}
 
+
+#left_column {float: left; width: 350px;margin-right:10px;}
+#right_column {float: left; width: 350px;margin-right:10px;}

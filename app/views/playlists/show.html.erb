@@ -11,30 +11,24 @@
 	<div class="headline" style="text-align: center;">
 		<div>Open in Spotify:</div>
 		<div  style="font-size: 25px;margin: 15px 20px 20px 20px;"><%= link_to truncate(h(@playlist.to_s), :length => 35), @playlist.url_spotify %></div>
-		<div id="playlist_share_buttons" class="clearfix" style="margin-left:290px;">
-			<div id="facebook_share" style="float:left;width:100px;">
-				<a name="fb_share" type="button_count" href="http://www.facebook.com/sharer.php">Share</a>
-				<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
-			</div>
-			
-			<div id="twitter_share" style="float:left;margin-top:4px;width:100px">
-				<script type="text/javascript">
-				tweetmeme_style = 'compact';
-				</script>
-				
-				<script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
-			</div>
-		</div>
 	</div>
 	<div class="round_top">
-		<div style="padding: 10px 10px 0px 10px;color:#666666;font-size:13px;font-weight:bold;">
-			Added <%= time_ago_in_words @playlist.created_at %> by:
-		</div>
-		<div id="creator" style="padding: 10px">
-			<%= render :partial => "/home/friend.html.erb", :locals => {:friend => @creator}%>
-		</div>
-		<div id="other people">
-			
+		<div class="clearfix">
+			<div id="left_column">
+				<div style="padding: 10px 10px 0px 10px;color:#666666;font-size:13px;font-weight:bold;">
+					Added <%= time_ago_in_words @playlist.created_at %> by:
+				</div>
+				<div id="creator" style="padding: 10px">
+					<%= render :partial => "/home/friend.html.erb", :locals => {:friend => @creator}%>
+				</div>
+			</div>
+			<div id="right_column">
+				<div style="padding-top:10px;color:#666666;font-size:13px;font-weight:bold;">
+					<div style="padding-top: 1px;float:left;margin-right:10px;">Share on Facebook:</div>
+					<a name="fb_share" type="box_count" href="http://www.facebook.com/sharer.php" style="float:left;">Share</a>
+					<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="round_bottom"> </div>
