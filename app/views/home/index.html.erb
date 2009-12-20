@@ -23,16 +23,17 @@
 
 			<% form_for :playlist, @new_playlist, :url => playlists_url, :html => {:id => "new_playlist_form"} do |f| %>
 	      <%= f.hidden_field :url %>
-	      <%= submit_tag 'Add Playlist', :onclick => "submitPlaylist();" %>
+	      <%= submit_tag 'Add Playlist' %>
 	    <% end %>
-
+<!--
+	, :onclick => "submitPlaylist();"
 			<script>
 				function submitPlaylist (){
 					$("playlist_url").value = $("input").innerHTML;
 					$("new_playlist_form").submit();
 				}
 			</script>
-
+-->
 		</div>
 	</div>
 	<div class="round_bottom"></div>
