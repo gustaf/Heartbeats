@@ -72,7 +72,7 @@ img { border:0 none; }
 #friends_list {margin-top:0px;margin-bottom:0px;padding:20px;}
 .friend_column {float: left; width: 350px;margin-right:10px;}
 .friend {width:350px;margin-bottom:15px; margin-right:5px;}
-.friend_pic {float:left; border:1px solid #DDDDDD; padding:2px; position:relative; top:-2px; vertical-align:middle;}
+.friend_pic {float:left; border:1px solid #DDDDDD; padding:2px; position:relative; top:-1px; vertical-align:middle;}
 .friend_details {float: left;width:275px;margin-left:10px;}
 .friend_name {font-weight:bold;font-size:14px;}
 
