@@ -12,7 +12,7 @@ img { border:0 none; }
 #header {text-align:right;}
 
 #logo img{float:left;text-decoration:none;border:0px;}
-#top_links{float:right;background-color:#efefef;white-space:nowrap;padding:0 .7em;}
+#top_links{float:right;background-color:#cccccc;white-space:nowrap;padding:0 .7em;}
 
 .headline {font-weight:bold;font-size:17px;color:#333333;margin-top:20px;padding:10px;}
 
