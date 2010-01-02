@@ -1,0 +1,15 @@
+INSTALL LIBSPOTIFY
+wget https://developer.spotify.com/download/libspotify/libspotify-0.0.2-linux6-x86.tar.gz --no-check-certificate
+tar xzf libspotify-0.0.2-linux6-x86.tar.gz 
+rm libspotify-0.0.2-linux6-x86.tar.gz 
+cd libspotify-0.0.2-linux6-x86/
+make setup
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$PWD/lib/pkgconfig
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/lib
+
+COMPILE AND RUN PROGRAM
+gcc -Wall -o playlist *.c /home/jonatan/libspotify-0.0.2-linux6-x86/lib/libspotify.so -I/home/jonatan/libspotify-0.0.2-linux6-x86/include -g
+./playlist <user> <password> <playlist uri>
+
+DEBUG
+gdb --args jukebox kallus pagedown spotify:user:spotify:playlist:3i89VitTqdAP68GrGp8o9D
