@@ -30,7 +30,6 @@ static sp_playlistcontainer *g_pc;
 /// State variables
 static int g_logged_in = 0;
 static int g_playlists_loaded_after_log_in = 0;
-const char *g_uri;
 
 /* --------------------  PLAYLIST CONTAINER CALLBACKS  --------------------- */
 /**
@@ -80,31 +79,15 @@ static sp_playlistcontainer_callbacks pc_callbacks = {
  */
 static void logged_in(sp_session *sess, sp_error error)
 {
-	sp_playlistcontainer *pc = sp_session_playlistcontainer(sess);
-	int i;
-
 	if (SP_ERROR_OK != error) {
 		syslog(LOG_ERR, "Login failed: %s\n", sp_error_message(error));
 		exit(2);
 	}
 
-	// Let us print the nice message...
-	sp_user *me = sp_session_user(sess);
-	const char *my_name = (sp_user_is_loaded(me) ?
-		sp_user_display_name(me) :
-		sp_user_canonical_name(me));
-
-	for (i = 0; i < sp_playlistcontainer_num_playlists(pc); ++i) {
-		sp_playlist *pl = sp_playlistcontainer_playlist(pc, i);
-
-	}
-
 	g_logged_in = 1;
 
-	sp_link *link = sp_link_create_from_string(g_uri);
-	sp_playlistcontainer_add_playlist(g_pc, link);
-
-	//fflush(stdout);
+	//sp_link *link = sp_link_create_from_string(g_uri);
+	//sp_playlistcontainer_add_playlist(g_pc, link);
 }
 
 /**
@@ -242,11 +225,7 @@ static void session_ready()
 		{
 			link = sp_link_create_from_playlist(pl);
 			sp_link_as_string(link, uri, 256);
-			if(strcmp(g_uri, uri) == 0)
-			{
-				print_playlist(pl);
-				exit(1);
-			}
+			//print_playlist(pl);
 		}
 	}
 }
@@ -284,23 +263,14 @@ static void sigIgn(int signo)
 {
 }
 
-int main(int argc, char **argv)
+int main(void)
 {
 	sp_session *sp;
 	sp_error err;
-	const char *username = NULL;
-	const char *password = NULL;
+	const char *username = "kallus";
+	const char *password = "pagedown";
 	
-	// Sending passwords on the command line is bad in general.
-	// We do it here for brevity.
-	if (argc < 4 || argv[1][0] == '-') {
-		//fprintf(stderr, "usage: %s <username> <password> <playlist uri>\n",
-		 //               basename(argv[0]));
-		exit(1);
-	}
-	username = argv[1];
-	password = argv[2];
-	g_uri = argv[3];
+	//g_uri = "spotify:user:kallus:playlist:1d4k8YcfQlYboldYh8sNm1";
 
 	// Setup for waking up the main thread in notify_main_thread()
 	g_main_thread = pthread_self();
