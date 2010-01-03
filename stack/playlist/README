@@ -12,4 +12,4 @@ gcc -Wall -o playlist *.c /home/jonatan/libspotify-0.0.2-linux6-x86/lib/libspoti
 ./playlist <user> <password> <playlist uri>
 
 DEBUG
-gdb --args jukebox kallus pagedown spotify:user:spotify:playlist:3i89VitTqdAP68GrGp8o9D
+gdb --args playlist <user> <password> <playlist uri>
