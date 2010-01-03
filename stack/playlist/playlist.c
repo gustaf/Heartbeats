@@ -8,6 +8,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <spotify/api.h>
+#include <syslog.h>
 
 
 /* --- Data --- */
@@ -45,8 +46,6 @@ const char *g_uri;
 static void playlist_added(sp_playlistcontainer *pc, sp_playlist *pl,
                            int position, void *userdata)
 {
-	printf("playlist added\n");
-	printf("name [%s]\n", sp_playlist_name(pl));
 }
 
 /**
@@ -85,8 +84,7 @@ static void logged_in(sp_session *sess, sp_error error)
 	int i;
 
 	if (SP_ERROR_OK != error) {
-		fprintf(stderr, "jukebox: Login failed: %s\n",
-			sp_error_message(error));
+		syslog(LOG_ERR, "Login failed: %s\n", sp_error_message(error));
 		exit(2);
 	}
 
@@ -95,10 +93,6 @@ static void logged_in(sp_session *sess, sp_error error)
 	const char *my_name = (sp_user_is_loaded(me) ?
 		sp_user_display_name(me) :
 		sp_user_canonical_name(me));
-
-	printf("Logged in to Spotify as user %s\n", my_name);
-
-	printf("jukebox: Looking at %d playlists\n", sp_playlistcontainer_num_playlists(pc));
 
 	for (i = 0; i < sp_playlistcontainer_num_playlists(pc); ++i) {
 		sp_playlist *pl = sp_playlistcontainer_playlist(pc, i);
@@ -123,7 +117,6 @@ static void logged_in(sp_session *sess, sp_error error)
  */
 static void notify_main_thread(sp_session *sess)
 {
-	//printf("notify_main_thread()\n");
 	pthread_kill(g_main_thread, SIGIO);
 }
 
@@ -235,10 +228,7 @@ static bool playlist_is_loaded(sp_playlist *pl)
 
 static void session_ready()
 {
-	printf("\nsession_ready()\n");
-
 	int num_playlists = sp_playlistcontainer_num_playlists(g_pc);
-	printf("number of playlists [%d]\n", num_playlists);
 	if(num_playlists > 0) g_playlists_loaded_after_log_in = 1;
 
 	int i;
@@ -281,7 +271,6 @@ static void loop()
 
 		pthread_sigmask(SIG_BLOCK, &sigset, NULL);
 		sp_session_process_events(g_sess, &timeout);
-		//printf("timeout %d\n",timeout);
 		if(g_logged_in) session_ready();
 		pthread_sigmask(SIG_UNBLOCK, &sigset, NULL);
 		usleep(timeout * 1000);
@@ -305,8 +294,8 @@ int main(int argc, char **argv)
 	// Sending passwords on the command line is bad in general.
 	// We do it here for brevity.
 	if (argc < 4 || argv[1][0] == '-') {
-		fprintf(stderr, "usage: %s <username> <password> <playlist uri>\n",
-		                basename(argv[0]));
+		//fprintf(stderr, "usage: %s <username> <password> <playlist uri>\n",
+		 //               basename(argv[0]));
 		exit(1);
 	}
 	username = argv[1];
@@ -323,8 +312,7 @@ int main(int argc, char **argv)
 	err = sp_session_init(&spconfig, &sp);
 
 	if (SP_ERROR_OK != err) {
-		fprintf(stderr, "Unable to create session: %s\n",
-			sp_error_message(err));
+		syslog(LOG_ERR, "Unable to create session: %s\n", sp_error_message(err));
 		exit(1);
 	}
 
