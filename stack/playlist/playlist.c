@@ -144,47 +144,136 @@ static sp_session_config spconfig = {
 };
 /* -------------------------  END SESSION CALLBACKS  ----------------------- */
 
-/**
- * Print the given track title together with some trivial metadata
- *
- * @param  track   The track object
- */
-static void print_track(sp_track *track)
+/* -------------------------        XML CREATION     ----------------------- */
+static void xml_escape(const char *in, char **out)
 {
-	int duration = sp_track_duration(track);
+	int extra_space = 0;
+	int i;
+	for(i = 0; i < strlen(in); i++) {
+		switch (in[i]) {
+			case '\"':
+			case '\'':
+				extra_space += 5;
+				break;
+			case '<':
+			case '>':
+				extra_space += 3;
+				break;
+			case '&':
+				extra_space += 4;
+				break;
+		}
+	}
+	*out = malloc(strlen(in) + extra_space + 1);
+	strcpy(*out, "");
+	for(i = 0; i < strlen(in); i++) {
+		switch (in[i]) {
+			case '\"':
+				strcat(*out, "&quot;");
+				break;
+			case '\'':
+				strcat(*out, "&apos;");
+				break;
+			case '<':
+				strcat(*out, "&lt;");
+				break;
+			case '>':
+				strcat(*out, "&gt;");
+				break;
+			case '&':
+				strcat(*out, "&amp;");
+				break;
+			default:
+				sprintf(*out, "%s%c", *out, in[i]);
+				break;
+		}
+	}
+}
 
-	printf("Track \"%s\" [%d:%02d] has %d artist(s), %d%% popularity\n",
-	       sp_track_name(track),
-	       duration / 60000,
-	       (duration / 1000) / 60,
-	       sp_track_num_artists(track),
-	       sp_track_popularity(track));
+static void artist_as_xml(sp_artist *artist, char **xml)
+{
+	char *template = "<artist>%s</artist>";
+	char *data;
+	xml_escape(sp_artist_name(artist), &data);
+	int l = strlen(template) + strlen(data) + 1;
+	*xml = malloc(l);
+	if(*xml == NULL) syslog(LOG_ERR, "could not malloc");
+	sprintf(*xml, template, data);
+	free(data);
+}
+
+static void track_as_xml(sp_track *track, char **xml)
+{
+	char *template = "<track name=\"%s\" popularity=\"%d\">%s</track>";
+	char *name;
+	xml_escape(sp_track_name(track), &name);
+	int pop = sp_track_popularity(track);
 
 	int i;
 	sp_artist *artist;
+	char *xml_artists = malloc(1);
+	strcpy(xml_artists, "");
+	char *xml_artist;
 	for(i = 0; i < sp_track_num_artists(track); i++)
 	{
 		artist = sp_track_artist(track, i);
-		if(!sp_artist_is_loaded(artist)) continue;
-		printf(" %s,", sp_artist_name(artist));
+		artist_as_xml(artist, &xml_artist);
+		xml_artists = realloc(xml_artists, strlen(xml_artists) + strlen(xml_artist) + 1);
+		if(xml_artists == NULL) syslog(LOG_ERR, "could not realloc");
+		strcat(xml_artists, xml_artist);
+		free(xml_artist);
 	}
-	printf("\n");
+
+	int l = strlen(template) + strlen(name) + 2 + strlen(xml_artists) + 1;
+	*xml = malloc(l);
+	if(*xml == NULL) syslog(LOG_ERR, "could not malloc");
+	sprintf(*xml, template, name, pop, xml_artists);
+	free(xml_artists);
+	free(name);
 }
 
-static void print_playlist(sp_playlist *pl)
+static void playlist_as_xml(sp_playlist *pl, char** xml)
 {
+	char *template = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<playlist name=\"%s\" uri=\"%s\">%s</playlist>";
+	char *name;
+	xml_escape(sp_playlist_name(pl), &name);
 	sp_link *link = sp_link_create_from_playlist(pl);
 	char uri[256];
 	sp_link_as_string(link, uri, 256);
-	printf("name [%s] uri [%s]\n", sp_playlist_name(pl), uri);
+	char *uri_clean;
+	xml_escape(uri, &uri_clean);
+
 	int i;
 	sp_track *track;
+	char *xml_tracks = malloc(1);
+	strcpy(xml_tracks, "");
+	char *xml_track;
 	for(i = 0; i < sp_playlist_num_tracks(pl); i++)
 	{
 		track = sp_playlist_track(pl, i);
-		if(!sp_track_is_loaded(track)) continue;
-		print_track(track);
+		track_as_xml(track, &xml_track);
+		xml_tracks = realloc(xml_tracks, strlen(xml_tracks) + strlen(xml_track) + 1);
+		if(xml_tracks == NULL) syslog(LOG_ERR, "could not realloc");
+		strcat(xml_tracks, xml_track);
+		free(xml_track);
 	}
+
+	int l = strlen(template) + strlen(name) + strlen(uri) + strlen(xml_tracks) + 1;
+	*xml = malloc(l);
+	if(*xml == NULL) syslog(LOG_ERR, "could not malloc");
+	sprintf(*xml, template, name, uri, xml_tracks);
+	free(xml_tracks);
+	free(name);
+	free(uri_clean);
+}
+/* ------------------------- END XML CREATION ----------------------------*/
+
+static void post_playlist(sp_playlist *pl)
+{
+	char *xml;
+	playlist_as_xml(pl, &xml);
+	syslog(LOG_INFO, "XML to post: %s", xml);
+	free(xml);
 }
 
 static bool playlist_is_loaded(sp_playlist *pl)
@@ -225,7 +314,10 @@ static void session_ready()
 		{
 			link = sp_link_create_from_playlist(pl);
 			sp_link_as_string(link, uri, 256);
-			//print_playlist(pl);
+			//if uri is in list:
+				post_playlist(pl);
+				//remove playlist from list
+				//remove playlist from program
 		}
 	}
 }
