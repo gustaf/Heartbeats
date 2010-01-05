@@ -55,6 +55,7 @@ static pthread_mutex_t g_out_list_mutex = PTHREAD_MUTEX_INITIALIZER;
 static void playlist_added(sp_playlistcontainer *pc, sp_playlist *pl,
                            int position, void *userdata)
 {
+	syslog(LOG_DEBUG, "playlist added");
 }
 
 /**
@@ -284,7 +285,7 @@ static void post_playlist(sp_playlist *pl)
 	if(command == NULL) syslog(LOG_ERR, "could not malloc");
 	sprintf(command, template, xml);
 	int rv = system(command);
-	syslog(LOG_INFO, "Posted XML, got return code: %d", rv);
+	if(rv != 0) syslog(LOG_ERR, "Posted XML, got return code: %d", rv);
 	free(xml);
 	free(command);
 }
@@ -316,10 +317,11 @@ static void session_ready()
 	int num_playlists = sp_playlistcontainer_num_playlists(g_pc);
 	if(num_playlists > 0) g_playlists_loaded_after_log_in = 1;
 
-	int i;
+	int i, uri_pos;
 	sp_playlist *pl;
 	sp_link *link;
 	char uri[256];
+	syslog(LOG_DEBUG, "going through playlists. in[%d] out[%d]", list_size(&g_in_list), list_size(&g_out_list));
 	for(i = 0; i < num_playlists; i++)
 	{
 		pl = sp_playlistcontainer_playlist(g_pc, i);
@@ -328,11 +330,18 @@ static void session_ready()
 			link = sp_link_create_from_playlist(pl);
 			sp_link_as_string(link, uri, 256);
 			pthread_mutex_lock(&g_out_list_mutex);
-			//if uri is in list:
+			uri_pos = list_locate(&g_out_list, uri);
+			if(uri_pos >= 0) {
+				list_delete_at(&g_out_list, uri_pos);
 				post_playlist(pl);
-				//remove playlist from list
-				//remove playlist from program
+				sp_playlistcontainer_remove_playlist(g_pc, i);
+				syslog(LOG_INFO, "removing playlist: %s", uri);
+			}
 			pthread_mutex_unlock(&g_out_list_mutex);
+		}
+		else
+		{
+			syslog(LOG_DEBUG, "playlist not loaded. id[%d]", i);
 		}
 	}
 	
@@ -342,7 +351,8 @@ static void session_ready()
 		sp_playlistcontainer_add_playlist(g_pc, sp_link_create_from_string(incoming_uri));
 		pthread_mutex_lock(&g_out_list_mutex);
 		list_append(&g_out_list, incoming_uri);
-		pthread_mutex_unlock(&g_in_list_mutex);
+		syslog(LOG_DEBUG, "handling incoming uri. in[%d] out[%d]", list_size(&g_in_list), list_size(&g_out_list));
+		pthread_mutex_unlock(&g_out_list_mutex);
 	}
 	pthread_mutex_unlock(&g_in_list_mutex);
 }
@@ -399,6 +409,7 @@ void *fcgi_loop()
 		pthread_mutex_lock(&g_in_list_mutex);
 		list_append(&g_in_list, stripped_req_uri());
 		pthread_mutex_unlock(&g_in_list_mutex);
+		pthread_kill(g_main_thread, SIGIO);
 	}
 	return 0;
 }
@@ -409,6 +420,7 @@ int main(void)
 	list_init(&g_out_list);
 	list_attributes_copy(&g_in_list, list_meter_string, 1);
 	list_attributes_copy(&g_out_list, list_meter_string, 1);
+	list_attributes_comparator(&g_out_list, list_comparator_string);
 
 	sp_session *sp;
 	sp_error err;
