@@ -9,6 +9,8 @@
 #include <unistd.h>
 #include <spotify/api.h>
 #include <syslog.h>
+#include "fcgi_stdio.h"
+#include "simclist.h"
 
 
 /* --- Data --- */
@@ -20,7 +22,7 @@ extern const size_t g_appkey_size;
 
 /// A handle to the main thread, needed for synchronization between callbacks
 /// and the main loop.
-static pthread_t g_main_thread = -1;
+static pthread_t g_main_thread;
 
 /// The global session handle
 static sp_session *g_sess;
@@ -30,6 +32,14 @@ static sp_playlistcontainer *g_pc;
 /// State variables
 static int g_logged_in = 0;
 static int g_playlists_loaded_after_log_in = 0;
+
+/// fcgi environment
+extern char **environ;
+
+static list_t g_in_list;
+static list_t g_out_list;
+static pthread_mutex_t g_in_list_mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t g_out_list_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 /* --------------------  PLAYLIST CONTAINER CALLBACKS  --------------------- */
 /**
@@ -85,9 +95,6 @@ static void logged_in(sp_session *sess, sp_error error)
 	}
 
 	g_logged_in = 1;
-
-	//sp_link *link = sp_link_create_from_string(g_uri);
-	//sp_playlistcontainer_add_playlist(g_pc, link);
 }
 
 /**
@@ -272,8 +279,14 @@ static void post_playlist(sp_playlist *pl)
 {
 	char *xml;
 	playlist_as_xml(pl, &xml);
-	syslog(LOG_INFO, "XML to post: %s", xml);
+	char *template = "wget -q -O - --post-data='%s' http://97.107.141.222/ > /dev/null";
+	char *command = malloc(strlen(template) + strlen(xml) + 1);
+	if(command == NULL) syslog(LOG_ERR, "could not malloc");
+	sprintf(command, template, xml);
+	int rv = system(command);
+	syslog(LOG_INFO, "Posted XML, got return code: %d", rv);
 	free(xml);
+	free(command);
 }
 
 static bool playlist_is_loaded(sp_playlist *pl)
@@ -314,12 +327,24 @@ static void session_ready()
 		{
 			link = sp_link_create_from_playlist(pl);
 			sp_link_as_string(link, uri, 256);
+			pthread_mutex_lock(&g_out_list_mutex);
 			//if uri is in list:
 				post_playlist(pl);
 				//remove playlist from list
 				//remove playlist from program
+			pthread_mutex_unlock(&g_out_list_mutex);
 		}
 	}
+	
+	pthread_mutex_lock(&g_in_list_mutex);
+	char *incoming_uri = list_fetch(&g_in_list);
+	if(incoming_uri != NULL) {
+		sp_playlistcontainer_add_playlist(g_pc, sp_link_create_from_string(incoming_uri));
+		pthread_mutex_lock(&g_out_list_mutex);
+		list_append(&g_out_list, incoming_uri);
+		pthread_mutex_unlock(&g_in_list_mutex);
+	}
+	pthread_mutex_unlock(&g_in_list_mutex);
 }
 
 /**
@@ -355,14 +380,40 @@ static void sigIgn(int signo)
 {
 }
 
+char* stripped_req_uri()
+{
+    char **envp = environ;
+    char *var_prefix = "REQUEST_URI=/playlist/";
+    for ( ; envp != NULL; envp++)
+        if(strstr(*envp, var_prefix))
+            return *envp + strlen(var_prefix);
+
+    return NULL;
+}
+
+void *fcgi_loop()
+{
+	while(FCGI_Accept() >= 0) {
+		printf("Content-type: text/html\r\n\r\nok");
+		syslog(LOG_INFO, "Received uri: %s", stripped_req_uri());
+		pthread_mutex_lock(&g_in_list_mutex);
+		list_append(&g_in_list, stripped_req_uri());
+		pthread_mutex_unlock(&g_in_list_mutex);
+	}
+	return 0;
+}
+
 int main(void)
 {
+	list_init(&g_in_list);
+	list_init(&g_out_list);
+	list_attributes_copy(&g_in_list, list_meter_string, 1);
+	list_attributes_copy(&g_out_list, list_meter_string, 1);
+
 	sp_session *sp;
 	sp_error err;
 	const char *username = "kallus";
 	const char *password = "pagedown";
-	
-	//g_uri = "spotify:user:kallus:playlist:1d4k8YcfQlYboldYh8sNm1";
 
 	// Setup for waking up the main thread in notify_main_thread()
 	g_main_thread = pthread_self();
@@ -388,6 +439,10 @@ int main(void)
 		NULL);
 
 	sp_session_login(sp, username, password);
+
+	//start fcgi thread
+	pthread_t fcgi_thread;
+	pthread_create(&fcgi_thread, NULL, fcgi_loop, NULL);
 
 	loop();
 
