@@ -1,32 +1,3 @@
-/**
- * Copyright (c) 2006-2009 Spotify Ltd
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- *
- * This example application shows parts of the playlist and player submodules.
- * It also shows another way of doing synchronization between callbacks and
- * the main thread.
- *
- * This file is part of the libspotify examples suite.
- */
-
 #include <errno.h>
 #include <libgen.h>
 #include <signal.h>
@@ -37,6 +8,9 @@
 #include <string.h>
 #include <unistd.h>
 #include <spotify/api.h>
+#include <syslog.h>
+#include "fcgi_stdio.h"
+#include "simclist.h"
 
 
 /* --- Data --- */
@@ -48,7 +22,7 @@ extern const size_t g_appkey_size;
 
 /// A handle to the main thread, needed for synchronization between callbacks
 /// and the main loop.
-static pthread_t g_main_thread = -1;
+static pthread_t g_main_thread;
 
 /// The global session handle
 static sp_session *g_sess;
@@ -58,7 +32,14 @@ static sp_playlistcontainer *g_pc;
 /// State variables
 static int g_logged_in = 0;
 static int g_playlists_loaded_after_log_in = 0;
-const char *g_uri;
+
+/// fcgi environment
+extern char **environ;
+
+static list_t g_in_list;
+static list_t g_out_list;
+static pthread_mutex_t g_in_list_mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t g_out_list_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 /* --------------------  PLAYLIST CONTAINER CALLBACKS  --------------------- */
 /**
@@ -74,8 +55,7 @@ const char *g_uri;
 static void playlist_added(sp_playlistcontainer *pc, sp_playlist *pl,
                            int position, void *userdata)
 {
-	printf("playlist added\n");
-	printf("name [%s]\n", sp_playlist_name(pl));
+	syslog(LOG_DEBUG, "playlist added");
 }
 
 /**
@@ -110,36 +90,12 @@ static sp_playlistcontainer_callbacks pc_callbacks = {
  */
 static void logged_in(sp_session *sess, sp_error error)
 {
-	sp_playlistcontainer *pc = sp_session_playlistcontainer(sess);
-	int i;
-
 	if (SP_ERROR_OK != error) {
-		fprintf(stderr, "jukebox: Login failed: %s\n",
-			sp_error_message(error));
+		syslog(LOG_ERR, "Login failed: %s\n", sp_error_message(error));
 		exit(2);
 	}
 
-	// Let us print the nice message...
-	sp_user *me = sp_session_user(sess);
-	const char *my_name = (sp_user_is_loaded(me) ?
-		sp_user_display_name(me) :
-		sp_user_canonical_name(me));
-
-	printf("Logged in to Spotify as user %s\n", my_name);
-
-	printf("jukebox: Looking at %d playlists\n", sp_playlistcontainer_num_playlists(pc));
-
-	for (i = 0; i < sp_playlistcontainer_num_playlists(pc); ++i) {
-		sp_playlist *pl = sp_playlistcontainer_playlist(pc, i);
-
-	}
-
 	g_logged_in = 1;
-
-	sp_link *link = sp_link_create_from_string(g_uri);
-	sp_playlistcontainer_add_playlist(g_pc, link);
-
-	//fflush(stdout);
 }
 
 /**
@@ -152,7 +108,6 @@ static void logged_in(sp_session *sess, sp_error error)
  */
 static void notify_main_thread(sp_session *sess)
 {
-	//printf("notify_main_thread()\n");
 	pthread_kill(g_main_thread, SIGIO);
 }
 
@@ -191,53 +146,148 @@ static sp_session_config spconfig = {
 	.settings_location = "tmp",
 	.application_key = g_appkey,
 	.application_key_size = 0, // Set in main()
-	.user_agent = "spotify-jukebox-example",
+	.user_agent = "heartb.com playlist lookup",
 	.callbacks = &session_callbacks,
 	NULL,
 };
 /* -------------------------  END SESSION CALLBACKS  ----------------------- */
 
-/**
- * Print the given track title together with some trivial metadata
- *
- * @param  track   The track object
- */
-static void print_track(sp_track *track)
+/* -------------------------        XML CREATION     ----------------------- */
+static void xml_escape(const char *in, char **out)
 {
-	int duration = sp_track_duration(track);
+	int extra_space = 0;
+	int i;
+	for(i = 0; i < strlen(in); i++) {
+		switch (in[i]) {
+			case '\"':
+			case '\'':
+				extra_space += 5;
+				break;
+			case '<':
+			case '>':
+				extra_space += 3;
+				break;
+			case '&':
+				extra_space += 4;
+				break;
+		}
+	}
+	*out = malloc(strlen(in) + extra_space + 1);
+	strcpy(*out, "");
+	for(i = 0; i < strlen(in); i++) {
+		switch (in[i]) {
+			case '\"':
+				strcat(*out, "&quot;");
+				break;
+			case '\'':
+				strcat(*out, "&apos;");
+				break;
+			case '<':
+				strcat(*out, "&lt;");
+				break;
+			case '>':
+				strcat(*out, "&gt;");
+				break;
+			case '&':
+				strcat(*out, "&amp;");
+				break;
+			default:
+				sprintf(*out, "%s%c", *out, in[i]);
+				break;
+		}
+	}
+}
 
-	printf("Track \"%s\" [%d:%02d] has %d artist(s), %d%% popularity\n",
-	       sp_track_name(track),
-	       duration / 60000,
-	       (duration / 1000) / 60,
-	       sp_track_num_artists(track),
-	       sp_track_popularity(track));
+static void artist_as_xml(sp_artist *artist, char **xml)
+{
+	char *template = "<artist>%s</artist>";
+	char *data;
+	xml_escape(sp_artist_name(artist), &data);
+	int l = strlen(template) + strlen(data) + 1;
+	*xml = malloc(l);
+	if(*xml == NULL) syslog(LOG_ERR, "could not malloc");
+	sprintf(*xml, template, data);
+	free(data);
+}
+
+static void track_as_xml(sp_track *track, char **xml)
+{
+	char *template = "<track name=\"%s\" popularity=\"%d\">%s</track>";
+	char *name;
+	xml_escape(sp_track_name(track), &name);
+	int pop = sp_track_popularity(track);
 
 	int i;
 	sp_artist *artist;
+	char *xml_artists = malloc(1);
+	strcpy(xml_artists, "");
+	char *xml_artist;
 	for(i = 0; i < sp_track_num_artists(track); i++)
 	{
 		artist = sp_track_artist(track, i);
-		if(!sp_artist_is_loaded(artist)) continue;
-		printf(" %s,", sp_artist_name(artist));
+		artist_as_xml(artist, &xml_artist);
+		xml_artists = realloc(xml_artists, strlen(xml_artists) + strlen(xml_artist) + 1);
+		if(xml_artists == NULL) syslog(LOG_ERR, "could not realloc");
+		strcat(xml_artists, xml_artist);
+		free(xml_artist);
 	}
-	printf("\n");
+
+	int l = strlen(template) + strlen(name) + 2 + strlen(xml_artists) + 1;
+	*xml = malloc(l);
+	if(*xml == NULL) syslog(LOG_ERR, "could not malloc");
+	sprintf(*xml, template, name, pop, xml_artists);
+	free(xml_artists);
+	free(name);
 }
 
-static void print_playlist(sp_playlist *pl)
+static void playlist_as_xml(sp_playlist *pl, char** xml)
 {
+	char *template = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<playlist name=\"%s\" uri=\"%s\">%s</playlist>";
+	char *name;
+	xml_escape(sp_playlist_name(pl), &name);
 	sp_link *link = sp_link_create_from_playlist(pl);
 	char uri[256];
 	sp_link_as_string(link, uri, 256);
-	printf("name [%s] uri [%s]\n", sp_playlist_name(pl), uri);
+	char *uri_clean;
+	xml_escape(uri, &uri_clean);
+
 	int i;
 	sp_track *track;
+	char *xml_tracks = malloc(1);
+	strcpy(xml_tracks, "");
+	char *xml_track;
 	for(i = 0; i < sp_playlist_num_tracks(pl); i++)
 	{
 		track = sp_playlist_track(pl, i);
-		if(!sp_track_is_loaded(track)) continue;
-		print_track(track);
+		track_as_xml(track, &xml_track);
+		xml_tracks = realloc(xml_tracks, strlen(xml_tracks) + strlen(xml_track) + 1);
+		if(xml_tracks == NULL) syslog(LOG_ERR, "could not realloc");
+		strcat(xml_tracks, xml_track);
+		free(xml_track);
 	}
+
+	int l = strlen(template) + strlen(name) + strlen(uri) + strlen(xml_tracks) + 1;
+	*xml = malloc(l);
+	if(*xml == NULL) syslog(LOG_ERR, "could not malloc");
+	sprintf(*xml, template, name, uri, xml_tracks);
+	free(xml_tracks);
+	free(name);
+	free(uri_clean);
+}
+/* ------------------------- END XML CREATION ----------------------------*/
+
+static void post_playlist(sp_playlist *pl)
+{
+	char *xml;
+	playlist_as_xml(pl, &xml);
+	char *template = "wget -q -O - --post-data='%s' http://97.107.141.222/ > /dev/null";
+	char *command = malloc(strlen(template) + strlen(xml) + 1);
+	if(command == NULL) syslog(LOG_ERR, "could not malloc");
+	sprintf(command, template, xml);
+	int rv = system(command);
+	if(rv != 0) syslog(LOG_ERR, "Posted XML, got return code: %d", rv);
+	free(xml);
+	free(command);
 }
 
 static bool playlist_is_loaded(sp_playlist *pl)
@@ -264,16 +314,14 @@ static bool playlist_is_loaded(sp_playlist *pl)
 
 static void session_ready()
 {
-	printf("\nsession_ready()\n");
-
 	int num_playlists = sp_playlistcontainer_num_playlists(g_pc);
-	printf("number of playlists [%d]\n", num_playlists);
 	if(num_playlists > 0) g_playlists_loaded_after_log_in = 1;
 
-	int i;
+	int i, uri_pos;
 	sp_playlist *pl;
 	sp_link *link;
 	char uri[256];
+	syslog(LOG_DEBUG, "going through playlists. in[%d] out[%d]", list_size(&g_in_list), list_size(&g_out_list));
 	for(i = 0; i < num_playlists; i++)
 	{
 		pl = sp_playlistcontainer_playlist(g_pc, i);
@@ -281,13 +329,32 @@ static void session_ready()
 		{
 			link = sp_link_create_from_playlist(pl);
 			sp_link_as_string(link, uri, 256);
-			if(strcmp(g_uri, uri) == 0)
-			{
-				print_playlist(pl);
-				exit(1);
+			pthread_mutex_lock(&g_out_list_mutex);
+			uri_pos = list_locate(&g_out_list, uri);
+			if(uri_pos >= 0) {
+				list_delete_at(&g_out_list, uri_pos);
+				post_playlist(pl);
+				sp_playlistcontainer_remove_playlist(g_pc, i);
+				syslog(LOG_INFO, "removing playlist: %s", uri);
 			}
+			pthread_mutex_unlock(&g_out_list_mutex);
+		}
+		else
+		{
+			syslog(LOG_DEBUG, "playlist not loaded. id[%d]", i);
 		}
 	}
+	
+	pthread_mutex_lock(&g_in_list_mutex);
+	char *incoming_uri = list_fetch(&g_in_list);
+	if(incoming_uri != NULL) {
+		sp_playlistcontainer_add_playlist(g_pc, sp_link_create_from_string(incoming_uri));
+		pthread_mutex_lock(&g_out_list_mutex);
+		list_append(&g_out_list, incoming_uri);
+		syslog(LOG_DEBUG, "handling incoming uri. in[%d] out[%d]", list_size(&g_in_list), list_size(&g_out_list));
+		pthread_mutex_unlock(&g_out_list_mutex);
+	}
+	pthread_mutex_unlock(&g_in_list_mutex);
 }
 
 /**
@@ -310,7 +377,6 @@ static void loop()
 
 		pthread_sigmask(SIG_BLOCK, &sigset, NULL);
 		sp_session_process_events(g_sess, &timeout);
-		//printf("timeout %d\n",timeout);
 		if(g_logged_in) session_ready();
 		pthread_sigmask(SIG_UNBLOCK, &sigset, NULL);
 		usleep(timeout * 1000);
@@ -324,23 +390,42 @@ static void sigIgn(int signo)
 {
 }
 
-int main(int argc, char **argv)
+char* stripped_req_uri()
 {
+    char **envp = environ;
+    char *var_prefix = "REQUEST_URI=/playlist/";
+    for ( ; envp != NULL; envp++)
+        if(strstr(*envp, var_prefix))
+            return *envp + strlen(var_prefix);
+
+    return NULL;
+}
+
+void *fcgi_loop()
+{
+	while(FCGI_Accept() >= 0) {
+		printf("Content-type: text/html\r\n\r\nok");
+		syslog(LOG_INFO, "Received uri: %s", stripped_req_uri());
+		pthread_mutex_lock(&g_in_list_mutex);
+		list_append(&g_in_list, stripped_req_uri());
+		pthread_mutex_unlock(&g_in_list_mutex);
+		pthread_kill(g_main_thread, SIGIO);
+	}
+	return 0;
+}
+
+int main(void)
+{
+	list_init(&g_in_list);
+	list_init(&g_out_list);
+	list_attributes_copy(&g_in_list, list_meter_string, 1);
+	list_attributes_copy(&g_out_list, list_meter_string, 1);
+	list_attributes_comparator(&g_out_list, list_comparator_string);
+
 	sp_session *sp;
 	sp_error err;
-	const char *username = NULL;
-	const char *password = NULL;
-	
-	// Sending passwords on the command line is bad in general.
-	// We do it here for brevity.
-	if (argc < 4 || argv[1][0] == '-') {
-		fprintf(stderr, "usage: %s <username> <password> <playlist uri>\n",
-		                basename(argv[0]));
-		exit(1);
-	}
-	username = argv[1];
-	password = argv[2];
-	g_uri = argv[3];
+	const char *username = "kallus";
+	const char *password = "pagedown";
 
 	// Setup for waking up the main thread in notify_main_thread()
 	g_main_thread = pthread_self();
@@ -352,8 +437,7 @@ int main(int argc, char **argv)
 	err = sp_session_init(&spconfig, &sp);
 
 	if (SP_ERROR_OK != err) {
-		fprintf(stderr, "Unable to create session: %s\n",
-			sp_error_message(err));
+		syslog(LOG_ERR, "Unable to create session: %s\n", sp_error_message(err));
 		exit(1);
 	}
 
@@ -367,6 +451,10 @@ int main(int argc, char **argv)
 		NULL);
 
 	sp_session_login(sp, username, password);
+
+	//start fcgi thread
+	pthread_t fcgi_thread;
+	pthread_create(&fcgi_thread, NULL, fcgi_loop, NULL);
 
 	loop();
 

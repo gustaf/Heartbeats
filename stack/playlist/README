@@ -7,9 +7,17 @@ make setup
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$PWD/lib/pkgconfig
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/lib
 
-COMPILE AND RUN PROGRAM
-gcc -Wall -o playlist *.c /home/jonatan/libspotify-0.0.2-linux6-x86/lib/libspotify.so -I/home/jonatan/libspotify-0.0.2-linux6-x86/include -g
-./playlist <user> <password> <playlist uri>
+INSTALL FCGI
+wget http://www.fastcgi.com/dist/fcgi.tar.gz
+tar xzf fcgi-2.4.0.tar.gz
+cd fcgi-2.4.0/
+[ ... don't remeber...]
+don't forget to set owner of app directory to www-data
+
+COMPILE
+gcc -Wall -o playlist *.c /home/jonatan/libspotify-0.0.2-linux6-x86/lib/libspotify.so -I/home/jonatan/libspotify-0.0.2-linux6-x86/include -lfcgi -g
+
+CONFIG LIGHTTPD TO USE PLAYLIST
 
 DEBUG
-gdb --args jukebox kallus pagedown spotify:user:spotify:playlist:3i89VitTqdAP68GrGp8o9D
+gdb playlist
