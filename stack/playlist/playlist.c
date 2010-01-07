@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include <spotify/api.h>
 #include <syslog.h>
-#include "fcgi_stdio.h"
+#include "fcgiapp.h"
 #include "simclist.h"
 
 
@@ -20,10 +20,6 @@ extern const uint8_t g_appkey[];
 /// The size of the application key.
 extern const size_t g_appkey_size;
 
-/// A handle to the main thread, needed for synchronization between callbacks
-/// and the main loop.
-static pthread_t g_main_thread;
-
 /// The global session handle
 static sp_session *g_sess;
 /// The global playlistcontainer handle
@@ -32,14 +28,11 @@ static sp_playlistcontainer *g_pc;
 /// State variables
 static int g_logged_in = 0;
 static int g_playlists_loaded_after_log_in = 0;
-
-/// fcgi environment
-extern char **environ;
+static int g_notified = 0;
 
 static list_t g_in_list;
 static list_t g_out_list;
 static pthread_mutex_t g_in_list_mutex = PTHREAD_MUTEX_INITIALIZER;
-static pthread_mutex_t g_out_list_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 /* --------------------  PLAYLIST CONTAINER CALLBACKS  --------------------- */
 /**
@@ -55,7 +48,6 @@ static pthread_mutex_t g_out_list_mutex = PTHREAD_MUTEX_INITIALIZER;
 static void playlist_added(sp_playlistcontainer *pc, sp_playlist *pl,
                            int position, void *userdata)
 {
-	syslog(LOG_DEBUG, "playlist added");
 }
 
 /**
@@ -108,7 +100,7 @@ static void logged_in(sp_session *sess, sp_error error)
  */
 static void notify_main_thread(sp_session *sess)
 {
-	pthread_kill(g_main_thread, SIGIO);
+	g_notified = 1;
 }
 
 /**
@@ -280,12 +272,13 @@ static void post_playlist(sp_playlist *pl)
 {
 	char *xml;
 	playlist_as_xml(pl, &xml);
-	char *template = "wget -q -O - --post-data='%s' http://97.107.141.222/ > /dev/null";
+	char *template = "wget -q -O - --post-data='%s' http://heartb.com/playlist_xml_receiver > /dev/null";
 	char *command = malloc(strlen(template) + strlen(xml) + 1);
 	if(command == NULL) syslog(LOG_ERR, "could not malloc");
 	sprintf(command, template, xml);
 	int rv = system(command);
 	if(rv != 0) syslog(LOG_ERR, "Posted XML, got return code: %d", rv);
+	else syslog(LOG_INFO, "Posted XML successfully");
 	free(xml);
 	free(command);
 }
@@ -321,7 +314,6 @@ static void session_ready()
 	sp_playlist *pl;
 	sp_link *link;
 	char uri[256];
-	syslog(LOG_DEBUG, "going through playlists. in[%d] out[%d]", list_size(&g_in_list), list_size(&g_out_list));
 	for(i = 0; i < num_playlists; i++)
 	{
 		pl = sp_playlistcontainer_playlist(g_pc, i);
@@ -329,7 +321,6 @@ static void session_ready()
 		{
 			link = sp_link_create_from_playlist(pl);
 			sp_link_as_string(link, uri, 256);
-			pthread_mutex_lock(&g_out_list_mutex);
 			uri_pos = list_locate(&g_out_list, uri);
 			if(uri_pos >= 0) {
 				list_delete_at(&g_out_list, uri_pos);
@@ -337,79 +328,62 @@ static void session_ready()
 				sp_playlistcontainer_remove_playlist(g_pc, i);
 				syslog(LOG_INFO, "removing playlist: %s", uri);
 			}
-			pthread_mutex_unlock(&g_out_list_mutex);
-		}
-		else
-		{
-			syslog(LOG_DEBUG, "playlist not loaded. id[%d]", i);
 		}
 	}
 	
 	pthread_mutex_lock(&g_in_list_mutex);
 	char *incoming_uri = list_fetch(&g_in_list);
-	if(incoming_uri != NULL) {
-		sp_playlistcontainer_add_playlist(g_pc, sp_link_create_from_string(incoming_uri));
-		pthread_mutex_lock(&g_out_list_mutex);
-		list_append(&g_out_list, incoming_uri);
-		syslog(LOG_DEBUG, "handling incoming uri. in[%d] out[%d]", list_size(&g_in_list), list_size(&g_out_list));
-		pthread_mutex_unlock(&g_out_list_mutex);
-	}
 	pthread_mutex_unlock(&g_in_list_mutex);
+	if(incoming_uri != NULL) {
+		link = sp_link_create_from_string(incoming_uri);
+		if(link != NULL) {
+			sp_playlistcontainer_add_playlist(g_pc, link);
+			list_append(&g_out_list, incoming_uri);
+		}
+	}
 }
 
-/**
- * The main loop. When this function returns, the program should terminate.
- *
- * To avoid having the \p SIGIO in notify_main_thread() interrupt libspotify,
- * we block it while processing events.
- *
- * @sa sp_session_process_events
- */
 static void loop()
 {
-	sigset_t sigset;
-
-	sigemptyset(&sigset);
-	sigaddset(&sigset, SIGIO);
-
+	const int frame_duration = 10000;
+	int timeout = -1;
+	int frame_count = 0;
 	while (1) {
-		int timeout = -1;
-
-		pthread_sigmask(SIG_BLOCK, &sigset, NULL);
-		sp_session_process_events(g_sess, &timeout);
+		if(g_notified || timeout < frame_duration * frame_count) {
+			sp_session_process_events(g_sess, &timeout);
+			timeout *= 1000;
+			frame_count = 0;
+			g_notified = 0;
+		}
 		if(g_logged_in) session_ready();
-		pthread_sigmask(SIG_UNBLOCK, &sigset, NULL);
-		usleep(timeout * 1000);
+		usleep(frame_duration);
+		frame_count++;
 	}
 }
 
-/**
- * A dummy function to ignore SIGIO.
- */
-static void sigIgn(int signo)
+static char* stripped_req_uri(char *in)
 {
-}
-
-char* stripped_req_uri()
-{
-    char **envp = environ;
-    char *var_prefix = "REQUEST_URI=/playlist/";
-    for ( ; envp != NULL; envp++)
-        if(strstr(*envp, var_prefix))
-            return *envp + strlen(var_prefix);
-
+    char *prefix = "/playlist/";
+    if(strstr(in, prefix) != NULL) return in + strlen(prefix);
     return NULL;
 }
 
-void *fcgi_loop()
+static void *fcgi_loop()
 {
-	while(FCGI_Accept() >= 0) {
-		printf("Content-type: text/html\r\n\r\nok");
-		syslog(LOG_INFO, "Received uri: %s", stripped_req_uri());
+	FCGX_Stream *in, *out, *err;
+	FCGX_ParamArray envp;
+	char *req_uri;
+
+	while (FCGX_Accept(&in, &out, &err, &envp) >= 0) {
+		FCGX_FPrintF(out,"Content-type: text/plain\r\n\r\nok");
+		req_uri = FCGX_GetParam("REQUEST_URI", envp);
+		if(req_uri == NULL) continue;
+		req_uri = stripped_req_uri(req_uri);
+		if(req_uri == NULL) continue;
+		syslog(LOG_INFO, "Received uri: %s", req_uri);
 		pthread_mutex_lock(&g_in_list_mutex);
-		list_append(&g_in_list, stripped_req_uri());
+		list_append(&g_in_list, req_uri);
 		pthread_mutex_unlock(&g_in_list_mutex);
-		pthread_kill(g_main_thread, SIGIO);
 	}
 	return 0;
 }
@@ -426,10 +400,6 @@ int main(void)
 	sp_error err;
 	const char *username = "kallus";
 	const char *password = "pagedown";
-
-	// Setup for waking up the main thread in notify_main_thread()
-	g_main_thread = pthread_self();
-	signal(SIGIO, &sigIgn);
 
 	/* Create session */
 	spconfig.application_key_size = g_appkey_size;
