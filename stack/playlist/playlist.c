@@ -272,7 +272,7 @@ static void post_playlist(sp_playlist *pl)
 {
 	char *xml;
 	playlist_as_xml(pl, &xml);
-	char *template = "wget -q -O - --post-data='%s' http://heartb.com/playlist_xml_receiver > /dev/null";
+	char *template = "wget -q -O - --post-data='%s' http://heartb.com/playlist_receiver > /dev/null";
 	char *command = malloc(strlen(template) + strlen(xml) + 1);
 	if(command == NULL) syslog(LOG_ERR, "could not malloc");
 	sprintf(command, template, xml);
