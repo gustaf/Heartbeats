@@ -3,7 +3,7 @@ class PlaylistReceiverController < ApplicationController
 
   def index
     @post = request.raw_post
-    logger.debug "playlist receiver received: #@post"
+    logger.info "playlist receiver received: #@post"
     render :text => "ok"
   end
 
