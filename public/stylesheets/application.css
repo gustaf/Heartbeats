@@ -1,18 +1,20 @@
 .clearfix:after {clear:both;content:".";display:block;font-size:0;height:0;line-height:0;visibility:hidden;}
 .clearfix {display:block;}
 
-body {background-color: #efefef;font-family:"lucida grande",tahoma,sans-serif;line-height: 1.5em;font-size:13px;color: #000000;}
+body {background:#cbe4f1 url(http://ourheartbeats.com/dev/background.png) repeat-x scroll left top !important;font-family:"lucida grande",tahoma,sans-serif;line-height: 1.5em;font-size:13px;color: #000000;}
+
+
 a:hover{text-decoration:underline;color: #3B5998;}
 a{cursor:pointer;color:#3B5998;text-decoration:none;outline-style:none;}
 a.FB_Link{cursor:pointer;color:#3B5998;text-decoration:none;outline-style:none;}
 a:hover.FB_Link{text-decoration:underline;color: #3B5998;}
 img { border:0 none; }
 
-#content {width:780px;margin:1em auto;padding:10px;background:#efefef;font-family:"lucida grande",tahoma,sans-serif;line-height: 1.5em;font-size:13px;color: #000000;}
+#content {width:780px;margin:1em auto;padding:10px;font-family:"lucida grande",tahoma,sans-serif;line-height: 1.5em;font-size:13px;color: #000000;}
 #header {text-align:right;}
 
 #logo img{float:left;text-decoration:none;border:0px;}
-#top_links{float:right;background-color:#efefef;white-space:nowrap;padding:0 .7em;}
+#top_links{float:right;white-space:nowrap;padding:0 .7em;}
 
 .headline {font-weight:bold;font-size:17px;color:#333333;margin-top:20px;padding:10px;}
 
@@ -71,10 +73,11 @@ img { border:0 none; }
 
 #friends_list {margin-top:0px;margin-bottom:0px;padding:20px;}
 .friend_column {float: left; width: 350px;margin-right:10px;}
-.friend {width:350px;margin-bottom:15px;}
-.friend_pic {float:left;}
+.friend {width:350px;margin-bottom:15px; margin-right:5px;}
+.friend_pic {float:left; border:1px solid #DDDDDD; padding:2px; position:relative; vertical-align:middle;}
 .friend_details {float: left;width:275px;margin-left:10px;}
 .friend_name {font-weight:bold;font-size:14px;}
+
 
 #left_column {float: left; width: 350px;margin-right:10px;}
 #right_column {float: left; width: 350px;margin-right:10px;}
