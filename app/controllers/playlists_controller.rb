@@ -1,5 +1,3 @@
-require 'net/http'
-
 class PlaylistsController < ApplicationController
   before_filter :set_facebook_session, :ensure_logged_in_and_get_user
   helper_method :facebook_session
@@ -32,9 +30,7 @@ class PlaylistsController < ApplicationController
     end
     
     if playlist
-      Net::HTTP.get "97.107.141.222", "/playlist/#{playlist.url_spotify}" if playlist.is_proper_playlist?
-      playlist.data_requested_at = DateTime.now
-      playlist.save
+      playlist.lookup!
       flash[:playlist_added] = "Show stream publisher"
     end
     

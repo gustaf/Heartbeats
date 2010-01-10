@@ -1,4 +1,5 @@
 require 'meta-spotify'
+require 'net/http'
 
 class Playlist < ActiveRecord::Base
   validate :url_is_valid
@@ -61,6 +62,14 @@ class Playlist < ActiveRecord::Base
     return unless playlist
     playlist.updated_at = DateTime.now
     playlist.save
+  end
+
+  def lookup!
+    if is_proper_playlist? then
+      Net::HTTP.get "97.107.141.222", "/playlist/#{url_spotify}"
+      data_requested_at = DateTime.now
+      save
+    end
   end
 
   class << self
