@@ -204,10 +204,15 @@ static void artist_as_xml(sp_artist *artist, char **xml)
 
 static void track_as_xml(sp_track *track, char **xml)
 {
-	char *template = "<track name=\"%s\" popularity=\"%d\">%s</track>";
-	char *name;
+	char *template = "<track name=\"%s\" popularity=\"%d\" album=\"%s\" uri=\"%s\" duration=\"%d\">%s</track>";
+	char *name, *album;
 	xml_escape(sp_track_name(track), &name);
+	xml_escape(sp_album_name(sp_track_album(track)), &album);
 	int pop = sp_track_popularity(track);
+	int duration = sp_track_duration(track);
+	char uri[256];
+	sp_link *link = sp_link_create_from_track(track, 0);
+	sp_link_as_string(link, uri, 256);
 
 	int i;
 	sp_artist *artist;
@@ -224,17 +229,18 @@ static void track_as_xml(sp_track *track, char **xml)
 		free(xml_artist);
 	}
 
-	int l = strlen(template) + strlen(name) + 2 + strlen(xml_artists) + 1;
+	int l = strlen(template) + strlen(name) + 2 + strlen(album) + strlen(uri) + 20 + strlen(xml_artists) + 1;
 	*xml = malloc(l);
 	if(*xml == NULL) syslog(LOG_ERR, "could not malloc");
-	sprintf(*xml, template, name, pop, xml_artists);
+	sprintf(*xml, template, name, pop, album, uri, duration, xml_artists);
 	free(xml_artists);
 	free(name);
+	free(album);
 }
 
 static void playlist_as_xml(sp_playlist *pl, char** xml)
 {
-	char *template = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<playlist name=\"%s\" uri=\"%s\">%s</playlist>";
+	char *template = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<playlist name=\"%s\" uri=\"%s\" collaborative=\"%s\">%s</playlist>";
 	char *name;
 	xml_escape(sp_playlist_name(pl), &name);
 	sp_link *link = sp_link_create_from_playlist(pl);
@@ -242,6 +248,9 @@ static void playlist_as_xml(sp_playlist *pl, char** xml)
 	sp_link_as_string(link, uri, 256);
 	char *uri_clean;
 	xml_escape(uri, &uri_clean);
+	char collab[4];
+	if(sp_playlist_is_collaborative(pl)) sprintf(collab, "yes");
+	else sprintf(collab, "no");
 
 	int i;
 	sp_track *track;
@@ -258,10 +267,10 @@ static void playlist_as_xml(sp_playlist *pl, char** xml)
 		free(xml_track);
 	}
 
-	int l = strlen(template) + strlen(name) + strlen(uri) + strlen(xml_tracks) + 1;
+	int l = strlen(template) + strlen(name) + strlen(uri) + 3 + strlen(xml_tracks) + 1;
 	*xml = malloc(l);
 	if(*xml == NULL) syslog(LOG_ERR, "could not malloc");
-	sprintf(*xml, template, name, uri, xml_tracks);
+	sprintf(*xml, template, name, uri, collab, xml_tracks);
 	free(xml_tracks);
 	free(name);
 	free(uri_clean);
@@ -272,6 +281,7 @@ static void post_playlist(sp_playlist *pl)
 {
 	char *xml;
 	playlist_as_xml(pl, &xml);
+	syslog(LOG_INFO, "playlist as xml: %s", xml);
 	char *template = "wget -q -O - --post-data='%s' http://heartb.com/playlist_receiver > /dev/null";
 	char *command = malloc(strlen(template) + strlen(xml) + 1);
 	if(command == NULL) syslog(LOG_ERR, "could not malloc");
