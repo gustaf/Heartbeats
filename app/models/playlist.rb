@@ -5,6 +5,7 @@ class Playlist < ActiveRecord::Base
   before_validation :set_url_spotify
   belongs_to :user
   has_many :likes
+  has_and_belongs_to_many :tracks
   
   def to_s
     title.blank? ? url : title
@@ -25,6 +26,10 @@ class Playlist < ActiveRecord::Base
     url =~ Regexp.union(
       /^spotify:user:[\w\.]+:playlist:\w+$/,
       /^spotify:(album|artist|track):\w+$/)
+  end
+
+  def is_proper_playlist?
+    url_spotify =~ /^spotify:user:[\w\.]+:playlist:\w+$/
   end
 
 # Get Artist & Trackname through MetaSpotify API Begin
