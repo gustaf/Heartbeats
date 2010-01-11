@@ -60,11 +60,16 @@
 				<div id="liked_by" style="padding: 10px">
 					<%= render :partial => "/users/portrait.html.erb", :collection => @liked_by %>
 				</div>
+				
 			</div>
+		</div>
+		<div class="tracklisting">
+		<strong>Playlist Tracks:</strong>
+        <%= render :partial => "/playlists/track_listing.html.erb" %>
 		</div>
 	</div>
 
-        <%= render :partial => "/playlists/track_listing.html.erb" %>
+
 
 	<div class="round_bottom"> </div>
 </div>

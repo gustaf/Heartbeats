@@ -1,10 +1,23 @@
 <div id="content">
+
+<!-- HEADER & Top Navigation -->		
 	<div id="header" class="clearfix">
-		<div id="top_links">
-					<%= link_to "Home", :action => "index" %> | 
-					<!--<%= link_to "Help", :action => "help" %> | -->
-					<%= fb_name facebook_session.user.uid, :useyou => "false" %> | 
-					<%= fb_logout_link "Sign Out", "signin" %> |		</div>
+				
+		<div id="top-navigation">
+			<ul class="navigation_list">
+					<li>
+						<%= link_to "Home", :action => "index" %> 
+					</li>
+					<li>
+						<%= fb_name facebook_session.user.uid, :useyou => "false" %> 
+					</li>
+					<li>
+						<%= fb_logout_link "Sign Out", "signin" %>
+					</li>
+			</ul>				
+		</div>
+		
+		
 		<div id="logo">
 			<%= link_to (image_tag "logo.png"), :action => "index" %>
 		</div>

@@ -1,20 +1,89 @@
 .clearfix:after {clear:both;content:".";display:block;font-size:0;height:0;line-height:0;visibility:hidden;}
 .clearfix {display:block;}
 
-body {background:#cbe4f1 url(http://ourheartbeats.com/dev/background.png) repeat-x scroll left top !important;font-family:"lucida grande",tahoma,sans-serif;line-height: 1.5em;font-size:13px;color: #000000;}
 
 
-a:hover{text-decoration:underline;color: #3B5998;}
-a{cursor:pointer;color:#3B5998;text-decoration:none;outline-style:none;}
-a.FB_Link{cursor:pointer;color:#3B5998;text-decoration:none;outline-style:none;}
-a:hover.FB_Link{text-decoration:underline;color: #3B5998;}
-img { border:0 none; }
 
-#content {width:780px;margin:1em auto;padding:10px;font-family:"lucida grande",tahoma,sans-serif;line-height: 1.5em;font-size:13px;color: #000000;}
-#header {text-align:right;}
+/* Content & General CSS */	
 
-#logo img{float:left;text-decoration:none;border:0px;}
-#top_links{float:right;white-space:nowrap;padding:0 .7em;}
+body {
+	font-family:"lucida grande",tahoma,verdana,arial,sans-serif,default;
+	font-size:80%;
+	background:#FFFFFF;
+	line-height: 1.5em;
+	}
+
+a	{
+	color:#0066CC;
+	text-decoration:none;cursor:pointer;
+	}
+a:hover	{
+	color:#0066CC;
+	text-decoration:underline;
+	}
+	
+img	{
+	border:0;
+	}
+
+
+a.FB_Link	{
+	color:#0066CC;
+	cursor:pointer;
+	text-decoration:none;
+	outline-style:none;
+	}
+	
+a:hover.FB_Link	{
+	color:#0066CC;
+	text-decoration:underline;
+	}
+
+#content {
+	width:780px;
+	margin:1em auto;
+	padding:10px;
+	}
+
+
+/* Header & Top Navigation */	
+
+#header {
+	}	
+
+#logo img {
+	float:left;
+	text-decoration:none;
+	border:0px;
+	}
+
+#top-navigation {
+	float:right;
+	white-space:nowrap;
+	}
+
+#top-navigation ul li {
+	text-align:right;
+	list-style-image:none;
+	list-style-position:outside;
+	list-style-type:none;
+	display:inline;
+	}
+
+#top-navigation li a {
+	color:#0066CC;
+	display:inline;
+	}	
+
+#top-navigation li a {
+	padding:0.3em 0.4em 0.2em;
+	}
+
+#top-navigation li a:hover {
+	color:#990000;
+	text-decoration:none;
+	}	
+
 
 .headline {font-weight:bold;font-size:17px;color:#333333;margin-top:20px;padding:10px;}
 
@@ -98,3 +167,12 @@ img { border:0 none; }
 	width: 57px;
 	float:left;
 }
+
+.tracklisting {
+	padding:20px;
+	}
+	
+.track {
+	color:#000000;
+	font-size:11px;
+	}
