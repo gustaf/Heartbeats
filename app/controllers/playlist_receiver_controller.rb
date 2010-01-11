@@ -21,22 +21,24 @@ class PlaylistReceiverController < ApplicationController
         pl.collaborative = p.attributes["collaborative"] == "yes" ? 1 : 0
         pl.data_updated_at = DateTime.now
 
-        xml.find("/playlist/track").each do |t|
+        pl.tracks = xml.find("/playlist/track").map do |t|
           track = Track.first(:conditions => ["uri = ?", t.attributes["uri"]]) || Track.new
           track.uri = t.attributes["uri"]
           track.name = t.attributes["name"]
           track.popularity = t.attributes["popularity"]
           track.duration = t.attributes["duration"]
           track.album = t.attributes["album"]
-          t.find("artist").each do |a|
-            artist = Artist.first(:conditions => ["name = ?", a.content]) || Artist.new
-            unless artist.name then
+          track.artists = t.find("artist").map do |a|
+            artist = Artist.first(:conditions => ["name = ?", a.content])
+            unless artist then
+              artist = Artists.new
               artist.name = a.content
               artist.save
             end
-            track.artists << artist
+            artist
           end
           track.save
+          track
         end
 
         pl.save
