@@ -99,6 +99,10 @@ img { border:0 none; }
 	float:left;
 }
 
+.tracklisting {
+	padding:20px;
+	}
+	
 .track {
 	color:#000000;
 	font-size:11px;
