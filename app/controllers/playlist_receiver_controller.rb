@@ -31,7 +31,7 @@ class PlaylistReceiverController < ApplicationController
           track.artists = t.find("artist").map do |a|
             artist = Artist.first(:conditions => ["name = ?", a.content])
             unless artist then
-              artist = Artists.new
+              artist = Artist.new
               artist.name = a.content
               artist.save
             end

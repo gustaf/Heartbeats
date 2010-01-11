@@ -347,8 +347,8 @@ static void session_ready()
 	if(incoming_uri != NULL) {
 		link = sp_link_create_from_string(incoming_uri);
 		if(link != NULL) {
-			sp_playlistcontainer_add_playlist(g_pc, link);
-			list_append(&g_out_list, incoming_uri);
+			if(NULL != sp_playlistcontainer_add_playlist(g_pc, link))
+				list_append(&g_out_list, incoming_uri);
 		}
 	}
 }
