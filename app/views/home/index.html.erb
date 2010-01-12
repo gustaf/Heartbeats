@@ -32,35 +32,35 @@
 
 <!-- Add Playlist -->
 			<div id="new_playlist">
-				<div id="input_border">
+
+<!--				<div id="input_border">
 					<div id="input_shaddow">
 						<div id="input" contenteditable="true">
 						</div>
 					</div>
 				</div>
-
+-->
 			 	<% form_for :playlist, @new_playlist, :url => playlists_url, :html => {:id => "new_playlist_form"} do |f| %>
-					<%= f.hidden_field :url %>
-		 			<%= submit_tag 'Add Playlist', :onclick => "submitPlaylist();return false;" %>
-				<% end %>
+					<%= f.text_field :url, :size => 56 %>
+		 			<%= submit_tag '♫ Add Playlist' %>
+				<% end %>	
+						
+						<small> For example: <span style="color:#0066CC;"> http://open.spotify.com/user/gus/playlist/4NlgJdeq17Niy</span> </small>
+						<br/>
+			</div>	
 
-				<script>
-					function submitPlaylist (){
-					$("playlist_url").value = $("input").innerHTML;
-					$("new_playlist_form").submit();
-					}
-				</script>
-			</div>
+
+
+
 
 <!-- Right Navigation -->
 		<div id="right-navigation">
 			<a href="#">Your Feed</a><br />
 			<a href="#">Latest Playlists</a><br />
-			<a href="#">Notifications</a><br />
+			<a href="#">Popular Playlists</a><br />
 			<a href="#">Notifications</a><br />
 		</div>		
-	</div>
-
+	</div>	
 
 
 
