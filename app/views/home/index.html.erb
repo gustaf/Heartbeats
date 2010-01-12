@@ -12,6 +12,9 @@
 						<%= fb_name facebook_session.user.uid, :useyou => "false" %> 
 					</li>
 					<li>
+						Settings
+					</li>
+					<li>
 						<%= fb_logout_link "Sign Out", "signin" %>
 					</li>
 			</ul>				
@@ -23,44 +26,91 @@
 		</div>
 	</div>
 	
-<!-- Content: Add Playlist & Right Navigtion -->		
-	
+<!-- Container: Add Playlist & Right Navigation -->		
 
-<!-- ADD PLAYLIST -->
-	<div class="headline">Copy and paste your Spotify playlist:</div>
-	<div class="round_top">
-		<div id="new_playlist" class="clearfix">
-			<div id="input_border">
-				<div id="input_shaddow">
-					<div id="input" contenteditable="true">
+	<div class="container_add_playlist_right_navigation">
+
+<!-- Add Playlist -->
+			<div id="new_playlist">
+				<div id="input_border">
+					<div id="input_shaddow">
+						<div id="input" contenteditable="true">
+						</div>
 					</div>
 				</div>
+
+			 	<% form_for :playlist, @new_playlist, :url => playlists_url, :html => {:id => "new_playlist_form"} do |f| %>
+					<%= f.hidden_field :url %>
+		 			<%= submit_tag 'Add Playlist', :onclick => "submitPlaylist();return false;" %>
+				<% end %>
+
+				<script>
+					function submitPlaylist (){
+					$("playlist_url").value = $("input").innerHTML;
+					$("new_playlist_form").submit();
+					}
+				</script>
 			</div>
 
-			 <% form_for :playlist, @new_playlist, :url => playlists_url, :html => {:id => "new_playlist_form"} do |f| %>
-			<%= f.hidden_field :url %>
-		 <%= submit_tag 'Add Playlist', :onclick => "submitPlaylist();return false;" %>
-		<% end %>
-
-		<script>
-		function submitPlaylist (){
-		$("playlist_url").value = $("input").innerHTML;
-		$("new_playlist_form").submit();
-		}
-		</script>
-			</div>
-		</div>
-	
-	<div class="headline">My playlists:</div>
-	<div class="round_top">		
-		<div id="friends_list" class="clearfix">
-			<div id="left_column" class="friend_column">
-				<%= render :partial => "friend", :collection => @friends_in_left_col %>
-			</div>
-			<div id="right_column" class="friend_column">
-				<%= render :partial => "friend", :collection => @friends_in_right_col %>
-			</div>
-		</div>
+<!-- Right Navigation -->
+		<div id="right-navigation">
+			<a href="#">Your Feed</a><br />
+			<a href="#">Latest Playlists</a><br />
+			<a href="#">Notifications</a><br />
+			<a href="#">Notifications</a><br />
+		</div>		
 	</div>
-	<div class="round_bottom"> </div>
+
+
+
+
+<!-- Container: Playlists & Suggestions -->		
+
+<div class="container_playlist_suggestions">
+	
+		<div style="clear:both;" class="headline">
+			Playlists:
+		</div>
+		
+				<div id="friends_list" class="clearfix">
+					<div id="left_column" class="friend_column">
+						<%= render :partial => "friend", :collection => @friends_in_left_col %>
+					</div>
+					<div id="right_column" class="friend_column">
+					<%= render :partial => "friend", :collection => @friends_in_right_col %>
+					</div>
+				</div>
+</div>
+
+
+<!-- Footer & Bottom Navigation -->		
+
+	<div id="footer">
+		<ul>
+			<li>
+				<a href="#">About Us</a>
+			</li>
+			<li>
+				<a href="#">Help</a>
+			</li>
+			<li>
+				<a href="#">Blog</a>
+			</li>
+			<li>
+				<a href="#">Contact</a>
+			</li>
+			<li>
+				<a href="#">Terms</a>
+			</li>
+			<li>
+				<a href="#">Privacy</a>
+			</li>
+		</ul>
+	
+	<br />	
+		<span style="font-size:9px;">© 2010 <a href="/about#about">Heartbeats</a> is made by <a 	href="http://www.twitter.com/kallus">Jonatan</a>, Joseph and <a href="http://www.twitter.com/gustaf">Gustaf</a>. 
+	<br />
+
+	</div>
+
 </div>
