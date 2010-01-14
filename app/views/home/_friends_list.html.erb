@@ -1,0 +1,10 @@
+<% friends_left = @friends.values_at(* Array.new(@friends.size) {|i| i*2}).select{|f| f} %>
+<% friends_right = @friends.values_at(* Array.new(@friends.size) {|i| i*2+1}).select{|f| f} %>
+<div id="friends_list" class="clearfix">
+  <div id="left_column" class="friend_column">
+    <%= render :partial => "home/friend", :collection => friends_left %>
+  </div>
+  <div id="right_column" class="friend_column">
+    <%= render :partial => "home/friend", :collection => friends_right %>
+  </div>
+</div>
