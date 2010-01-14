@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   
   def show
     @profile_user = User.find(params[:id])
-    #@friends = User.friends_for_user(@profile_user)
+    @friends = @profile_user.followees
   end
 
 end

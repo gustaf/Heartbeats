@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :uid
   has_many :playlists
   has_many :likes
+  has_many :fb_followees
+  has_many :hb_followees
   
   def like(playlist)
     unless likes?(playlist)
@@ -22,6 +24,12 @@ class User < ActiveRecord::Base
   def likes?(playlist)
     !like_for(playlist).blank?
   end
+
+  def followees
+    followee_uids = fb_followees.map{|fb| fb.uid} + hb_followees.map{|hb| hb.uid}
+    followee_uids.uniq!
+    User.find(:all, :conditions => ["uid IN (?)", followee_uids], :include => :playlists)
+  end
   
   class << self
     def find_or_create(uid)
@@ -30,12 +38,6 @@ class User < ActiveRecord::Base
       user = new(:uid => uid)
       user.save!
       user
-    end
-
-    #only use this methor for user 'me' for now
-    def friends_for_user(user)
-      friends = Facebooker::User.new(user.uid).friends
-      User.find(:all, :conditions => ["uid IN (?)", friends.map{|f| f.uid}], :include => :playlists)
     end
   end
 end

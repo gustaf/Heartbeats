@@ -3,6 +3,6 @@ class HomeController < ApplicationController
   helper_method :facebook_session
 
   def index
-    @friends = [@user] + User.friends_for_user(@user)
+    @friends = [@user] + @user.followees
   end
 end
