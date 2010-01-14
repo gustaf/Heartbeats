@@ -31,5 +31,11 @@ class User < ActiveRecord::Base
       user.save!
       user
     end
+
+    #only use this methor for user 'me' for now
+    def friends_for_user(user)
+      friends = Facebooker::User.new(user.uid).friends
+      User.find(:all, :conditions => ["uid IN (?)", friends.map{|f| f.uid}], :include => :playlists)
+    end
   end
 end

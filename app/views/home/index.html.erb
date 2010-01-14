@@ -9,7 +9,7 @@
 						<%= link_to "Home", :action => "index" %> 
 					</li>
 					<li>
-						<%= fb_name facebook_session.user.uid, :useyou => "false" %> 
+                                        <%= link_to fb_name(facebook_session.user.uid, {:useyou => "false", :linked => "false"}), @user %> 
 					</li>
 					<li>
 						Settings
@@ -72,14 +72,7 @@
 			Playlists:
 		</div>
 		
-				<div id="friends_list" class="clearfix">
-					<div id="left_column" class="friend_column">
-						<%= render :partial => "friend", :collection => @friends_in_left_col %>
-					</div>
-					<div id="right_column" class="friend_column">
-					<%= render :partial => "friend", :collection => @friends_in_right_col %>
-					</div>
-				</div>
+                <%= render :partial => "friends_list" %>
 </div>
 
 
