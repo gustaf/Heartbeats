@@ -1,7 +1,7 @@
 class CreateFbFollowees < ActiveRecord::Migration
   def self.up
     create_table :fb_followees do |t|
-      t.integer :uid
+      t.integer :uid, :limit => 15
       t.references :user
 
       t.timestamps
