@@ -31,7 +31,6 @@ static int g_playlists_loaded_after_log_in = 0;
 static int g_notified = 0;
 
 static list_t g_in_list;
-static list_t g_out_list;
 static pthread_mutex_t g_in_list_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 /* --------------------  PLAYLIST CONTAINER CALLBACKS  --------------------- */
@@ -320,35 +319,26 @@ static void session_ready()
 	int num_playlists = sp_playlistcontainer_num_playlists(g_pc);
 	if(num_playlists > 0) g_playlists_loaded_after_log_in = 1;
 
-	int i, uri_pos;
+	int i;
 	sp_playlist *pl;
-	sp_link *link;
-	char uri[256];
 	for(i = 0; i < num_playlists; i++)
 	{
 		pl = sp_playlistcontainer_playlist(g_pc, i);
 		if(playlist_is_loaded(pl))
 		{
-			link = sp_link_create_from_playlist(pl);
-			sp_link_as_string(link, uri, 256);
-			uri_pos = list_locate(&g_out_list, uri);
-			if(uri_pos >= 0) {
-				list_delete_at(&g_out_list, uri_pos);
-				post_playlist(pl);
-				sp_playlistcontainer_remove_playlist(g_pc, i);
-				syslog(LOG_INFO, "removing playlist: %s", uri);
-			}
+			post_playlist(pl);
+			sp_playlistcontainer_remove_playlist(g_pc, i);
 		}
 	}
 	
 	pthread_mutex_lock(&g_in_list_mutex);
 	char *incoming_uri = list_fetch(&g_in_list);
 	pthread_mutex_unlock(&g_in_list_mutex);
+	sp_link *link;
 	if(incoming_uri != NULL) {
 		link = sp_link_create_from_string(incoming_uri);
-		if(link != NULL) {
-			if(NULL != sp_playlistcontainer_add_playlist(g_pc, link))
-				list_append(&g_out_list, incoming_uri);
+		if(link == NULL || NULL == sp_playlistcontainer_add_playlist(g_pc, link)) {
+			syslog(LOG_ERR, "could not add playlist: %s", incoming_uri);
 		}
 	}
 }
@@ -401,15 +391,14 @@ static void *fcgi_loop()
 int main(void)
 {
 	list_init(&g_in_list);
-	list_init(&g_out_list);
 	list_attributes_copy(&g_in_list, list_meter_string, 1);
-	list_attributes_copy(&g_out_list, list_meter_string, 1);
-	list_attributes_comparator(&g_out_list, list_comparator_string);
 
 	sp_session *sp;
 	sp_error err;
-	const char *username = "kallus";
-	const char *password = "pagedown";
+
+	//all playlists for this account will be removed
+	const char *username = "heartb";
+	const char *password = "SmaDZSN6";
 
 	/* Create session */
 	spconfig.application_key_size = g_appkey_size;
