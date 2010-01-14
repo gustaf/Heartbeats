@@ -28,33 +28,27 @@
 	
 <!-- Container: Add Playlist & Right Navigation -->		
 
-	<div class="container_add_playlist_right_navigation">
 
+
+<div class="container_add_playlist_right_navigation">
 <!-- Add Playlist -->
 			<div id="new_playlist">
 
-<!--				<div id="input_border">
-					<div id="input_shaddow">
-						<div id="input" contenteditable="true">
-						</div>
-					</div>
-				</div>
--->
-		<script type="text/javascript">
-		function submitform()
-		{
-		    document.forms["new_playlist_form"].submit();
-		}
-		</script>
+				<script type="text/javascript">
+					function submitform()
+					{
+		    		document.forms["new_playlist_form"].submit();
+					}
+					</script>
 			
 			 	<% form_for :playlist, @new_playlist, :url => playlists_url, :html => {:id => "new_playlist_form"} do |f| %>
-					<%= f.text_field :url, :size => 56 %>
+					<%= f.text_field :url, :size => 62 %>
 					<a href="javascript: submitform()" class="button"><span style="color: green;">♫ </span> Add Playlist</a>
 				<% end %>
 
 		
 						
-						<small>Example: <span style="color:#0066CC;"> http://open.spotify.com/user/gus/playlist/4NlgJdeq17Niy</span> </small>
+			<small><span style="color:#818181;">Example: http://open.spotify.com/user/gus/playlist/4NlgJdeq17Niy</span></small>
 						<br/>
 			</div>	
 
@@ -64,33 +58,113 @@
 
 <!-- Right Navigation -->
 		<div id="right-navigation">
-			Your Feed<br />
-			Latest Playlists<br />
-			Popular Playlists<br />
-			Notifications<br />
+		
 		</div>		
-	</div>	
+</div>	
 
 
 
 <!-- Container: Playlists & Suggestions -->		
 
-<div class="container_playlist_suggestions">
-	
-		<div style="clear:both;" class="headline">
-			Playlists:
-		</div>
+<div class="wrapper">
 		
 				<div id="friends_list" class="clearfix">
+					<div>
+						<h2>
+							Following
+						</h2>
+					</div>
+					<br />
 					<div id="left_column" class="friend_column">
 						<%= render :partial => "friend", :collection => @friends_in_left_col %>
 					</div>
+					
 					<div id="right_column" class="friend_column">
 					<%= render :partial => "friend", :collection => @friends_in_right_col %>
 					</div>
+					
 				</div>
+
+
+				
+<div class="suggestions">
+			<div><h2>Suggestions</h2></div>		
+				<ul class="list_contents">
+					<li class="list_item">
+						<span id="">
+							<a class="topic_name" href="/"><span style="text-decoration:none;color:green;"> ♫ </span>
+								<span id=""><a href="/">Sonically Spotifying</a></span>
+							</a>
+						</span>
+						<div class="topic_follow_button">
+							<span id="">
+								<a id="playtip1" original-title="Play in Spotify" class="topic_follow follow_button" href="#"><span style="text-decoration:none;color:green;"> ► </span> Play</a>
+							</span>
+						</div>
+							<span class="justification">
+			 					• Liked by
+								<a class="user" href="/">Simon Hildor</a>
+							</span>
+					</li>
+
+					<li class="list_item">
+						<span id="">
+							<a class="topic_name" href="/"><span style="text-decoration:none;color:green;"> ♫ </span>
+								<span id=""><a href="/">DJH Balearic Charts</a></span></a>
+							</span>
+						<div class="topic_follow_button">
+							<span id="">
+								<a id="playtip2" original-title="Play in Spotify" class="topic_follow follow_button" href="#"><span style="text-decoration:none;color:green;"> ► </span> Play</a>
+							</span>
+						</div>
+							<span class="justification">
+				 				• Liked by
+								<a class="user" href="#">Jon Larsson</a> and <a class="user" href="#">4 more</a>
+							</span>
+					</li>
+
+					<li class="list_item">
+						<span id="">
+							<a class="topic_name" href="#"><span style="text-decoration:none;color:green;"> ♫ </span>
+								<span id=""><a href="/">Tiltlugnare</a></span></a>
+							</span>
+						<div class="topic_follow_button">
+							<span id="">
+								<a id="playtip3" original-title="Play in Spotify"  class="topic_follow follow_button" href="#"><span style="text-decoration:none;color:green;"> ► </span> Play</a>
+							</span>
+						</div>
+							<span class="justification">
+				 				• Added by
+								<a class="user" href="/u/420/Mark-Slee">Archie Dahlbäck</a>
+							</span>
+					</li>			
+
+					<li class="list_item">
+						<span id="">
+							<a class="topic_name" href="#"><span style="text-decoration:none;color:green;"> ♫ </span>
+								<span id=""><a href="/">Skånsk Hiphop 2009</a></span></a>
+							</span>
+						<div class="topic_follow_button">
+							<span id="">
+								<a id="playtip4" original-title="Play in Spotify" class="topic_follow follow_button" href="#"<span style="text-decoration:none;color:green;"> ► </span> Play</a>
+							</span>
+
+						</div>
+							<span class="justification">
+					 			• Liked by
+								<a class="user" href="#">Jonatan Kallus</a> and <a class="user" href="#">3 more</a>
+							</span>
+					</li>
+
+
+			</ul>
+		</div>		
 </div>
 
+		<div id="events">
+			<h2>Events</h2>
+			 Coming soon. 
+		</div>
 
 <!-- Footer & Bottom Navigation -->		
 
