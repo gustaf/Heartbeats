@@ -38,9 +38,12 @@ a:hover.FB_Link	{
 	}
 
 #content {
-	width:800px;
+	width:870px;
 	margin:1em auto;
 	padding:10px;
+	border:0px;
+	border-color:#0066CC;
+	border-style:solid;
 	}
 
 .clearfix:after {
@@ -57,6 +60,39 @@ a:hover.FB_Link	{
 	display:block;
 	}
 
+/* Buttons */	
+
+.button {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	-moz-border-radius-bottomleft:3px;
+	-moz-border-radius-bottomright:3px;
+	-moz-border-radius-topleft:3px;
+	-moz-border-radius-topright:3px;
+	background:#E0E0E0 url(/images/button_background.gif) repeat-x scroll left top;
+	border-color:#BBBBBB #BBBBBB #999999;
+	border-style:solid;
+	border-width:1px;
+	color:#444444;
+	cursor:pointer;
+	display:inline-block;
+	font-size:0.9em;
+	font-weight:bold;
+	padding:3px 10px;
+	text-align:center;
+	text-shadow:0 1px #F0F0F0;
+	}
+
+.button:hover, .button:active {
+	border-bottom:1px solid #6B8545;
+	border-color:#8DA766 #8DA766 #6B8545;
+	text-decoration:none;
+	}
+
+.user a 	{
+	color:#6699CC;
+	}
 
 
 /* Header & Top Navigation */	
@@ -103,10 +139,11 @@ a:hover.FB_Link	{
 /* Container: Add Playlist & Right Navigation */		
 
 .container_add_playlist_right_navigation {
-	width:100%;
+	width:800px;
 	border:0px;
 	border-color:#000000;
 	border-style:solid;
+	clear:both;
 	}
 	
 #new_playlist {
@@ -114,67 +151,72 @@ a:hover.FB_Link	{
 	width:600px;
 	margin-top:30px;
 	margin-bottom:20px;
-	margin-left:20px;
+	margin-left:10px;
 	padding:4px;
 	border:0px;
 	border-style:solid;
 	}
 
-/*
-	#new_playlist #input_border{
-		width:340px;
-		border-color:#AEAEAE #BBBBBB #BBBBBB;
-		border-style:solid;
-		border-width:1px;
-		float: left;
+
+#playlist_large {
+	font-size:1.4em;
+	font-family:'Helvetica Neue',Arial,Sans-serif;
+	text-decoration:none;
+	font-weight: bold;
+	color:#0066CC;
+	letter-spacing:-0.03em;
+	padding-left: 20px;
 	}
-	#new_playlist #input_shaddow {	
-		border-top:1px solid #E8E8E8;
-		padding:2px 5px 3px;
+
+#playlist_large a:hover {
+	font-size:1.4em;
+	font-family:'Helvetica Neue',Arial,Sans-serif;
+	color:#0066CC;
+	text-decoration:underline;
+	letter-spacing:-0.03em;
+	padding-left: 20px;
 	}
-	#new_playlist #input {
-		width:275px;
-		background-color:#ffffff;
-		border:medium none;
-		cursor:text;
-		font-size:14px;
-		margin:0;
-		max-height:200px;
-		min-height:20px;
-		outline-color:-moz-use-text-color;
-		outline-style:none;
-		outline-width:medium;
-		overflow-x:hidden;
-		overflow-y:auto;
-		padding:0;
+
+#playlist_large span a:hover {
+	text-decoration:none;	
 	}
-	#new_playlist input{
-		font-family:arial,sans-serif;
-		font-size:16px;
-		height:1.85em;
-		float: left; 
-		margin-left: 5px;
-	}
-*/
+
 
 #right-navigation	{
 	float:right;
 	width:160px;
+	font-weight:bold;
 	margin-top:30px;
 	margin-bottom:10px;
 	border:0px;
 	border-color:#000000;
 	border-style:solid;
+	line-height:2.0em;
 	}
 
 /* Container: Container: Playlists & Suggestions  */		
 
-.container_playlist_suggestions {
+.wrapper {
 	width:100%;
 	border:0px;
 	border-color:#000000;
 	border-style:solid;
 	}
+
+.playlists {
+	width:600px;
+	border:0px;
+	border-color:#000000;
+	border-style:solid;
+	}
+		
+.suggestions {
+	width:200px;
+	border:0px;
+	border-color:#000000;
+	border-style:solid;
+	}
+
 
 .headline {
 	font-weight:bold;
@@ -211,13 +253,23 @@ ul {
 #my_playlists{border:0px;border-style:solid;border-width:0px;margin-top:0px;margin-bottom:0px;padding:20px;}
 .playlist{color:#0066cc; width: 300px;}
 .playlist img {float: left; margin-top: 2px;}
-.playlist a {overflow: hidden; float: left; margin-left: 5px;}
+.playlist p {
+	float: left; 
+	overflow: hidden; 
+	margin-left: 5px;
+	}
+
+.playlist a {
+	overflow: hidden; 
+	float: left; 
+	margin-left: 5px;
+	}
 .playlist .delete_link {float: right;}
 
 #friends_list {margin-top:0px;margin-bottom:0px;padding:20px;}
 .friend_column {float: left; width: 350px;margin-right:10px;}
 .friend {width:350px;margin-bottom:15px; margin-right:5px;}
-.friend_pic {float:left; border:1px solid #DDDDDD; padding:2px; position:relative; vertical-align:middle;}
+.friend_pic {float:left; border:0px solid #DDDDDD; padding:2px; position:relative; vertical-align:middle;}
 .friend_details {float: left;width:275px;margin-left:10px;}
 .friend_name {font-weight:bold;font-size:14px;}
 
