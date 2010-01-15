@@ -13,6 +13,13 @@
 			<%= render :partial => "/users/friend.html.erb", :locals => {:friend => @profile_user}%>
 		</div>
 	</div>
+        <% if @show_follow_button then %>
+          <div>
+            <% form_tag(hb_followee_path, :method => @follows ? "delete" : "put") do %>
+              <%= submit_tag(@follows ? "unfollow" : "follow") %>
+            <% end %>
+          </div>
+        <% end %>
 	<div class="round_bottom"> </div>
 
         <div class="container_playlist_suggestions">

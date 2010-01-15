@@ -4,6 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users
   map.resources :playlists
   map.resources :likes
+  map.resources :hb_followees
 
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

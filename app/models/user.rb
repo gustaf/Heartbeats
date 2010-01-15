@@ -30,6 +30,16 @@ class User < ActiveRecord::Base
     followee_uids.uniq!
     User.find(:all, :conditions => ["uid IN (?)", followee_uids], :include => :playlists)
   end
+
+  def follow!(uid)
+    hb_followees << HbFollowee.new(:uid => uid)
+    save
+  end
+
+  def unfollow!(uid)
+    hb_followees.delete(* hb_followees.select{|hb| hb.uid == uid})
+    save
+  end
   
   class << self
     def find_or_create(uid)
