@@ -7,7 +7,7 @@ def update_playlists
   Playlist.all(:order => "data_requested_at ASC").each do |p|
     puts "requesting data for playlist #{p.url_spotify}"
     p.lookup!
-    sleep 60
+    sleep 1
   end
   puts "updating playlists...done"
 end
