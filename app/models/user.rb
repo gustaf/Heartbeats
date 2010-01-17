@@ -40,10 +40,15 @@ class User < ActiveRecord::Base
     hb_followees.delete(* hb_followees.select{|hb| hb.uid == uid})
     save
   end
+
+  #for bands in town
+  def top50artists
+    playlists.sort{|a,b| b.created_at <=> a.created_at}.map{|p| p.tracks.map{|t| t.artists.map{|a| a.name}}}.flatten.uniq[0...50]
+  end
   
   class << self
     def find_or_create(uid)
-      user = first({:conditions => {:uid => uid}})
+      user = first({:conditions => {:uid => uid}}, :include => {:playlists => {:tracks => :artists}})
       return user if user
       user = new(:uid => uid)
       user.save!

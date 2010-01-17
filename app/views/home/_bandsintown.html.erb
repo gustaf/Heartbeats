@@ -1,0 +1,14 @@
+<% unless @events.empty? then %>
+  <div>
+    <div style="clear:both;" class="headline">
+      Buy Recommended Tickets in Your Area:
+    </div>
+
+    <% @events.each do |event| %>
+      <div>
+        <% artists = event.artists.map{|a| a.name}.join(", ") %>
+        <%= link_to artists + (event.tickets_available? ? "" : " (not available)"), "#{event.ticket_url}?affil_code=heartb_#{@user.id}", :popup => true %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
