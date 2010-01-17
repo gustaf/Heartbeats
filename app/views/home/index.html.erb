@@ -26,11 +26,11 @@
 		</div>
 	</div>
 	
+	
+	
 <!-- Container: Add Playlist & Right Navigation -->		
 
-
-
-<div class="container_add_playlist_right_navigation">
+<div class="main-top wrapper">
 <!-- Add Playlist -->
 			<div id="new_playlist">
 
@@ -52,35 +52,37 @@
 						<br/>
 			</div>	
 
-
-
-
-
-<!-- Right Navigation -->
-		<div id="right-navigation">
-		
-		</div>		
 </div>	
 
 
-<!-- Container: Playlists & Suggestions -->		
+<!-- Wrapper: Playlists & Suggestions -->		
 
-<div class="container_playlist_suggestions">
+	<div class="main wrapper">
 	
-		<div style="clear:both;" class="headline">
-			Playlists:
-		</div>
-		
-                <%= render :partial => "friends_list" %>
-</div>
+			<div class="following">
+				<h2>Following</h2>
+	            <%= render :partial => "friends_list" %>
+			</div>
+			
+			<div class="shows">
+				<h2>Shows</h2>
+				<%= render :partial => "bandsintown" %>
+			</div>
+			
+			<div class="suggestions">
+				<h2>Suggestions</h2>
+				Coming soon. 
+			</div>
 
-<%= render :partial => "bandsintown" %>
+	</div>
 
 
 <!-- Footer & Bottom Navigation -->		
 
-	<div id="footer">
-		<ul>
+	<div class="footer wrapper">
+
+		<div id="footer">
+			<ul>
 			<li>
 				About Us
 			</li>
@@ -101,10 +103,10 @@
 			</li>
 		</ul>
 	
-	<br />	
-		<span style="font-size:9px;">© 2010 <a href="/about#about">Heartbeats</a> is made by <a 	href="http://www.twitter.com/kallus">Jonatan</a>, Joseph and <a href="http://www.twitter.com/gustaf">Gustaf</a>. 
-	<br />
-
+			<br />	
+			<span style="font-size:9px;">© 2010 <a href="/about#about">Heartbeats</a> is made by <a 	href="http://www.twitter.com/kallus">Jonatan</a>, Joseph and <a href="http://www.twitter.com/gustaf">Gustaf</a>. 
+			<br />
+		</div>
 	</div>
 
 </div>

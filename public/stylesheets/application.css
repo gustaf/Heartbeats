@@ -16,7 +16,7 @@ h2 	{
 	color:#444444;
 	font-size:18px;
 	font-weight:bold;
-	margin-bottom:4px;
+	margin-bottom:6px;
 	}
 
 a	{
@@ -52,7 +52,17 @@ a:hover.FB_Link	{
 	border-color:#0066CC;
 	border-style:solid;
 	}
-
+	
+.wrapper {
+	width:100%;
+	float:left;
+	border:0px;
+	border-color:#000000;
+	border-style:solid;
+	display:block;
+	margin-bottom:2px; 
+		}	
+	
 .clearfix:after {
 	clear:both;
 	content:".";
@@ -68,7 +78,9 @@ a:hover.FB_Link	{
 	}
 
 
-/* Buttons */	
+
+
+/* = = = = Buttons = = = = */	
 
 .button {
 	-moz-background-clip:border;
@@ -105,7 +117,7 @@ a:hover.FB_Link	{
 
 
 
-/* Header & Top Navigation */	
+/* = = = = Header & Top Navigation = = = = */	
 
 #header {
 	border:0px;
@@ -150,14 +162,7 @@ a:hover.FB_Link	{
 
 
 
-/* Container: Add Playlist & Right Navigation */		
-
-.container_add_playlist_right_navigation {
-	width:100%;
-	border:0px;
-	border-color:#000000;
-	border-style:solid;
-	}
+/* = = = = Add Playlist = = = = */	
 	
 #new_playlist {
 	float:left;
@@ -166,41 +171,17 @@ a:hover.FB_Link	{
 	margin-bottom:20px;
 	margin-left:10px;
 	padding:4px;
-	border:0px;
-	border-style:solid;
-	}
-
-#right-navigation	{
-	float:right;
-	width:160px;
-	font-weight:bold;
-	margin-top:30px;
-	margin-bottom:10px;
-	border:0px;
-	border-color:#000000;
-	border-style:solid;
-	line-height:2.0em;
 	}
 
 
+/* = = = = Following = = = = */	
 
-/* Container: Container: Playlists & Suggestions & Events  */		
-
-.wrapper {
-	width:100%;
-	border:0px;
-	border-color:#000000;
-	border-style:solid;
-	clear:both; 
-	}
-
-#friends_list {
+.following {
 	float:left; 
 	width:600px;
 	border:0px;
-	border-color:#000000;
+	border-color:green;
 	border-style:solid;
-	
 	}
 	
 #left_column {
@@ -214,8 +195,7 @@ a:hover.FB_Link	{
 	float:left; 
 	width:290px;
 	margin-right:8px;
-	}
-	
+	}	
 
 .friend_column {
 	float:left; 
@@ -255,14 +235,14 @@ a:hover.FB_Link	{
 
 		
 
-/* Suggestions */	
-
+/* = = = = Suggestions = = = = */	
+	
 .suggestions {
 	float:right;
 	width:250px;
 	border:0px;
-	border-color:#000000;
-	border-style:solid;
+	border-color:red;
+	border-style:solid;		
 	}
 
 
@@ -290,60 +270,21 @@ ul {
 	float:right;
 	}
 
-.recent_changes .list_item, .notifications_list .follow_button, .suggestions .topic_follow_button, .suggestions .justification {
-	font-size:0.8em;
-	}
-
-.follow_button {
-	float:right;
-	}
-
-.follow_button, .submit_button, .action_button {
-	-moz-background-clip:border;
-	-moz-background-inline-policy:continuous;
-	-moz-background-origin:padding;
-	-moz-border-radius-bottomleft:3px;
-	-moz-border-radius-bottomright:3px;
-	-moz-border-radius-topleft:3px;
-	-moz-border-radius-topright:3px;
-	background:#E0E0E0 url(/images/button_background.gif) repeat-x scroll left top;
-	border-color:#BBBBBB #BBBBBB #999999;
-	border-style:solid;
-	border-width:1px;
-	color:#444444;
-	cursor:pointer;
-	display:inline-block;
-	font-size:0.9em;
-	font-weight:bold;
-	padding:3px 10px;
-	text-align:center;
-	text-shadow:0 1px #F0F0F0;
-	}
-
-.follow_button:hover, .follow_button:active {
-	border-bottom:1px solid #6B8545;
-	border-color:#8DA766 #8DA766 #6B8545;
-	text-decoration:none;
-	}
-
-.user a 	{
-	color:#6699CC;
-	}
 
 
-/* Events  */		
+/* = = = = Shows = = = = */		
 
-#events	{
+.shows	{
 	float:right;
 	width:250px;
-	margin-top:10px;
-	border:0px;
-	border-color:#000000;
+	border:1px;
+	border-color:red;
 	border-style:solid;		
 	}
 
 
-/* Footer  */		
+
+/* = = = = Footer = = = = */		
 
 #footer {
 	text-align:center;
@@ -356,6 +297,10 @@ ul {
 	list-style-type:none;
 	}
 
+
+
+/* = = = = Footer = = = = */		
+
 #footer li {
 	display:inline;
 	padding:0 12px;	
@@ -367,6 +312,7 @@ ul {
 
 
 #my_playlists{border:0px;border-style:solid;border-width:0px;margin-top:0px;margin-bottom:0px;padding:20px;}
+
 .playlist{color:#0066cc; width: 300px;}
 
 .playlist img {float: left; margin-top: 2px;}
