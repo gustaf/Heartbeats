@@ -72,6 +72,10 @@ class Playlist < ActiveRecord::Base
     end
   end
 
+  def artists
+    tracks.map{|t| t.artists.map{|a| a.name}}.flatten.uniq
+  end
+
   class << self
     def find_by_uid(uid)
       all(:joins => :user, :conditions => {:users => {:uid => uid}})

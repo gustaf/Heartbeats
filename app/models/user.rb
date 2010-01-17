@@ -43,7 +43,11 @@ class User < ActiveRecord::Base
 
   #for bands in town
   def top50artists
-    playlists.sort{|a,b| b.created_at <=> a.created_at}.map{|p| p.tracks.map{|t| t.artists.map{|a| a.name}}}.flatten.uniq[0...50]
+    artists = playlists.sort{|a,b| b.created_at <=> a.created_at}.map{|p| p.artists}.flatten.uniq
+    return artists[0...50] if artists.size >= 50
+    followees_playlists = followees.map{|f| f.playlists}.flatten
+    artists += followees_playlists.sort{|a,b| b.created_at <=> a.created_at}.map{|p| p.artists}.flatten.uniq
+    artists[0...50]
   end
   
   class << self

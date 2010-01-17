@@ -11,6 +11,7 @@ class HomeController < ApplicationController
       @events = Bandsintown::Event.recommended({
         :artists => @user.top50artists,
         :location => request.remote_ip
+        #:location => "83.227.76.155"
       })
     rescue Bandsintown::APIError
       @events = []
