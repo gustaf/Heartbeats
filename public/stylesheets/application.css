@@ -277,7 +277,7 @@ ul {
 .shows	{
 	float:right;
 	width:250px;
-	border:1px;
+	border:0px;
 	border-color:red;
 	border-style:solid;		
 	}
