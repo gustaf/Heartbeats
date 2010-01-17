@@ -46,7 +46,7 @@ a:hover.FB_Link	{
 	}
 
 #content {
-	width:870px;
+	width:964px;
 	margin:1em auto;
 	border:0px;
 	border-color:#0066CC;
@@ -178,7 +178,7 @@ a:hover.FB_Link	{
 
 .following {
 	float:left; 
-	width:600px;
+	width:640px;
 	border:0px;
 	border-color:green;
 	border-style:solid;
@@ -186,15 +186,20 @@ a:hover.FB_Link	{
 	
 #left_column {
 	float:left; 
-	width:290px;
+	width:310px;
 	margin-right:8px;
-
+	border:0px;
+	border-color:yellow;
+	border-style:solid;
 	}
 	
 #right_column {
 	float:left; 
-	width:290px;
+	width:310px;
 	margin-right:8px;
+	border:0px;
+	border-color:orange;
+	border-style:solid;
 	}	
 
 .friend_column {
@@ -233,13 +238,25 @@ a:hover.FB_Link	{
 	font-size:10px;
 	}
 
+/* = = = = Shows = = = = */		
+
+.shows	{
+	float:right;
+	width:300px;
+	border:0px;
+	border-color:red;
+	border-style:solid;
+	font-family:Helvetica,Arial,default;
+	}
+
+
 		
 
 /* = = = = Suggestions = = = = */	
 	
 .suggestions {
 	float:right;
-	width:250px;
+	width:300px;
 	border:0px;
 	border-color:red;
 	border-style:solid;		
@@ -268,20 +285,6 @@ ul {
 
 .suggestions .topic_follow_button {
 	float:right;
-	}
-
-
-
-/* = = = = Shows = = = = */		
-
-.shows	{
-	float:right;
-	width:250px;
-	border:0px;
-	border-color:red;
-	border-style:solid;
-	font-size:0.8em;
-	font-family:Helvetica,Arial,default;
 	}
 
 

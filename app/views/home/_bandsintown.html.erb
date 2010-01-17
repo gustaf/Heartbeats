@@ -6,11 +6,13 @@
 
     <% @events.each do |event| %>
       <div>
-        <% artists = event.artists.map{|a| a.name}.join(", ") %>
-        <%= link_to artists + (event.tickets_available? ? "" : " (not available)"), "#{event.ticket_url}?affil_code=heartb_#{@user.id}", :popup => true %>
+        <span style="font-size:0.9em;"><% artists = event.artists.map{|a| a.name}.join(", ") %>
+        <%= link_to artists + (event.tickets_available? ? "" : " (not available)"), "#{event.ticket_url}?affil_code=heartb_#{@user.id}", :popup => true %> </span>
+		<span style="font-size:0.8em;">
         <%= h event.datetime.strftime("%b %d") %>
         <%= h event.venue.name %>
         <%= h event.venue.city %>
+		<span>	
       </div>
     <% end %>
   </div>

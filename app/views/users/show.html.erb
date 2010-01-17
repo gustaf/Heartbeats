@@ -1,14 +1,30 @@
 <div id="content">
 	<div id="header" class="clearfix">
-		<div id="top_links">
-			<%= link_to "Home", root_url %>
+				
+		<div id="top-navigation">
+			<ul class="navigation_list">
+					<li>
+						<%= link_to "Home", :action => "index" %> 
+					</li>
+					<li>
+						Settings
+					</li>
+					<li>
+						<%= fb_logout_link "Sign Out", "signin" %>
+					</li>
+			</ul>				
 		</div>
+		
+		
 		<div id="logo">
-			<%= link_to (image_tag "logo.png"), root_url %>
+			<%= link_to (image_tag "logo.png"), :action => "index" %>
 		</div>
 	</div>
 	
-	<div class="round_top" style="margin-top:20px">
+	
+	<div class="main wrapper">
+	
+	
 		<div id="user" style="padding: 10px">
 			<%= render :partial => "/users/friend.html.erb", :locals => {:friend => @profile_user}%>
 		</div>
@@ -20,13 +36,11 @@
             <% end %>
           </div>
         <% end %>
-	<div class="round_bottom"> </div>
 
         <div class="container_playlist_suggestions">
-
-          <div style="clear:both;" class="headline">
-            Following:
-          </div>
+				
+				<div class="following">
+					<h2>Following</h2>
 
           <%= render :partial => "home/friends_list" %>
         </div>
