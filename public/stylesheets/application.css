@@ -276,10 +276,12 @@ ul {
 
 .shows	{
 	float:right;
-	width:250px;
+	width:275px;
 	border:0px;
 	border-color:red;
-	border-style:solid;		
+	border-style:solid;
+	font-size:0.8em;
+	font-family:Helvetica,Arial,default;
 	}
 
 
