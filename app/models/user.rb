@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
   
   class << self
     def find_or_create(uid)
-      user = first({:conditions => {:uid => uid}}, :include => {:playlists => {:tracks => :artists}})
+      user = first({:conditions => {:uid => uid}})
       return user if user
       user = new(:uid => uid)
       user.save!
