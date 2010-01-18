@@ -3,14 +3,29 @@
 </script>
 <div id="content">
 	<div id="header" class="clearfix">
-		<div id="top_links">
-			<%= link_to "Home", root_url %>
+				
+		<div id="top-navigation">
+			<ul class="navigation_list">
+					<li>
+						<%= link_to "Home", "/" %>
+					</li>
+					<li>
+						Settings
+					</li>
+					<li>
+						<%= fb_logout_link "Sign Out", "signin" %>
+					</li>
+			</ul>				
 		</div>
+		
+		
 		<div id="logo">
-			<%= link_to (image_tag "logo.png"), root_url %>
+			<%= link_to (image_tag "logo.png"), :action => "index" %>
 		</div>
 	</div>
-	
+
+	<br /> <br /> <br />
+
 	<div class="headline" style="text-align: center;">
 		<div>Open in Spotify:</div>
 		<div  style="font-size: 25px;margin: 15px 20px 20px 20px;"><%= link_to truncate(h(@playlist.to_s), :length => 35), @playlist.url_spotify %></div>
