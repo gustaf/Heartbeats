@@ -60,7 +60,8 @@ a:hover.FB_Link	{
 	border-color:#000000;
 	border-style:solid;
 	display:block;
-	margin-bottom:2px; 
+	margin-top:10px;
+	margin-bottom:10px;  
 		}	
 	
 .clearfix:after {
@@ -179,6 +180,48 @@ a:hover.FB_Link	{
 	}
 
 
+/* = = = = Playlist = = = = */		
+
+.playlist {
+	color:#C3C3C3;
+	font-size:12px;
+	list-style-image:none;
+	list-style-position:outside;
+	line-height:1.5em;	
+	}
+
+
+.playlist_large {
+	font-size:1.4em;
+	font-family:'Helvetica Neue',Arial,Sans-serif;
+	font-weight: bold;
+	letter-spacing:-0.03em;
+	padding-left: 20px;
+	}
+
+.playlist_large a {
+	font-size:1.0em;
+	font-family:'Helvetica Neue',Arial,Sans-serif;
+	text-decoration:none;
+	font-weight: bold;
+	color:#0066CC;
+	letter-spacing:-0.03em;
+	}
+
+.playlist_large a:hover {
+	font-size:1.0em;
+	font-family:'Helvetica Neue',Arial,Sans-serif;
+	color:#0066CC;
+	text-decoration:underline;
+	letter-spacing:-0.03em;
+	}
+
+.playlist_large span a:hover {
+	text-decoration:none;	
+	}
+
+
+
 /* = = = = Following = = = = */	
 
 .following {
@@ -241,6 +284,28 @@ a:hover.FB_Link	{
 .playlists {
 	float:left;
 	font-size:10px;
+	}
+
+
+/* = = = = Tracks = = = = */		
+
+.tracks {
+	float:left; 
+	width:640px;	
+	border:0px;
+	border-color:green;
+	border-style:solid;
+	}
+
+
+/* = = = = User = = = = */		
+
+.user {
+	float:right;
+	width:300px;	
+	border:0px;
+	border-color:red;
+	border-style:solid;
 	}
 
 /* = = = = Shows = = = = */		
