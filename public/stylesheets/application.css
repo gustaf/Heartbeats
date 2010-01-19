@@ -2,7 +2,7 @@
 
 
 
-/* Content & General CSS */	
+/* = = = = Body, Text, Links = = = = */	
 
 body {
 	font-family:"lucida grande",tahoma,verdana,arial,sans-serif,default;
@@ -47,13 +47,15 @@ a:hover.FB_Link	{
 	text-decoration:underline;
 	}
 
+/* = = = = Header = = = = */	
+
 #header-wrapper {
 	margin:0;
 	padding:0;
 	-moz-background-clip:border;
 	-moz-background-inline-policy:continuous;
 	-moz-background-origin:padding;
-	background-color:#343434;
+	background-color:#404040;
 	min-height:44px;
 	border:0px;
 	border-style:solid;
@@ -63,7 +65,7 @@ a:hover.FB_Link	{
 #header-content {
 	margin:0 auto;
 	padding-top:8px;
-	width:870px;
+	width:920px;
 	position:relative;	
 	border:0px;
 	border-style:solid;
@@ -71,7 +73,6 @@ a:hover.FB_Link	{
 	}
 	
 #top-center	{
-	width:200px;
 	height:31px;	
 	float:left;
 	margin-left:4px;
@@ -83,12 +84,12 @@ a:hover.FB_Link	{
 	}	
 	
 
-/* = = = = Header & Top Navigation = = = = */	
+/* = = = = Header Content (Navigation & Logo) = = = = */	
 
 #logo img {
 	float:left;
-	height:31px;
-	width:149px;
+	height:29px;
+	width:135px;
 	text-decoration:none;
 	margin-bottom:2px;
 	border:0px;
@@ -98,17 +99,17 @@ a:hover.FB_Link	{
 
 #top-navigation {
 	float:right;
-	height:31px;
+	height:29px;
 	white-space:nowrap;
 	border:0px;
 	border-style:solid;
 	border-color:white;
-	margin-bottom:2px;		
+	margin-bottom:2px;
 	}
 
 #top-navigation ul li {
 	text-align:right;
-	line-height:31px;
+	line-height:29px;
 	list-style-image:none;
 	list-style-position:outside;
 	list-style-type:none;
@@ -125,7 +126,7 @@ a:hover.FB_Link	{
 	color:#FFFFFF;
 	display:inline;
 	outline-style:none;
-	padding:0.3em 0.4em 0.2em;
+	padding:0 8px;
 	}	
 
 #top-navigation li a:hover {
@@ -134,26 +135,17 @@ a:hover.FB_Link	{
 	}	
 
 
-/* = = = = ...= = = = */	
+/* = = = = Content & Wrappers = = = = */	
 
 
 	
 #content {
-	width:964px;
+	width:920px;
 	margin:1em auto;
 	border:0px;
 	border-color:#0066CC;
 	border-style:solid;
 	}
-
-#content_thin {
-	width:800px;
-	margin:1em auto;
-	border:0px;
-	border-color:#0066CC;
-	border-style:solid;
-	
-	}	
 	
 .wrapper {
 	width:100%;
@@ -297,7 +289,7 @@ a:hover.FB_Link	{
 
 .following {
 	float:left; 
-	width:640px;
+	width:630px;
 	border:0px;
 	border-color:green;
 	border-style:solid;
@@ -305,7 +297,7 @@ a:hover.FB_Link	{
 	
 #left_column {
 	float:left; 
-	width:310px;
+	width:305px;
 	margin-right:8px;
 	border:0px;
 	border-color:yellow;
@@ -314,7 +306,7 @@ a:hover.FB_Link	{
 	
 #right_column {
 	float:left; 
-	width:310px;
+	width:305px;
 	margin-right:8px;
 	border:0px;
 	border-color:orange;
@@ -380,7 +372,6 @@ a:hover.FB_Link	{
 	}
 
 .tracks a:hover {
-
 	color:#589106;
 	}
 
@@ -394,14 +385,6 @@ a:hover.FB_Link	{
 	border:0px;
 	border-color:red;
 	border-style:solid;
-	-moz-background-clip:border;
-	-moz-background-inline-policy:continuous;
-	-moz-background-origin:padding;
-	-moz-border-radius-bottomleft:5px;
-	-moz-border-radius-bottomright:5px;
-	-moz-border-radius-topleft:5px;
-	-moz-border-radius-topright:5px;
-	background:#F6F6F6;
 	}
 
 /* = = = = User = = = = */		
@@ -418,7 +401,7 @@ a:hover.FB_Link	{
 
 .shows	{
 	float:right;
-	width:300px;
+	width:280px;
 	border:0px;
 	border-color:red;
 	border-style:solid;
@@ -467,10 +450,23 @@ ul {
 
 /* = = = = Footer = = = = */		
 
-#footer {
-	text-align:center;
-	clear:both;
+#footer_left {
+	float:left;
+	margin-bottom:50px;
+	border:0px;
+	border-color:#0066CC;
+	border-style:solid;
+	text-align:left;
 	}
+
+#footer_right {
+	float:right;
+	margin-bottom:50px;
+	border:0px;
+	border-color:#0066CC;
+	border-style:solid;
+	}
+
 
 ul {
 	display:inline;
@@ -478,22 +474,14 @@ ul {
 	list-style-type:none;
 	}
 
-
-
-/* = = = = Footer = = = = */		
-
-#footer {
-	margin-bottom:40px;
-	}	
-
-#footer li {
+.footer li {
 	display:inline;
-	padding:0 12px;
+	padding:0 14px 0 0 ;
 	font-size:12px;
 	}
 
 
-/* Unsorted styles  */		
+/* = = = = Unsorted styles  = = = = */		
 
 
 
@@ -534,11 +522,3 @@ ul {
 	float:left;
 }
 
-.tracklisting {
-	padding:20px;
-	}
-	
-.track {
-	color:#000000;
-	font-size:11px;
-	}
