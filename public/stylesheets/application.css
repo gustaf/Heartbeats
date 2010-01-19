@@ -23,6 +23,7 @@ h2 	{
 a	{
 	color:#0066CC;
 	text-decoration:none;cursor:pointer;
+	outline-style:none;
 	}
 a:hover	{
 	color:#0066CC;
@@ -123,12 +124,9 @@ a:hover.FB_Link	{
 #top-navigation li a {
 	color:#FFFFFF;
 	display:inline;
-	font-weight:bold;
-	}	
-
-#top-navigation li a {
+	outline-style:none;
 	padding:0.3em 0.4em 0.2em;
-	}
+	}	
 
 #top-navigation li a:hover {
 	color:#FFFFFF;
