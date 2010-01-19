@@ -1,5 +1,8 @@
 
-	<div class="track">
-				<div><%= track.artists.map{|a| a.name}.join ", " %> <%= track.name %> <%= track.popularity %></div>
+	<div class="tracks">
+		<li>
+			<a href=""><%= track.artists.map{|a| a.name}.join ", " %> <%= track.name %></a> 
+				<span style="color:#FFF"><%= track.popularity %></span>
+		</li>
 	</div>
 

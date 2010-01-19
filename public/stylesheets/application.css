@@ -291,11 +291,15 @@ a:hover.FB_Link	{
 
 .tracks {
 	float:left; 
-	width:640px;	
+	width:640px;
+	color:#C3C3C3;
+	font-size:12px;
+	list-style-image:none;
+	list-style-position:outside;
+	line-height:1.5em;	
 	border:0px;
 	border-color:green;
-	border-style:solid;
-	}
+	border-style:solid;	}
 
 
 /* = = = = User = = = = */		
