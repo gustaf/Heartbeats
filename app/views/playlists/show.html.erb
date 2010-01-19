@@ -1,55 +1,34 @@
-<script type="text/javascript">
-	//window.onload = function(){ document.location.href = "<%= @playlist.url_spotify %>";}
-</script>
 
-<div id="content">
-	
 <!-- Header & Top Navigation -->			
-	<div id="header" class="clearfix">
-				
-		<div id="top-navigation">
-			<ul class="navigation_list">
-					<li>
-						<%= link_to "Home", "/" %>
-					</li>
-					<li>
-						Settings
-					</li>
-					<li>
-						<%= fb_logout_link "Sign Out", "signin" %>
-					</li>
-			</ul>				
-		</div>
-		
-		
-		<div id="logo">
-			<%= link_to (image_tag "logo.png"), :action => "index" %>
-		</div>
-	</div>
+	<%= render :partial => "navigation/header" %>	
+
 
 <!-- Container: Playlistname-->		
 
+
+<div id="content_thin">
 <br /><br /><br />
 
-<div class="main-top wrapper">
+<div class="main-top wrapper">	
 		<div class="playlist_large">
 			 Open in Spotify: <%= link_to truncate(h(@playlist.to_s), :length => 55), @playlist.url_spotify %>
 		</div>
+		
+			<div class="playlist_actions">
 			
-			<div id="facebook_share" style="padding:10px 0px 0px 300px;color:#666666;font-size:13px;font-weight:bold;" class="clearfix">
 				<div style="padding-top: 1px;float:left;margin-right:10px;">Share on Facebook:</div>
 				<a name="fb_share" type="box_count" href="http://www.facebook.com/sharer.php" style="float:left;">Share</a>
 				<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
 			
 			
 				<% unless @current_user_like %>
-					<div id="like" style="padding:10px 0px 0px 0px;color:#666666;font-size:13px;font-weight:bold;" class="clearfix">
+					<div id="like" style="padding:0px 0px 0px 0px;color:#666666;font-size:13px;font-weight:bold;" class="clearfix">
 						<%= image_tag "fb_like_on.gif" %>
 						<%= link_to "Like", likes_url(:playlist_id => @playlist.id), :class => "like_link", :method => :post %>
 					</div>
 
 				<% else %>
-					<div id="like" style="padding:10px 0px 0px 0px;color:#666666;font-size:13px;font-weight:bold;" class="clearfix">
+					<div id="like" style="padding:0px 0px 0px 0px;color:#666666;font-size:13px;font-weight:bold;" class="clearfix">
 						<%= link_to("Unlike", like_url(@current_user_like), :confirm => "Are you sure you want to unlike this playlist?", :method => :delete, :class => "like_link") %>
 					</div>
 				<% end %>
@@ -62,11 +41,12 @@
 <!-- Container: Tracks & User-->		
 <div class="main wrapper">
 
-		<div class="tracks">
+		<div class="track-listing">
 			<h2>Playlist Tracks</h2>
 		        <%= render :partial => "/playlists/track_listing.html.erb" %>
 			</div>
 
+	<div class="right">		
 		<div class="user">
 			<h2>User</h2>
 				<div id="creator" style="padding: 10px">
@@ -81,42 +61,12 @@
 			<h2>Liked by</h2>
 			<%= render :partial => "/users/portrait.html.erb", :collection => @liked_by %>
 		</div>
-
+	</div>	
 		
 </div>	
  
 
 <!-- Footer & Bottom Navigation -->		
-
-	<div class="footer wrapper">
-
-		<div id="footer">
-			<ul>
-			<li>
-				About Us
-			</li>
-			<li>
-				Help
-			</li>
-			<li>
-				Blog
-			</li>
-			<li>
-				Contact
-			</li>
-			<li>
-				Terms
-			</li>
-			<li>
-				Privacy
-			</li>
-		</ul>
-	
-			<br />	
-			<span style="font-size:9px;">© 2010 <a href="/about#about">Heartbeats</a> is made by <a 	href="http://www.twitter.com/kallus">Jonatan</a>, Joseph and <a href="http://www.twitter.com/gustaf">Gustaf</a>. 
-			<br />
-		</div>
-	</div>
-
+	<%= render :partial => "navigation/footer" %>	
 
 

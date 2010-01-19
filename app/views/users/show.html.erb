@@ -1,25 +1,10 @@
+
+<!-- Header & Top Navigation -->			
+	<%= render :partial => "navigation/header" %>	
+
+
+
 <div id="content">
-	<div id="header" class="clearfix">
-				
-		<div id="top-navigation">
-			<ul class="navigation_list">
-					<li>
-						<%= link_to "Home", "/" %>
-					</li>
-					<li>
-						Settings
-					</li>
-					<li>
-						<%= fb_logout_link "Sign Out", "signin" %>
-					</li>
-			</ul>				
-		</div>
-		
-		
-		<div id="logo">
-			<%= link_to (image_tag "logo.png"), :action => "index" %>
-		</div>
-	</div>
 	
 	<br /> <br /> <br />
 	<div class="main wrapper">
@@ -45,3 +30,7 @@
           <%= render :partial => "home/friends_list" %>
         </div>
 </div>
+
+
+<!-- Footer & Bottom Navigation -->		
+	<%= render :partial => "navigation/footer" %>	
