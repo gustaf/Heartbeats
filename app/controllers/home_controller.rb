@@ -17,4 +17,14 @@ def index
       @events = []
     end
   end
+  def aboutus
+  end
+  def help
+  end
+  def contact
+  end
+  def terms
+  end
+  def privacy
+  end
 end

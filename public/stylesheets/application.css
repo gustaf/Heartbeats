@@ -8,10 +8,26 @@ body {
 	font-family:"lucida grande",tahoma,verdana,arial,sans-serif,default;
 	font-size:80%;
 	background:#FFFFFF;
-	line-height: 1.5em;
 	margin:0;
 	padding:0;
 	}
+
+* {
+	margin:0;
+	padding:0;
+	}
+
+ol {
+	list-style-image:none;
+	list-style-position:outside;
+	}
+
+ul {
+	list-style-image:none;
+	list-style-position:outside;
+	list-style-type:none;
+	}
+
 
 h2 	{
 	font-family:"lucida grande",tahoma,verdana,arial,sans-serif,default;
@@ -22,9 +38,11 @@ h2 	{
 
 a	{
 	color:#0066CC;
-	text-decoration:none;cursor:pointer;
+	text-decoration:none;
+	cursor:pointer;
 	outline-style:none;
 	}
+	
 a:hover	{
 	color:#0066CC;
 	text-decoration:underline;
@@ -133,7 +151,6 @@ a:hover.FB_Link	{
 	color:#FFFFFF;
 	text-decoration:underline;
 	}	
-
 
 /* = = = = Content & Wrappers = = = = */	
 
@@ -349,32 +366,88 @@ a:hover.FB_Link	{
 	font-size:10px;
 	}
 
+	.playlist{color:#0066cc; width: 300px;}
+
+	.playlist img {float: left; margin-top: 2px;}
+
+	.playlist span {
+		float: left; 
+		overflow: hidden; 
+		margin-left: 5px;
+		}
+
+	.playlist a {
+		overflow: hidden; 
+		float: left; 
+		margin-left: 5px;
+		}
+	.playlist .delete_link {float: right;}
+
+
+	.portrait {
+		width: 57px;
+		display:block;
+		float:left;
+		overflow:hidden;
+		padding-right:6px;
+		position:relative;
+	}
+	.portrait .user_pic, .portrait .user_name {
+		display:block;
+		float:left;
+	}
+	.portrait_name {
+		width: 57px;
+		float:left;
+	}
+
 
 /* = = = = Tracks = = = = */		
 
 .track-listing {
 	float:left; 
-	width:440px;
-	list-style-image:none;
-	list-style-position:outside;
+	width:480px;
 	margin-left:20px;
 	border:0px;
 	border-color:orange;
 	border-style:solid;
 	}
 	
-.tracks {
-	color:#C3C3C3;
-	font-size:12px;
-	list-style-image:none;
-	list-style-position:outside;
-	line-height:1.7em;	
+#tracks ol {
+	display:block;
 	}
+
+.tracks { height:22px;
+	}
+	
+.tracks {
+	padding:0 0 2px;
+	color:#E0E0E0;
+	font-size:12px;
+	}	
+
+.tracks a {
+	-moz-border-radius-bottomleft:6px;
+	-moz-border-radius-bottomright:6px;
+	-moz-border-radius-topleft:6px;
+	-moz-border-radius-topright:6px;
+	border-bottom-left-radius: 6px 6px;
+	border-bottom-right-radius: 6px 6px;
+	border-top-left-radius: 6px 6px;
+	border-top-right-radius: 6px 6px;
+	clear:both;
+	display:block;
+	padding:5px 7px 5px 10px;	
+	}	
 
 .tracks a:hover {
-	color:#589106;
+	background-color:#ebf4f9;
+	text-decoration:none;
 	}
 
+.temporary{
+	color:#FFF;
+	}
 
 /* = = = = User = = = = */		
 
@@ -452,6 +525,7 @@ ul {
 
 #footer_left {
 	float:left;
+	margin-top:20px;
 	margin-bottom:50px;
 	border:0px;
 	border-color:#0066CC;
@@ -461,6 +535,7 @@ ul {
 
 #footer_right {
 	float:right;
+	margin-top:20px;
 	margin-bottom:50px;
 	border:0px;
 	border-color:#0066CC;
@@ -481,44 +556,5 @@ ul {
 	}
 
 
-/* = = = = Unsorted styles  = = = = */		
 
-
-
-#my_playlists{border:0px;border-style:solid;border-width:0px;margin-top:0px;margin-bottom:0px;padding:20px;}
-
-.playlist{color:#0066cc; width: 300px;}
-
-.playlist img {float: left; margin-top: 2px;}
-
-.playlist span {
-	float: left; 
-	overflow: hidden; 
-	margin-left: 5px;
-	}
-
-.playlist a {
-	overflow: hidden; 
-	float: left; 
-	margin-left: 5px;
-	}
-.playlist .delete_link {float: right;}
-
-
-.portrait {
-	width: 57px;
-	display:block;
-	float:left;
-	overflow:hidden;
-	padding-right:6px;
-	position:relative;
-}
-.portrait .user_pic, .portrait .user_name {
-	display:block;
-	float:left;
-}
-.portrait_name {
-	width: 57px;
-	float:left;
-}
 

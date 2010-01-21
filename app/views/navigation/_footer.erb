@@ -5,7 +5,7 @@
 	
 		<ul>
 			<li>
-				© 2010 <a href="">Heartbeats</a>
+				© 2010 <%= link_to "Heartbeats", "/home/aboutus" %>
 			</li>
 		</ul>
 	</div>
@@ -14,22 +14,22 @@
 	
 		<ul>
 			<li>
-				About Us
+				<%= link_to "About Us", "/home/aboutus" %>
 			</li>
 			<li>
-				Help
+				<%= link_to "Help", "/home/help" %>
 			</li>
 			<li>
-				Blog
+				<a href="http://heartb.tumblr.com">Blog</a>
 			</li>
 			<li>
-				<a href="mailto:gustaf@gmail.com?subject=Heartbeats">Contact</a>
+				<%= link_to "Contact", "/home/contact" %>
 			</li>
 			<li>
-				Terms
+			   	<%= link_to "Terms", "/home/terms" %>
 			</li>
 			<li>
-				Privacy
+				<%= link_to "Privacy", "/home/privacy" %>
 			</li>
 		</ul>
 	</div>
