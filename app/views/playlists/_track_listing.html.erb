@@ -1,5 +1,24 @@
 <div>
-  <ol><%= render :partial => "/playlists/track.html.erb", :collection => @playlist.tracks %></ol>
+
+	<table>
+		<thead>	
+			<th>
+			</th>
+			<th class="tracklist_name">
+			Name
+			</th>
+			<th class="tracklist_artist">
+			Artist
+			</th>
+<!--
+			<th class="tracklist_popularity">
+			Popularity
+			</th>
+-->
+		</thead>
+	</table>	
+  <%= render :partial => "/playlists/track.html.erb", :collection => @playlist.tracks %>
+
 </div>
 
  

@@ -1,6 +1,25 @@
 
-	<div id="tracks">
-		<li class="tracks">	
-			<a href=""><%= truncate track.artists.map{|a| a.name}.join ", " %> -  <%= truncate track.name %> <%= truncate track.name %>  <span class="temporary"><%= track.popularity %></span></a> 
-		</li>
+	<div>
+		<table class="track-list">
+			<tbody>
+				<tr>
+					
+					<td class="tracklist_incremental">
+					</td>
+					
+					<td class="tracklist_name">
+						<a class="tracks" href=""><%= truncate track.name %></a>
+					</td>
+					
+					<td class="tracklist_artist">
+						<a class="tracks" href=""><%= truncate track.artists.map{|a| a.name}.join ", " %></a>
+					</td>
+
+<!--					
+					<td class="tracklist_popularity">
+						<span class="temporary"><%= track.popularity %></span></a>
+					</td>		
+-->
+				</tr>
+		</table>
 	</div>

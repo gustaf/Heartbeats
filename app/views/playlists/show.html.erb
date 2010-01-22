@@ -9,14 +9,15 @@
 <div id="content">
 <br /><br /><br />
 
-<div class="main-top wrapper">	
+<div class="main-top wrapper">
+			
 		<div class="playlist_large">
-			 Open in Spotify: <%= link_to truncate(h(@playlist.to_s), :length => 55), @playlist.url_spotify %>
+		<span style="text-decoration:none;color:green;"> ♫ </span><%= link_to truncate(h(@playlist.to_s), :length => 55), @playlist.url_spotify %>
 		</div>
 		
 			<div class="playlist_actions">
 			
-				<div style="padding-top: 1px;float:left;margin-right:10px;">Share on Facebook:</div>
+			 
 				<a name="fb_share" type="box_count" href="http://www.facebook.com/sharer.php" style="float:left;">Share</a>
 				<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
 			
@@ -32,18 +33,17 @@
 						<%= link_to("Unlike", like_url(@current_user_like), :confirm => "Are you sure you want to unlike this playlist?", :method => :delete, :class => "like_link") %>
 					</div>
 				<% end %>
+				<br /><br /><br />
 		
 			</div>
 		
 </div>
-
 
 <!-- Container: Tracks & User-->		
 <div class="main wrapper">
 
 
 		<div class="track-listing">
-			<h2>Playlist Tracks</h2>
 		        <%= render :partial => "/playlists/track_listing.html.erb" %>
 			</div>
 
