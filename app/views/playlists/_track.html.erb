@@ -1,6 +1,6 @@
 
 	<div id="tracks">
 		<li class="tracks">	
-			<a href=""><%= truncate track.artists.map{|a| a.name}.join ", " %> -  <%= truncate track.name %>  <span class="temporary"><%= track.popularity %></span></a> 
+			<a href=""><%= truncate track.artists.map{|a| a.name}.join ", " %> -  <%= truncate track.name %> <%= truncate track.name %>  <span class="temporary"><%= track.popularity %></span></a> 
 		</li>
 	</div>
