@@ -1,0 +1,30 @@
+<div id="header-wrapper">
+
+	<div id="header-content" class="clearfix">
+		
+			<div id="logo">
+				<%= link_to (image_tag "logo.png"), "/" %>
+			</div>
+				
+			<div id="top-center">
+			</div>	
+				
+			<div id="top-navigation">
+				<ul class="navigation_list">
+					<li>
+						<%= link_to "Home", "/" %>
+					</li>
+					<li>
+						<%= link_to fb_name(facebook_session.user.uid, {:useyou => "false", :linked => "false"}), @user %> 
+					</li> 
+					<li>
+						Settings
+					</li>
+					<li>
+						<%= fb_logout_link "Sign Out", "signin" %>
+					</li>
+				</ul>				
+			</div>
+	</div>
+
+</div>

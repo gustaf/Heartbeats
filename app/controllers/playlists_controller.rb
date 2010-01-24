@@ -30,6 +30,7 @@ class PlaylistsController < ApplicationController
     end
     
     if playlist
+      playlist.lookup!
       flash[:playlist_added] = "Show stream publisher"
     end
     

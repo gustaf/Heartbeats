@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :uid
   has_many :playlists
   has_many :likes
+  has_many :fb_followees
+  has_many :hb_followees
   
   def like(playlist)
     unless likes?(playlist)
@@ -21,6 +23,31 @@ class User < ActiveRecord::Base
   
   def likes?(playlist)
     !like_for(playlist).blank?
+  end
+
+  def followees
+    followee_uids = fb_followees.map{|fb| fb.uid} + hb_followees.map{|hb| hb.uid}
+    followee_uids.uniq!
+    User.find(:all, :conditions => ["uid IN (?)", followee_uids], :include => :playlists)
+  end
+
+  def follow!(uid)
+    hb_followees << HbFollowee.new(:uid => uid)
+    save
+  end
+
+  def unfollow!(uid)
+    hb_followees.delete(* hb_followees.select{|hb| hb.uid == uid})
+    save
+  end
+
+  #for bands in town
+  def top50artists
+    artists = playlists.sort{|a,b| b.created_at <=> a.created_at}.map{|p| p.artists}.flatten.uniq
+    return artists[0...50] #if artists.size >= 50
+    followees_playlists = followees.map{|f| f.playlists}.flatten
+    artists += followees_playlists.sort{|a,b| b.created_at <=> a.created_at}.map{|p| p.artists}.flatten.uniq
+    artists[0...50]
   end
   
   class << self

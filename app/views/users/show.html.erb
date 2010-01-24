@@ -1,17 +1,36 @@
+
+<!-- Header & Top Navigation -->			
+	<%= render :partial => "navigation/header" %>	
+
+
+
 <div id="content">
-	<div id="header" class="clearfix">
-		<div id="top_links">
-			<%= link_to "Home", root_url %>
-		</div>
-		<div id="logo">
-			<%= link_to (image_tag "logo.png"), root_url %>
-		</div>
-	</div>
 	
-	<div class="round_top" style="margin-top:20px">
+	<br /> <br /> <br />
+	<div class="main wrapper">
+	
+	
 		<div id="user" style="padding: 10px">
-			<%= render :partial => "/home/friend.html.erb", :locals => {:friend => @profile_user}%>
+			<%= render :partial => "/users/friend.html.erb", :locals => {:friend => @profile_user}%>
 		</div>
 	</div>
-	<div class="round_bottom"> </div>
+        <% if @show_follow_button then %>
+          <div>
+            <% form_tag(hb_followee_path, :method => @follows ? "delete" : "put") do %>
+              <%= submit_tag(@follows ? "unfollow" : "follow") %>
+            <% end %>
+          </div>
+        <% end %>
+
+        <div class="container_playlist_suggestions">
+				
+				<div class="following">
+					<h2>Following</h2>
+
+          <%= render :partial => "home/friends_list" %>
+        </div>
 </div>
+
+
+<!-- Footer & Bottom Navigation -->		
+	<%= render :partial => "navigation/footer" %>	

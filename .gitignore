@@ -6,3 +6,6 @@ development.log
 production.log
 facebooker.yml
 tmp
+*.swp
+config/database.yml
+db/development.sqlite3

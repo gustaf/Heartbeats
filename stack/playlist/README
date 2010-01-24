@@ -1,0 +1,23 @@
+INSTALL LIBSPOTIFY
+wget https://developer.spotify.com/download/libspotify/libspotify-0.0.2-linux6-x86.tar.gz --no-check-certificate
+tar xzf libspotify-0.0.2-linux6-x86.tar.gz 
+rm libspotify-0.0.2-linux6-x86.tar.gz 
+cd libspotify-0.0.2-linux6-x86/
+make setup
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$PWD/lib/pkgconfig
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/lib
+
+INSTALL FCGI
+wget http://www.fastcgi.com/dist/fcgi.tar.gz
+tar xzf fcgi-2.4.0.tar.gz
+cd fcgi-2.4.0/
+[ ... don't remeber...]
+don't forget to set owner of app directory to www-data
+
+COMPILE
+gcc -Wall -o playlist *.c /home/jonatan/libspotify-0.0.2-linux6-x86/lib/libspotify.so -I/home/jonatan/libspotify-0.0.2-linux6-x86/include -lfcgi -g
+
+CONFIG LIGHTTPD TO USE PLAYLIST
+
+DEBUG
+gdb playlist

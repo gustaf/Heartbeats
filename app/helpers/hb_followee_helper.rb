@@ -1,0 +1,2 @@
+module HbFolloweeHelper
+end

@@ -1,17 +1,26 @@
-<div id="content">
-	<div id="header" class="clearfix">
-		<div id="top_links">
-			<%= link_to "Home", :action => "index" %> | 
-			<%= link_to "Help", :action => "help" %> | 
-			<%= fb_name facebook_session.user.uid, :useyou => "false" %> | 
-			<%= fb_logout_link "Sign Out", "signin" %> | 
+
+<!-- Header & Top Navigation -->			
+	<%= render :partial => "navigation/header" %>	
+
+	<div id="content">
+		<div class="main wrapper">
+				Help
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				
 		</div>
-		<div id="logo">
-			<%= image_tag "logo.png" %>
-		</div>
-	</div>
-	<br/>
-	<a id="inline" href="http://heartb.com/images/spotifyscreen.png">
-		Auto-javascript that checks if you've added a playlist
-		</a>
-</div>
+
+<!-- Footer & Bottom Navigation -->		
+	<%= render :partial => "navigation/footer" %>	
+	

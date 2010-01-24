@@ -1,11 +1,15 @@
 <div id="content">
-	<p>Hey, Heartbeats is a new way to share your Spotify music with you friends. It's pre-alpha but if you've found your way here feel free to sign in with your Facebook account. <br/><br/></p>
+	<div class="signin">
+
+	<p>Hey there, 
+	<br/><br/>
+	Heartbeats is a new music discovery service that lets you share your Spotify music with your friends. We're not really done yet but feel free to try an early version. <strong>Sign in by clicking 'Connect with Facebook'</strong> below.
+	<br/><br/>
+	Also, don't forget to send us feedback on what's broken and what new stuff you'd like to see. Thanks!
+	<br/><br/></p>
 
 <%= fb_login_and_redirect root_url, :length => :long %>
+	</div>
 </div>
 
-<script>
-		$(document).ready(function() {
-		    mpmetrics.track('signin-page');
-		});
-</script>		
+		

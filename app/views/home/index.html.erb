@@ -1,60 +1,54 @@
+
+<!-- Header & Top Navigation -->			
+	<%= render :partial => "navigation/header" %>	
+
+
 <div id="content">
-	<div id="header" class="clearfix">
-		<div id="top_links">
-					<%= link_to "Home", :action => "index" %> | 
-					<!--<%= link_to "Help", :action => "help" %> | -->
-					<%= fb_name facebook_session.user.uid, :useyou => "false" %> | 
-					<%= fb_logout_link "Sign Out", "signin" %> |		</div>
-		<div id="logo">
-			<%= link_to (image_tag "logo.png"), :action => "index" %>
-		</div>
-	</div>
 	
-	<!-- ADD PLAYLIST -->
-	<div class="headline">Copy and paste your Spotify playlist:</div>
-	<div class="round_top">
-		<div id="new_playlist" class="clearfix">
-			<div id="input_border">
-				<div id="input_shaddow">
-					<div id="input" contenteditable="true">
-					</div>
+<!-- Container: Add Playlist & Right Navigation -->		
+
+<div class="main-top wrapper">
+<!-- Add Playlist -->
+			<div id="new_playlist">
+
+				<script type="text/javascript">
+					function submitform()
+					{
+		    		document.forms["new_playlist_form"].submit();
+					}
+					</script>
+			
+			 	<% form_for :playlist, @new_playlist, :url => playlists_url, :html => {:id => "new_playlist_form"} do |f| %>
+					<%= f.text_field :url, :size => 62 %>
+					<a href="javascript: submitform()" class="button"><span style="color: green;">♫ </span> Add Playlist</a>
+				<% end %>
+
+		
+						
+			<small><span style="color:#818181;">Example: http://open.spotify.com/user/gus/playlist/4NlgJdeq17Niy</span></small>
+						<br/>
+			</div>	
+
+</div>	
+
+
+<!-- Wrapper: Playlists & Suggestions -->		
+
+	<div class="main wrapper">
+	
+			<div class="following">
+				<h2>Following</h2>
+	            <%= render :partial => "friends_list" %>
 				</div>
+			
+			<div class="shows">
+				<h2>Shows</h2>
+				<%= render :partial => "bandsintown" %>
 			</div>
 
-			<% form_for :playlist, @new_playlist, :url => playlists_url, :html => {:id => "new_playlist_form"} do |f| %>
-	      <%= f.hidden_field :url %>
-	      <%= submit_tag 'Add Playlist', :onclick => "submitPlaylist();return false;" %>
-	    <% end %>
+	</div>
 
-			<script>
-				function submitPlaylist (){
-					$("playlist_url").value = $("input").innerHTML;
-					$("new_playlist_form").submit();
-					mpmetrics.track('add-playlist');
-				}
-			</script>
-		</div>
-	</div>
-	<div class="round_bottom"></div>
-	
-	<div class="headline">My playlists:</div>
-	<div class="round_top">
-		<div id="my_playlists" class="clearfix">
-			<%= render :partial => "playlist_with_delete", :collection => @my_playlists %>
-		</div>
-	</div>
-	<div class="round_bottom"> </div>
-	
-	<div class="headline">Friends' playlists:</div>
-	<div class="round_top">		
-		<div id="friends_list" class="clearfix">
-			<div id="left_column" class="friend_column">
-				<%= render :partial => "friend", :collection => @friends_in_left_col %>
-			</div>
-			<div id="right_column" class="friend_column">
-				<%= render :partial => "friend", :collection => @friends_in_right_col %>
-			</div>
-		</div>
-	</div>
-	<div class="round_bottom"> </div>
-</div>
+
+<!-- Footer & Bottom Navigation -->		
+	<%= render :partial => "navigation/footer" %>	
+
