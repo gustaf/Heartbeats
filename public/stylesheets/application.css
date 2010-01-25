@@ -249,16 +249,26 @@ a:hover.FB_Link	{
 	padding:4px;
 	}
 
+#new_playlist_form {
+	}
+	
+
 
 /* = = = = Playlist = = = = */		
 
-.playlist_large {
+#playlist_large {
+	float: left;
+	min-width: 100px;
+	display:block;
 	font-size:19px;
 	font-family:"lucida grande",tahoma,verdana,arial,sans-serif,default;
 	text-decoration:none;
 	color:#0066CC;
 	letter-spacing:-0.05em;
 	margin-left: 100px;
+	border:0px;
+	border-color:red;
+	border-style:solid;
 	}
 
 .playlist_large a {
@@ -279,10 +289,12 @@ a:hover.FB_Link	{
 	text-decoration:none;	
 	}
 
-.playlist_actions {
+#playlist_actions {
+	clear: left; 
+	display:block;
 	font-size:1.0em;
 	font-family:'Helvetica Neue',Arial,Sans-serif;
-	margin-top:10px;
+	padding:20px;
 	margin-left: 240px;
 	border:0px;
 	border-color:green;
@@ -580,5 +592,13 @@ ul {
 	}
 
 
+/* = = = = Tipsy = = = = */	
 
+.tipsy { padding: 5px; font-size: 10px; opacity: 0.8; filter: alpha(opacity=80); background-repeat: no-repeat;  background-image: url(../images/tipsy.gif); }
+.tipsy-inner { padding: 5px 8px 4px 8px; background-color: black; color: white; max-width: 300px; text-align: center; }
+.tipsy-inner { -moz-border-radius:3px; -webkit-border-radius:3px; }
+.tipsy-north { background-position: top center; }
+.tipsy-south { background-position: bottom center;}
+.tipsy-east { background-position: right center; }
+.tipsy-west { background-position: left center; }
 

@@ -11,11 +11,11 @@
 
 <div class="main-top wrapper">
 			
-		<div class="playlist_large">
+		<div id="playlist_large" class="clearfix" original-title="Play in Spotify">
 		<span style="text-decoration:none;color:green;"> ♫ </span><%= link_to truncate(h(@playlist.to_s), :length => 55), @playlist.url_spotify %>
 		</div>
 		
-			<div class="playlist_actions">
+			<div id="playlist_actions" class="clearfix">
 			
 			 
 				<a name="fb_share" type="box_count" href="http://www.facebook.com/sharer.php" style="float:left;">Share</a>
