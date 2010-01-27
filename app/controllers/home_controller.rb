@@ -11,7 +11,7 @@ def index
       @events = Bandsintown::Event.recommended({
         :artists => @user.top50artists,
         :location => request.remote_ip
-        #:location => "212.162.1.95"
+       #:location => "212.162.1.95"
       })
     rescue Bandsintown::APIError
       @events = []

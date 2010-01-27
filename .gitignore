@@ -4,5 +4,5 @@ development.log
 production.log
 tmp
 *.swp
-config/database.yml
 db/development.sqlite3
+config/database.yml
