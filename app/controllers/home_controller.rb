@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   before_filter :set_facebook_session, :ensure_logged_in_and_get_user
   helper_method :facebook_session
 
-def index
+ def index
     @friends = [@user] + @user.followees
     Bandsintown.app_id = "heartbeats"
     begin
@@ -17,14 +17,14 @@ def index
       @events = []
     end
   end
-  def aboutus
-  end
-  def help
-  end
-  def contact
-  end
-  def terms
-  end
-  def privacy
-  end
+#  def aboutus
+#  end
+#  def help
+#  end
+#  def contact
+#  end
+#  def terms
+#  end
+#  def privacy
+#  end
 end

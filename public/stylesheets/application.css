@@ -1,8 +1,18 @@
+/*
+     ___           ___           ___           ___           ___           ___           ___           ___           ___           ___     
+    /\__\         /\  \         /\  \         /\  \         /\  \         /\  \         /\  \         /\  \         /\  \         /\  \    
+   /:/  /        /::\  \       /::\  \       /::\  \        \:\  \       /::\  \       /::\  \       /::\  \        \:\  \       /::\  \   
+  /:/__/        /:/\:\  \     /:/\:\  \     /:/\:\  \        \:\  \     /:/\:\  \     /:/\:\  \     /:/\:\  \        \:\  \     /:/\ \  \  
+ /::\  \ ___   /::\~\:\  \   /::\~\:\  \   /::\~\:\  \       /::\  \   /::\~\:\__\   /::\~\:\  \   /::\~\:\  \       /::\  \   _\:\~\ \  \ 
+/:/\:\  /\__\ /:/\:\ \:\__\ /:/\:\ \:\__\ /:/\:\ \:\__\     /:/\:\__\ /:/\:\ \:|__| /:/\:\ \:\__\ /:/\:\ \:\__\     /:/\:\__\ /\ \:\ \ \__\
+\/__\:\/:/  / \:\~\:\ \/__/ \/__\:\/:/  / \/_|::\/:/  /    /:/  \/__/ \:\~\:\/:/  / \:\~\:\ \/__/ \/__\:\/:/  /    /:/  \/__/ \:\ \:\ \/__/
+     \::/  /   \:\ \:\__\        \::/  /     |:|::/  /    /:/  /       \:\ \::/  /   \:\ \:\__\        \::/  /    /:/  /       \:\ \:\__\  
+     /:/  /     \:\ \/__/        /:/  /      |:|\/__/     \/__/         \:\/:/  /     \:\ \/__/        /:/  /     \/__/         \:\/:/  /  
+    /:/  /       \:\__\         /:/  /       |:|  |                      \::/__/       \:\__\         /:/  /                     \::/  /   
+    \/__/         \/__/         \/__/         \|__|                       ~~            \/__/         \/__/                       \/__/
 
 
-
-
-/* = = = = Body, Text, Links = = = = */	
+*/ /* = = = = Body, Text, Links = = = = */	
 
 body {
 	font-family:"lucida grande",tahoma,verdana,arial,sans-serif,default;
@@ -33,8 +43,15 @@ ul {
 h2 	{
 	font-family:"lucida grande",tahoma,verdana,arial,sans-serif,default;
 	color:#333333;
-	font-size:12px;
+	font-size:14px;
+	font-weight:normal;
 	margin-bottom:6px;
+	}
+
+small {
+	font-size:10px;
+	font-family:"lucida grande",tahoma,verdana,arial,sans-serif,default;
+	color:#666666;
 	}
 
 a	{
@@ -45,8 +62,8 @@ a	{
 	}
 	
 a:hover	{
-	color:#0066CC;
-	text-decoration:underline;
+	color:#FF0000;
+	text-decoration:none;
 	}
 	
 img	{
@@ -208,6 +225,10 @@ a:hover.FB_Link	{
 	-moz-border-radius-bottomright:3px;
 	-moz-border-radius-topleft:3px;
 	-moz-border-radius-topright:3px;
+	-webkit-border-top-left-radius:3px;
+	-webkit-border-top-right-radius:3px;
+	-webkit-border-bottom-left-radius:3px;
+	-webkit-border-bottom-right-radius:3px;
 	background:#E0E0E0 url(/images/button_background.gif) repeat-x scroll left top;
 	border-color:#BBBBBB #BBBBBB #999999;
 	border-style:solid;
@@ -246,12 +267,31 @@ a:hover.FB_Link	{
 	margin-top:30px;
 	margin-bottom:20px;
 	margin-left:10px;
-	padding:4px;
-	}
-
-#new_playlist_form {
 	}
 	
+#new_playlist_form {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	-moz-border-radius-bottomleft:5px;
+	-moz-border-radius-bottomright:5px;
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-topright:5px;
+	-webkit-border-top-left-radius:5px;
+	-webkit-border-top-right-radius:5px;
+	-webkit-border-bottom-left-radius:5px;
+	-webkit-border-bottom-right-radius:5px;
+	background-color:#F0F6FB;
+	border:0px;
+	border-color:red;
+	border-style:solid;
+	padding:14px;
+	}
+
+.text_field	{
+	font-size:1.1em;
+	margin-right:4px;
+	}
 
 
 /* = = = = Playlist = = = = */		
@@ -360,47 +400,56 @@ a:hover.FB_Link	{
 
 .friend_name {
 	font-weight:bold;
-	font-size:13px;
+	font-size:1.1em;
+	line-height:1.5em;
+	vertical-align:top;	
+	font-family:"Helvetica Neue",Helvetica,Arial,default;
+	font-weight: bold;
 	}
 
 .playlists {
+	line-height:1.5em;
+	font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
+	font-size:1.0em;
+	color:#0066cc; 
+	width:300px;
+	border:0px;
+	border-color:yellow;
+	border-style:solid;
+	}
+
+.playlist img {
+	float:left; 
+	margin-top: 3px;
+	margin-right: 3px;
+	line-height:1.5em;
+	}
+
+/*
+.playlist span {
+		float: left; 
+		overflow: hidden; 
+		margin-left: 5px;
+		}
+
+*/
+.portrait {
+	width: 57px;
+	display:block;
 	float:left;
-	font-size:10px;
+	overflow:hidden;
+	padding-right:8px;
+	position:relative;
 	}
-
-	.playlist{color:#0066cc; width: 300px;}
-
-	.playlist img {float: left; margin-top: 2px;}
-
-	.playlist span {
-		float: left; 
-		overflow: hidden; 
-		margin-left: 5px;
-		}
-
-	.playlist a {
-		overflow: hidden; 
-		float: left; 
-		margin-left: 5px;
-		}
-	.playlist .delete_link {float: right;}
-
-
-	.portrait {
-		width: 57px;
-		display:block;
-		float:left;
-		overflow:hidden;
-		padding-right:6px;
-		position:relative;
+		
+.portrait .user_pic, .portrait .user_name {
+	display:block;
+	float:left;
 	}
-	.portrait .user_pic, .portrait .user_name {
-		display:block;
-		float:left;
-	}
-	.portrait_name {
-		width: 57px;
-		float:left;
+	
+.portrait_name {
+	width: 57px;
+	float:left;
 	}
 
 
@@ -514,7 +563,8 @@ table tr td {
 	border:0px;
 	border-color:red;
 	border-style:solid;
-	font-family:Helvetica,Arial,default;
+	font-family:"lucida grande",tahoma,verdana,arial,sans-serif,default;
+	line-height:1.3em;
 	}
 
 
