@@ -1,9 +1,5 @@
 <% unless @events.empty? then %>
   <div>
-    <div style="clear:both;" class="headline">
-      Buy Recommended Tickets in Your Area:
-    </div>
-
     <% @events.each do |event| %>
       <div>
         <span style="font-size:0.9em;"><% artists = event.artists.map{|a| a.name}.join(", ") %>

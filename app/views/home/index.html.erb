@@ -9,7 +9,7 @@
 
 <div class="main-top wrapper">
 <!-- Add Playlist -->
-			<div id="new_playlist">
+			<div id="new_playlist" original-title="Drag and Drop your Spotify Playlist to the input field below. Then click Add Playlist">
 
 				<script type="text/javascript">
 					function submitform()
@@ -19,13 +19,14 @@
 					</script>
 			
 			 	<% form_for :playlist, @new_playlist, :url => playlists_url, :html => {:id => "new_playlist_form"} do |f| %>
-					<%= f.text_field :url, :size => 62 %>
-					<a href="javascript: submitform()" class="button"><span style="color: green;">♫ </span> Add Playlist</a>
+					<%= f.text_field :url, :size => 50, :class => "text_field" %>
+					<a href="javascript: submitform()" class="button"><span style="color: green;">♫ </span> Add Playlist</a><br />
+				<small>Example: http://open.spotify.com/user/gus/playlist/4NlgJdeq17Niy</small>
 				<% end %>
 
 		
 						
-			<small><span style="color:#818181;">Example: http://open.spotify.com/user/gus/playlist/4NlgJdeq17Niy</span></small>
+
 						<br/>
 			</div>	
 
@@ -42,7 +43,7 @@
 				</div>
 			
 			<div class="shows">
-				<h2>Shows</h2>
+				<h2>Local Shows</h2>
 				<%= render :partial => "bandsintown" %>
 			</div>
 
