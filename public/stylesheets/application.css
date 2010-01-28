@@ -45,7 +45,7 @@ h2 	{
 	color:#333333;
 	font-size:14px;
 	font-weight:normal;
-	margin-bottom:6px;
+	margin-bottom:12px;
 	}
 
 small {
@@ -557,16 +557,45 @@ table tr td {
 
 /* = = = = Shows = = = = */		
 
-.shows	{
+.shows_wrapper	{
 	float:right;
-	width:280px;
+	width:282px;
 	border:0px;
 	border-color:red;
 	border-style:solid;
 	font-family:"lucida grande",tahoma,verdana,arial,sans-serif,default;
+	font-size:12px;
 	line-height:1.3em;
 	}
 
+.shows	{
+	float:right;
+	width:282px;
+	font-family:"lucida grande",tahoma,verdana,arial,sans-serif,default;
+	font-size:12px;
+	line-height:1.3em;
+	margin-bottom:8px;
+	}
+
+.shows:hover {
+	background-color:#F0F6FB;
+	color:#000000;	
+	}
+
+.shows_date_venue {
+	font-size:10px;
+	color:#999999;	
+	}
+
+
+.shows_date_venue a {
+	font-size:10px;
+	color:#999999;	
+	}
+
+.shows_date_venue a:hover {
+	color:#FF0000;	
+	}
 
 		
 
