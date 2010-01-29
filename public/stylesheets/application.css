@@ -183,15 +183,14 @@ a:hover.FB_Link	{
 	}
 	
 .wrapper {
-	width:100%;
+	width:920px;
 	float:left;
 	border:0px;
-	border-color:yellow;
+	border-color:green;
 	border-style:solid;
 	display:block;
-	margin-top:10px;
-	margin-bottom:10px;  
-		}	
+	margin-top:32px;
+	}	
 	
 .clearfix:after {
 	clear:both;
@@ -255,18 +254,12 @@ a:hover.FB_Link	{
 
 
 
-
-
-
-
 /* = = = = Add Playlist = = = = */	
 	
 #new_playlist {
 	float:left;
 	width:600px;
-	margin-top:30px;
-	margin-bottom:20px;
-	margin-left:10px;
+	padding:10px;
 	}
 	
 #new_playlist_form {

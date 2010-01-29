@@ -6,31 +6,33 @@
 
 <div id="content">
 	
-	<br /> <br /> <br />
-	<div class="main wrapper">
+
+	<div class="main-top wrapper">
 	
-	
-		<div id="user" style="padding: 10px">
+		<br />
+		<div id="user">
 			<%= render :partial => "/users/friend.html.erb", :locals => {:friend => @profile_user}%>
 		</div>
+	
 	</div>
-        <% if @show_follow_button then %>
-          <div>
-            <% form_tag(hb_followee_path, :method => @follows ? "delete" : "put") do %>
-              <%= submit_tag(@follows ? "unfollow" : "follow") %>
-            <% end %>
-          </div>
+    
+	<div class="main wrapper">
+    	<% if @show_follow_button then %>
+          	<div>
+            	<% form_tag(hb_followee_path, :method => @follows ? "delete" : "put") do %>
+              	<%= submit_tag(@follows ? "unfollow" : "follow") %>
+            	<% end %>
+          	</div>
         <% end %>
-
-        <div class="container_playlist_suggestions">
 				
-				<div class="following">
+			<div class="following">
 					<h2>Following</h2>
 
-          <%= render :partial => "home/friends_list" %>
-        </div>
-</div>
-
+          			<%= render :partial => "home/friends_list" %>
+        	</div>
+	</div>		
 
 <!-- Footer & Bottom Navigation -->		
 	<%= render :partial => "navigation/footer" %>	
+
+</div>
