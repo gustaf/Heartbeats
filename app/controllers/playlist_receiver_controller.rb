@@ -5,7 +5,6 @@ class PlaylistReceiverController < ApplicationController
 
   def index
     self.class.parse_xml(request.raw_post)
-    logger.error "DEBUG!!!!!!!!!!!!!!! got: #{request.raw_post}"
     render :text => "ok"
   end
 
