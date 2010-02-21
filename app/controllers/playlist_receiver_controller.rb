@@ -13,6 +13,7 @@ class PlaylistReceiverController < ApplicationController
       xml = XML::Document.string(xml)
 
       uri = xml.find_first("/playlist/@uri").value
+      logger.error "uri: #{uri}"
       pls = Playlist.all(:conditions => ["url_spotify = ?", uri])
 
       pls.each do |pl|
