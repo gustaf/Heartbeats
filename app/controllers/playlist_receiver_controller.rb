@@ -13,7 +13,6 @@ class PlaylistReceiverController < ApplicationController
       xml = XML::Document.string(xml)
 
       uri = xml.find_first("/playlist/@uri").value
-      logger.error "uri: #{uri}"
       pls = Playlist.all(:conditions => ["url_spotify = ?", uri])
 
       pls.each do |pl|
@@ -34,19 +33,16 @@ class PlaylistReceiverController < ApplicationController
             unless artist then
               artist = Artist.new
               artist.name = a.content
-              artist.save!
+              artist.save
             end
             artist
           end
-          track.save!
+          track.save
           track
         end
 
-        pl.save!
-        logger.error pl.inspect
+        pl.save
       end
-
-      logger.error "DONE"
 
     end
   end
