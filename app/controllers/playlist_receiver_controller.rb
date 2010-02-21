@@ -4,7 +4,7 @@ class PlaylistReceiverController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def index
-    #self.class.parse_xml(request.raw_post)
+    self.class.parse_xml(request.raw_post)
     logger.error "DEBUG!!!!!!!!!!!!!!! got: #{request.raw_post}"
     render :text => "ok"
   end
