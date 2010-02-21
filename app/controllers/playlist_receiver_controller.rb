@@ -5,7 +5,7 @@ class PlaylistReceiverController < ApplicationController
 
   def index
     #self.class.parse_xml(request.raw_post)
-    render :text => request.inspect
+    render :text => request.raw_post.inspect
   end
 
   class << self
