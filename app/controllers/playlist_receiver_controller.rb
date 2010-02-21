@@ -44,6 +44,8 @@ class PlaylistReceiverController < ApplicationController
         pl.save!
       end
 
+      logger.error "DONE"
+
     end
   end
 end
