@@ -18,8 +18,6 @@ class PlaylistReceiverController < ApplicationController
       pls.each do |pl|
         p = xml.find_first("/playlist")
         pl.title = p.attributes["name"]
-        pl.save
-        logger.error "got #{p.attributes["name"]}"
         pl.collaborative = p.attributes["collaborative"] == "yes" ? 1 : 0
         pl.data_updated_at = DateTime.now
 
@@ -35,15 +33,15 @@ class PlaylistReceiverController < ApplicationController
             unless artist then
               artist = Artist.new
               artist.name = a.content
-              artist.save
+              artist.save!
             end
             artist
           end
-          track.save
+          track.save!
           track
         end
 
-        pl.save
+        pl.save!
       end
 
     end
