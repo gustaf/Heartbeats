@@ -18,6 +18,7 @@ class PlaylistReceiverController < ApplicationController
       pls.each do |pl|
         p = xml.find_first("/playlist")
         pl.title = p.attributes["name"]
+        logger.erro "got #{p.attributes["name"]}"
         pl.collaborative = p.attributes["collaborative"] == "yes" ? 1 : 0
         pl.data_updated_at = DateTime.now
 
