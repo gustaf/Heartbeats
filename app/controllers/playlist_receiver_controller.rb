@@ -42,6 +42,7 @@ class PlaylistReceiverController < ApplicationController
         end
 
         pl.save!
+        logger.error pl.inspect
       end
 
       logger.error "DONE"
