@@ -1,8 +1,8 @@
 log/*
-db/schema.rb
 test.log
 development.log
 production.log
 tmp
 *.swp
 db/development.sqlite3
+config/database.yml

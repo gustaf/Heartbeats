@@ -1,14 +1,17 @@
 <% unless @events.empty? then %>
   <div>
     <% @events.each do |event| %>
-      <div>
-        <span style="font-size:0.9em;"><% artists = event.artists.map{|a| a.name}.join(", ") %>
-        <%= link_to artists + (event.tickets_available? ? "" : " (not available)"), "#{event.ticket_url}?affil_code=heartb_#{@user.id}", :popup => true %> </span>
-		<span style="font-size:0.8em;">
-        <%= h event.datetime.strftime("%b %d") %>
-        <%= h event.venue.name %>
-        <%= h event.venue.city %>
-		<span>	
+      <div class="shows">
+        <% artists = event.artists.map{|a| a.name}.join(", ") %>
+        <%= link_to artists + (event.tickets_available? ? "" : " (no tickets)"), "#{event.ticket_url}?affil_code=heartb_#{@user.id}", :popup => true %>  					
+     	
+		<br />
+		<span class="shows_date_venue">
+        	<%= link_to (h event.datetime.strftime("%b %d")), "#{event.ticket_url}?affil_code=heartb_#{@user.id}", :popup => true %> · 		
+        	<%= link_to (h event.venue.name), "#{event.ticket_url}?affil_code=heartb_#{@user.id}", :popup => true %>,   
+			<%= link_to (h event.venue.city), "#{event.ticket_url}?affil_code=heartb_#{@user.id}", :popup => true %>  
+		</span>
+
       </div>
     <% end %>
   </div>

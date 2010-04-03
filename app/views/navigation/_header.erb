@@ -15,7 +15,7 @@
 						<%= link_to "Home", "/" %>
 					</li>
 					<li>
-						<%= link_to fb_name(facebook_session.user.uid, {:useyou => "false", :linked => "false"}), @user %> 
+						<%= link_to fb_name(@user.uid, {:useyou => "false", :linked => "false"}), @user %> 
 					</li> 
 					<li>
 						Settings

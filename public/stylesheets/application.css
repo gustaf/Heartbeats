@@ -45,7 +45,7 @@ h2 	{
 	color:#333333;
 	font-size:14px;
 	font-weight:normal;
-	margin-bottom:6px;
+	margin-bottom:12px;
 	}
 
 small {
@@ -183,15 +183,14 @@ a:hover.FB_Link	{
 	}
 	
 .wrapper {
-	width:100%;
+	width:920px;
 	float:left;
 	border:0px;
-	border-color:yellow;
+	border-color:green;
 	border-style:solid;
 	display:block;
-	margin-top:10px;
-	margin-bottom:10px;  
-		}	
+	margin-top:32px;
+	}	
 	
 .clearfix:after {
 	clear:both;
@@ -255,18 +254,12 @@ a:hover.FB_Link	{
 
 
 
-
-
-
-
 /* = = = = Add Playlist = = = = */	
 	
 #new_playlist {
 	float:left;
 	width:600px;
-	margin-top:30px;
-	margin-bottom:20px;
-	margin-left:10px;
+	padding:10px;
 	}
 	
 #new_playlist_form {
@@ -557,16 +550,45 @@ table tr td {
 
 /* = = = = Shows = = = = */		
 
-.shows	{
+.shows_wrapper	{
 	float:right;
-	width:280px;
+	width:282px;
 	border:0px;
 	border-color:red;
 	border-style:solid;
 	font-family:"lucida grande",tahoma,verdana,arial,sans-serif,default;
+	font-size:12px;
 	line-height:1.3em;
 	}
 
+.shows	{
+	float:right;
+	width:282px;
+	font-family:"lucida grande",tahoma,verdana,arial,sans-serif,default;
+	font-size:12px;
+	line-height:1.3em;
+	margin-bottom:8px;
+	}
+
+.shows:hover {
+	background-color:#F0F6FB;
+	color:#000000;	
+	}
+
+.shows_date_venue {
+	font-size:10px;
+	color:#999999;	
+	}
+
+
+.shows_date_venue a {
+	font-size:10px;
+	color:#999999;	
+	}
+
+.shows_date_venue a:hover {
+	color:#FF0000;	
+	}
 
 		
 
