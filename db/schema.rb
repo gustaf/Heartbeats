@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(:version => 20100403181047) do
     t.datetime "updated_at"
   end
 
+  add_index "artists", ["name"], :name => "index_artists_on_name", :unique => true
+
   create_table "artists_tracks", :id => false, :force => true do |t|
     t.integer "track_id"
     t.integer "artist_id"
@@ -50,6 +52,8 @@ ActiveRecord::Schema.define(:version => 20100403181047) do
     t.datetime "updated_at"
   end
 
+  add_index "likes", ["user_id", "playlist_id"], :name => "index_likes_on_user_id_and_playlist_id", :unique => true
+
   create_table "playlists", :force => true do |t|
     t.string   "url"
     t.string   "url_spotify",       :null => false
@@ -61,6 +65,8 @@ ActiveRecord::Schema.define(:version => 20100403181047) do
     t.datetime "data_requested_at"
     t.datetime "data_updated_at"
   end
+
+  add_index "playlists", ["user_id", "url_spotify"], :name => "index_playlists_on_user_id_and_url_spotify", :unique => true
 
   create_table "playlists_tracks", :id => false, :force => true do |t|
     t.integer "playlist_id"
@@ -76,6 +82,8 @@ ActiveRecord::Schema.define(:version => 20100403181047) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "tracks", ["uri"], :name => "index_tracks_on_uri", :unique => true
 
   create_table "users", :force => true do |t|
     t.integer  "uid",        :limit => 8
