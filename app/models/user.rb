@@ -26,22 +26,19 @@ class User < ActiveRecord::Base
   end
 
   def friends
-    p @fb_friends
-    User.all({:conditions => ["uid IN (?)", @fb_friends]})
+    User.all(:include => :playlists, :conditions => ["uid IN (?)", @fb_friends])
   end
 
   #for bands in town
   def top50artists
-    artists = playlists.sort{|a,b| b.created_at <=> a.created_at}.map{|p| p.artists}.flatten.uniq
-    return artists[0...50] #if artists.size >= 50
-    followees_playlists = followees.map{|f| f.playlists}.flatten
-    artists += followees_playlists.sort{|a,b| b.created_at <=> a.created_at}.map{|p| p.artists}.flatten.uniq
-    artists[0...50]
+    #disabled until caching/background task/AJAX
+    return []
+    return Artist.all(:limit => 50, :joins => {:tracks => {:playlists => :user}}, :conditions => ["users.id = ?", 6], :select => "DISTINCT(artists.name)", :order => "playlists.created_at DESC").map{|a| a.name}
   end
   
   class << self
     def find_or_create(uid)
-      user = first({:conditions => {:uid => uid}})
+      user = first(:conditions => {:uid => uid})
       return user if user
       user = new(:uid => uid)
       user.save!

@@ -5,7 +5,7 @@
           <div class="friend_name"><%= link_to fb_name(friend.uid, {:useyou => "false", :linked => "false"}), friend %></div>
 		<div class="playlists">
 			<%= render :partial => "/home/playlist.html.erb", :collection => friend.playlists[0..2] %>
-                        <% if friend.playlists.count > 3 then %>
+                        <% if friend.playlists[3] then %>
                           <div class="playlists"><%= link_to "more", friend %></div>
                         <% end %>
 		</div>

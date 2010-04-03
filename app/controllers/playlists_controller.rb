@@ -7,7 +7,7 @@ class PlaylistsController < ApplicationController
   end
   
   def show
-    @playlist = Playlist.find params[:id]
+    @playlist = Playlist.find params[:id], :include => {:tracks => :artists}
     @creator = @playlist.user
     @liked_by = User.find(:all, :joins => :likes, :conditions => ["likes.playlist_id = ?", @playlist])
     @current_user_like = @user.like_for @playlist
