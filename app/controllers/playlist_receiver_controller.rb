@@ -35,6 +35,8 @@ class PlaylistReceiverController < ApplicationController
               artist.name = a.content
               artist.save
             end
+            ArtistName.new(:user_id => pl.user_id, :name => artist.name) ||
+              ArtistName.update_all("name = '#{artist.name}'", "user_id = #{pl.user_id}, name = '#{artist.name}'")
             artist
           end
           track.save

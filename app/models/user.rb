@@ -32,8 +32,7 @@ class User < ActiveRecord::Base
   #for bands in town
   def top50artists
     #disabled until caching/background task/AJAX
-    return []
-    return Artist.all(:limit => 50, :joins => {:tracks => {:playlists => :user}}, :conditions => ["users.id = ?", 6], :select => "DISTINCT(artists.name)", :order => "playlists.created_at DESC").map{|a| a.name}
+    ArtistName.top50(self)
   end
   
   class << self
