@@ -393,6 +393,16 @@ int main(void)
 	list_init(&g_in_list);
 	list_attributes_copy(&g_in_list, list_meter_string, 1);
 
+	system("wget -qrO missing_playlists http://heartb.com/missing_playlists");
+	FILE *file;
+	char line[256];
+	file = fopen("missing_playlists", "r");
+	while(fgets(line, 256, file) != NULL) {
+		if(line[strlen(line)-1] == '\n') line[strlen(line)-1] = '\0';
+		list_append(&g_in_list, line);
+	}
+	fclose(file);
+
 	sp_session *sp;
 	sp_error err;
 
