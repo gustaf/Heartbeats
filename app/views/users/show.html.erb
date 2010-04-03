@@ -17,19 +17,7 @@
 	</div>
     
 	<div class="main wrapper">
-    	<% if @show_follow_button then %>
-          	<div>
-            	<% form_tag(hb_followee_path, :method => @follows ? "delete" : "put") do %>
-              	<%= submit_tag(@follows ? "unfollow" : "follow") %>
-            	<% end %>
-          	</div>
-        <% end %>
-				
-			<div class="following">
-					<h2>Following</h2>
-
-          			<%= render :partial => "home/friends_list" %>
-        	</div>
+			
 	</div>		
 
 <!-- Footer & Bottom Navigation -->		

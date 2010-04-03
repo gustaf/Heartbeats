@@ -3,8 +3,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :uid
   has_many :playlists
   has_many :likes
-  has_many :fb_followees
-  has_many :hb_followees
+  
+  attr_writer :fb_friends
   
   def like(playlist)
     unless likes?(playlist)
@@ -25,20 +25,9 @@ class User < ActiveRecord::Base
     !like_for(playlist).blank?
   end
 
-  def followees
-    followee_uids = fb_followees.map{|fb| fb.uid} + hb_followees.map{|hb| hb.uid}
-    followee_uids.uniq!
-    User.find(:all, :conditions => ["uid IN (?)", followee_uids], :include => :playlists)
-  end
-
-  def follow!(uid)
-    hb_followees << HbFollowee.new(:uid => uid)
-    save
-  end
-
-  def unfollow!(uid)
-    hb_followees.delete(* hb_followees.select{|hb| hb.uid == uid})
-    save
+  def friends
+    p @fb_friends
+    User.all({:conditions => ["uid IN (?)", @fb_friends]})
   end
 
   #for bands in town

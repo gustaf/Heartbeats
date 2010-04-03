@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
     end
 
     @user = User.find_or_create(facebook_session.user.id)
-    @user.fb_followees= facebook_session.user.friends.map{|f| FbFollowee.new(:uid => f.uid)}
+    @user.fb_friends= facebook_session.user.friends.map{|f| f.uid}
   end
   
   def check_uri
