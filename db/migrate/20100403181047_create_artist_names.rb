@@ -10,7 +10,7 @@ class CreateArtistNames < ActiveRecord::Migration
     say "this will take a long time, #{User.count} users in total"
     User.all.each do |u|
       say u.id
-      artists = Artist.all(:limit => 50, :joins => {:tracks => {:playlists => :user}}, :conditions => ["users.id = ?", u.id], :select => "DISTINCT(artists.name)", :order => "playlists.created_at DESC")
+      artists = Artist.all(:limit => 50, :joins => {:tracks => {:playlists => :user}}, :conditions => ["users.id = ?", u.id], :select => "DISTINCT(artists.name), playlists.created_at", :order => "playlists.created_at DESC")
       artists.each do |a|
         ArtistName.new(:name => a.name, :user_id => u.id).save
       end
