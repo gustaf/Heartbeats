@@ -2,6 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 
 require 'meta-spotify'
+#require 'ar-extensions'
 
 class ApplicationController < ActionController::Base
   before_filter :check_uri
@@ -25,9 +26,8 @@ class ApplicationController < ActionController::Base
       redirect_to(:controller => "signin")
       return
     end
-
+    
     @user = User.find_or_create(facebook_session.user.id)
-    @user.fb_followees= facebook_session.user.friends.map{|f| FbFollowee.new(:uid => f.uid)}
   end
   
   def check_uri
