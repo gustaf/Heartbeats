@@ -5,6 +5,6 @@ class MissingPlaylistsController < ApplicationController
     playlists = Playlist.all(:conditions => ["title IS NULL"])
     urls = playlists.select{|p| p.is_proper_playlist?}.map{|p| p.url_spotify}
     
-    render :text => urls.join("\n")
+    render :text => urls.shuffle.join("\n")
   end
 end

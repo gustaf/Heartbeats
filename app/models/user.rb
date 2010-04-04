@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   end
 
   def friends
-    User.all(:include => :playlists, :conditions => ["uid IN (?)", @fb_friends])
+    User.all(:include => :playlists, :conditions => ["uid IN (?)", @fb_friends], :order => "playlists.created_at DESC")
   end
 
   #for bands in town
@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
   
   class << self
     def find_or_create(uid)
-      user = first(:conditions => {:uid => uid})
+      user = first(:conditions => {:uid => uid}, :include => :playlists, :order => "playlists.created_at DESC")
       return user if user
       user = new(:uid => uid)
       user.save!

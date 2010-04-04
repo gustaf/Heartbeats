@@ -7,6 +7,6 @@ class UsersController < ApplicationController
   end
   
   def show
-    @profile_user = User.find(params[:id])
+    @profile_user = User.find(params[:id], :include => :playlists, :order => "playlists.created_at DESC")
   end
 end
