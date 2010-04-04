@@ -11,6 +11,10 @@ class Playlist < ActiveRecord::Base
   def to_s
     title.blank? ? url : title
   end
+
+  def liked_by?(user)
+    likes.any?{|l| l.user_id == user.id}
+  end
   
   # CHECK AND VALIDATE SPOTIFY URL
   def url_is_valid

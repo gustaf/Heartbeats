@@ -26,18 +26,18 @@ class User < ActiveRecord::Base
   end
 
   def friends
-    User.all(:include => :playlists, :conditions => ["uid IN (?)", @fb_friends], :order => "coalesce(playlists.created_at,'-infinity') DESC")
+    User.all(:include => {:playlists => :likes}, :conditions => ["uid IN (?)", @fb_friends], :order => "coalesce(playlists.created_at,'-infinity') DESC")
+    #coalesce ugly work around to make postgres putting the NULLS LAST without breaking in mysql
   end
 
   #for bands in town
   def top50artists
-    #disabled until caching/background task/AJAX
     ArtistName.top50(self)
   end
   
   class << self
     def find_or_create(uid)
-      user = first(:conditions => {:uid => uid}, :include => :playlists, :order => "playlists.created_at DESC")
+      user = first(:conditions => {:uid => uid}, :include => {:playlists => :likes}, :order => "playlists.created_at DESC")
       return user if user
       user = new(:uid => uid)
       user.save!
