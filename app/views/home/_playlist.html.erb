@@ -1,9 +1,4 @@
-<div class="playlist">
-	<%= image_tag "spotifyclick.png" %> <%= link_to truncate(h(playlist.to_s), :length => 32), playlist_path(playlist) %>
-        <%= if playlist.liked_by?(@user)
-              link_to "[unlike]", like_url(@user.like_for playlist), :method => :delete, :class => "like_link"
-            else
-              link_to "[like]", likes_url(:playlist_id => playlist.id), :class => "like_link", :method => :post
-            end %>
-          <%= "(#{playlist.likes.length})" %>
+<div <%= playlist_counter > 2 ? 'class="hidden_playlist" style="display:none"' : 'class="playlist"' %>>
+  <%= image_tag "spotifyclick.png" %> <%= link_to truncate(h(playlist.to_s), :length => 32), playlist_path(playlist) %>
+  <span class="like"><%= render :partial => "home/like", :locals => {:playlist => playlist} %></span>
 </div>

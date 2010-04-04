@@ -1,12 +1,12 @@
 
-<div class="friend clearfix">
+<div class="friend clearfix" id="<%= friend.id %>">
 	<div class="friend_pic"><%= fb_profile_pic friend.uid, :size => :square, :height => 42, :width => 42 %></div>
 	<div class="friend_details">
           <div class="friend_name"><%= link_to fb_name(friend.uid, {:useyou => "false", :linked => "false"}), friend %></div>
 		<div class="playlists">
-			<%= render :partial => "/home/playlist.html.erb", :collection => friend.playlists[0..2] %>
+			<%= render :partial => "/home/playlist.html.erb", :collection => friend.playlists[0..9] %>
                         <% if friend.playlists[3] then %>
-                          <div class="playlists"><%= link_to "more", friend %></div>
+                          <div class="more"><a href="javascript:void(0);">more</a><span>&raquo;</span></div>
                         <% end %>
 		</div>
 	</div>

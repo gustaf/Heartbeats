@@ -6,7 +6,8 @@
 	<%= stylesheet_link_tag "application" %>
 
 	
-				<%= javascript_include_tag :defaults %> 
+				<%= javascript_include_tag ['jquery-1.3.2.min','application'] %>
+				<%= javascript_include_tag :defaults %>
 				<%= fb_connect_javascript_tag %>
 				<% init_fb_connect "XFBML","Api" do %>
 				  <%= yield :fb_connect%>
