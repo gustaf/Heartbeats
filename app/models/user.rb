@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   end
 
   def friends
-    User.all(:include => :playlists, :conditions => ["uid IN (?)", @fb_friends], :order => "playlists.created_at DESC")
+    User.all(:include => :playlists, :conditions => ["uid IN (?)", @fb_friends], :order => "playlists.created_at DESC, users.created_at DESC")
   end
 
   #for bands in town
