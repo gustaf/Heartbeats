@@ -32,7 +32,3 @@ $(document).ready(function (){
       }
       });
     });
-
-function register_likes() {
-
-}

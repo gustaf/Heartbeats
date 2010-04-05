@@ -1,56 +1,42 @@
 
 <!-- Header & Top Navigation -->			
-	<%= render :partial => "navigation/header" %>	
-
+<%= render :partial => "navigation/header" %>	
 
 <div id="content">
-	
-<!-- Container: Add Playlist & Right Navigation -->		
+  <!-- Container: Add Playlist & Right Navigation -->		
 
-<div class="main-top wrapper">
-<!-- Add Playlist -->
-			<div id="new_playlist" original-title="Drag and Drop your Spotify Playlist to the input field below. Then click Add Playlist">
+  <div class="main-top wrapper">
+    <!-- Add Playlist -->
+    <div id="new_playlist" original-title="Drag and Drop your Spotify Playlist to the input field below. Then click Add Playlist">
 
-				<script type="text/javascript">
-					function submitform()
-					{
-		    		document.forms["new_playlist_form"].submit();
-					}
-					</script>
+      <script type="text/javascript">
+        function submitform() {
+          document.forms["new_playlist_form"].submit();
+        }
+      </script>
 			
-			 	<% form_for :playlist, @new_playlist, :url => playlists_url, :html => {:id => "new_playlist_form"} do |f| %>
-					<%= f.text_field :url, :size => 50, :class => "text_field" %>
-					<a href="javascript: submitform()" class="button"><span style="color: green;">♫ </span> Add Playlist</a><br />
-				<small>Example: http://open.spotify.com/user/gus/playlist/4NlgJdeq17Niy</small>
-				<% end %>
+      <% form_for :playlist, @new_playlist, :url => playlists_url, :html => {:id => "new_playlist_form"} do |f| %>
+        <%= f.text_field :url, :size => 50, :class => "text_field" %>
+        <a href="javascript: submitform()" class="button"><span style="color: green;">♫ </span> Add Playlist</a><br />
+        <small>Example: http://open.spotify.com/user/gus/playlist/4NlgJdeq17Niy</small>
+      <% end %>
 
-		
-						
+    </div>	
+  </div>	
 
-						<br/>
-			</div>	
-
-</div>	
-
-
-<!-- Wrapper: Playlists & Suggestions -->		
-
-	<div class="main wrapper">
-	
-			<div class="following">
-				<h2>Following</h2>
-	            <%= render :partial => "friends_list" %>
-				</div>
+  <!-- Wrapper: Playlists & Suggestions -->		
+  <div class="main wrapper">
+    <div class="following">
+      <h2>Friends</h2>
+      <%= render :partial => "friends_list" %>
+    </div>
 			
-			<div class="shows_wrapper">
-				<h2>Local Shows</h2>
-				<%= render :partial => "bandsintown" %>
-			</div>
+    <div class="shows_wrapper">
+      <h2>Local Shows</h2>
+      <%= render :partial => "bandsintown" %>
+    </div>
+  </div>
 
-	</div>
-
-
-<!-- Footer & Bottom Navigation -->		
-	<%= render :partial => "navigation/footer" %>	
-
+  <!-- Footer & Bottom Navigation -->		
+  <%= render :partial => "navigation/footer" %>	
 </div>
