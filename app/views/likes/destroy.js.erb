@@ -1,0 +1,1 @@
+$("div#<%= @playlist.id %> > span").html("<%= escape_javascript(render(:partial => "home/like", :locals => {:playlist => @playlist})) %>");

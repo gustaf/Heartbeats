@@ -1,6 +1,6 @@
 <% link = if playlist.liked_by?(@user)
-    link_to "unlike", like_url(@user.like_for playlist), :method => :delete, :class => "like_link"
+    link_to "unlike", like_url(@user.like_for playlist), :class => "unlike_link"
   else
-    link_to "like", likes_url(:playlist_id => playlist.id), :class => "like_link", :method => :post
+    link_to "like", likes_url(:playlist_id => playlist.id), :class => "like_link"
   end %>
 <%= "[#{link} (#{playlist.likes.length})]" %>
