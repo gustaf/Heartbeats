@@ -8,5 +8,7 @@ class UsersController < ApplicationController
   
   def show
     @profile_user = User.find(params[:id], :include => {:playlists => :likes}, :order => "playlists.created_at DESC")
+    @playlists = @profile_user.playlists
+    @liked_playlists = Playlist.all :include => [:likes, :user], :conditions => ["likes.user_id = ?", @profile_user], :order => "likes.created_at DESC"
   end
 end

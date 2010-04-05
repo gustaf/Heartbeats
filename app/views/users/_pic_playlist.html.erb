@@ -1,0 +1,5 @@
+<div id="<%= pic_playlist.id %>" class="playlist_big">
+  <div class="friend_pic"><%= link_to fb_profile_pic(pic_playlist.user.uid, :size => :square, :height => 42, :width => 42, :linked => "false"), pic_playlist.user %></div>
+  <%= link_to truncate(h(pic_playlist.to_s), :length => 32), playlist_path(pic_playlist) %>
+  <span class="like"><%= render :partial => "home/like", :locals => {:playlist => pic_playlist} %></span>
+</div>

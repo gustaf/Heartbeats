@@ -9,13 +9,15 @@
     </div>
   </div>
 
-  <div class="main wrapper">
-    <div class="playlist wrapper">
+  <div class="main wrapper home">
+    <div class="playlists">
       <h2><%= fb_name @profile_user.uid, :useyou => "false", :firstnameonly => "true", :possessive => "true", :linked => "false" %> Playlists</h2>
+      <%= render :partial => "playlist", :collection => @playlists %>
     </div>
 			
-    <div class="likes wrapper">
-      <h2>Liked by <%= fb_name @profile_user.uid, :useyou => "false", :firstnameonly => "true", :linked => "false" %></h2>
+    <div class="likes">
+      <h2><%= fb_name @profile_user.uid, :useyou => "false", :firstnameonly => "true", :linked => "false" %> Likes</h2>
+      <%= render :partial => "pic_playlist", :collection => @liked_playlists %>
     </div>
   </div>		
 

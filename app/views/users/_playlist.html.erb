@@ -1,0 +1,4 @@
+<div id="<%= playlist.id %>" class="playlist_big">
+  <%= image_tag "spotifyclick.png" %> <%= link_to truncate(h(playlist.to_s), :length => 32), playlist_path(playlist) %>
+  <span class="like"><%= render :partial => "home/like", :locals => {:playlist => playlist} %></span>
+</div>
