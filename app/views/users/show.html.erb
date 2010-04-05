@@ -1,26 +1,24 @@
-
 <!-- Header & Top Navigation -->			
-	<%= render :partial => "navigation/header" %>	
-
-
+<%= render :partial => "navigation/header" %>	
 
 <div id="content">
-	
+  <div class="main-top wrapper">
+    <br />
+    <div id="user">
+      <%= render :partial => "friend", :locals => {:friend => @profile_user}%>
+    </div>
+  </div>
 
-	<div class="main-top wrapper">
-	
-		<br />
-		<div id="user">
-			<%= render :partial => "/users/friend.html.erb", :locals => {:friend => @profile_user}%>
-		</div>
-	
-	</div>
-    
-	<div class="main wrapper">
+  <div class="main wrapper">
+    <div class="playlist wrapper">
+      <h2><%= fb_name @profile_user.uid, :useyou => "false", :firstnameonly => "true", :possessive => "true", :linked => "false" %> Playlists</h2>
+    </div>
 			
-	</div>		
+    <div class="likes wrapper">
+      <h2>Liked by <%= fb_name @profile_user.uid, :useyou => "false", :firstnameonly => "true", :linked => "false" %></h2>
+    </div>
+  </div>		
 
-<!-- Footer & Bottom Navigation -->		
-	<%= render :partial => "navigation/footer" %>	
-
+  <!-- Footer & Bottom Navigation -->		
+  <%= render :partial => "navigation/footer" %>	
 </div>

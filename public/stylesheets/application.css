@@ -189,7 +189,6 @@ a:hover.FB_Link	{
 	border-color:green;
 	border-style:solid;
 	display:block;
-	margin-top:32px;
 	}	
 	
 .clearfix:after {
@@ -400,6 +399,14 @@ a:hover.FB_Link	{
 	font-size:1.1em;
 	line-height:1.5em;
 	vertical-align:top;	
+	font-family:"Helvetica Neue",Helvetica,Arial,default;
+	font-weight: bold;
+	}
+
+.friend_name_big {
+	font-weight:bold;
+	font-size:1.7em;
+	line-height:1.5em;
 	font-family:"Helvetica Neue",Helvetica,Arial,default;
 	font-weight: bold;
 	}
